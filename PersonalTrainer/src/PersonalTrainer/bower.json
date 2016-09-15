@@ -2,6 +2,6 @@
   "name": "asp.net",
   "private": true,
   "dependencies": {
-    "bootstrap": "3.3.6"
+    "semantic": "2.1.8"
   }
 }
