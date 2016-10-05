@@ -1,6 +1,7 @@
 ﻿using Framework.Models;
 using Framework.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace PersonalTrainerDiet.Controllers
 {
@@ -31,6 +32,20 @@ namespace PersonalTrainerDiet.Controllers
             return View(new ProductDto());
         }
 
+        [HttpPost]
+        public IActionResult EditProduct(Guid productId)
+        {
+            return RedirectToAction("ProductList", "Diet");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProduct(Guid productId)
+        {
+            productManagement.RemoveProduct(productId);
+            return RedirectToAction("ProductList", "Diet");
+        }
+
+        
         /// <summary>
         /// Odpowiedzialny za wyświetlanie listy produktów.
         /// </summary>

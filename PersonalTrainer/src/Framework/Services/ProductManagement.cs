@@ -72,7 +72,13 @@ namespace Framework.Services
         {
             using (var trans = context.Database.BeginTransaction())
             {
+                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(productId));
+                context.ProductsDetails.Remove(pd);
+                context.Products.Remove(p);
 
+                context.SaveChanges();
+                trans.Commit();
             }
         }
 
@@ -81,6 +87,10 @@ namespace Framework.Services
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Pozyskuje listę wszystkich produktów w bazie danych.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ProductDto> GetProducts()
         {
             var result = from p in context.Products
@@ -94,6 +104,49 @@ namespace Framework.Services
 
             var list = result.Select(x => new ProductDto()
             {
+                ProductId = x.p.ProductId,
+                UserId = x.p.UserId,
+                Name = x.p.Name,
+                Manufacturer = x.p.Manufacturer,
+                Type = GetProductTypeEnum(x.p.ProductType),
+                Macro = new Macro()
+                {
+                    Protein = x.pd.Protein,
+                    Fat = x.pd.Fat,
+                    Fibre = x.pd.Fibre,
+                    Carbohydrates = x.pd.Carbohydrates,
+                    Calories = x.pd.Calories,
+                    Quantity = x.pd.Quantity,
+                    QuantityType = GetQuantityTypeEnum(x.pd.QuantityType)
+                }
+            });
+
+            return list.ToList();
+        }
+
+        /// <summary>
+        /// Pozyskuje listę wszystkich produktów dodanych przez użytkownika
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ProductDto> GetUserProducts()
+        {
+            var userGuid = session.GetString(userId);
+
+            if (!String.IsNullOrWhiteSpace(userGuid)) throw new KeyNotFoundException(nameof(userGuid));
+
+            var result = from p in context.Products
+                         join pd in context.ProductsDetails
+                         on p.ProductId equals pd.ProductId
+                         where p.UserId.Equals(userGuid)
+                         select new
+                         {
+                             p,
+                             pd
+                         };
+
+            var list = result.Select(x => new ProductDto()
+            {
+                ProductId = x.p.ProductId,
                 UserId = x.p.UserId,
                 Name = x.p.Name,
                 Manufacturer = x.p.Manufacturer,

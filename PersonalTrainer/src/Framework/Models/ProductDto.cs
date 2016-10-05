@@ -5,6 +5,8 @@ namespace Framework.Models
 {
     public class ProductDto
     {
+        public Guid ProductId { get; set; }
+
         public Guid UserId { get; set; }
 
         public String Name { get; set; }

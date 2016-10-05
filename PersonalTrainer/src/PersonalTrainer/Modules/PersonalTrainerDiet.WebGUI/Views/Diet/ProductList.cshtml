@@ -18,9 +18,10 @@
                 <th>Protein</th>
                 <th>Fibre</th>
                 <th>Type</th>
+                <th colspan="2">Operations</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody asp-for="">
             @foreach (var item in Model)
             {
                 <tr>
@@ -32,6 +33,19 @@
                     <td>@item.Macro.Protein</td>
                     <td>@item.Macro.Fibre</td>
                     <td>@item.Type</td>
+                    <td>
+                            <form asp-controller="Diet" asp-action="EditProduct" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId"/>
+                                <button class="ui blue button" type="submit">Edit</button>
+                            </form>
+              
+                    </td>
+                    <td>
+                        <form asp-controller="Diet" asp-action="DeleteProduct" method="post">
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <button class="ui blue button" type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
