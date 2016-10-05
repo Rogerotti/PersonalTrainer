@@ -145,7 +145,7 @@
     <value>Hasło nie pasuje.</value>
   </data>
   <data name="PasswordRegex" xml:space="preserve">
-    <value>Podane hasło  jest nieprawidłowe.</value>
+    <value>Podany format hasła  jest nieprawidłowy.</value>
   </data>
   <data name="PasswordRequired" xml:space="preserve">
     <value>Hasło jest wymagane.</value>

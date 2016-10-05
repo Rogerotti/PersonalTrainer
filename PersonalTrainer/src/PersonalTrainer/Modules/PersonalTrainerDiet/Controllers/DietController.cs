@@ -1,10 +1,6 @@
 ﻿using Framework.Models;
 using Framework.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PersonalTrainerDiet.Controllers
 {
@@ -35,6 +31,11 @@ namespace PersonalTrainerDiet.Controllers
             return View(new ProductDto());
         }
 
+        /// <summary>
+        /// Odpowiedzialny za wyświetlanie listy produktów.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public IActionResult ProductList()
         {
             var products = productManagement.GetProducts();

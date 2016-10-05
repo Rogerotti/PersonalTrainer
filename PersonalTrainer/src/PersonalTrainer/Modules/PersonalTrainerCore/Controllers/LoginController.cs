@@ -9,10 +9,13 @@ namespace PersonalTrainerCore.Controllers
     public class LoginController : Controller
     {
         private readonly IUserManagement userManagement;
+        private readonly ILogger logger;
 
-        public LoginController(IUserManagement userManagement)
+        public LoginController(IUserManagement userManagement,
+            ILogger logger)
         {
             this.userManagement = userManagement;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -29,9 +32,9 @@ namespace PersonalTrainerCore.Controllers
                 userManagement.Login(user.Login, user.Password);
                 var item = userManagement.GetCurrentUser();
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-        
+                logger.LogDebug("Dodawanie uzytkownika", new[] { exc.Message });
             }
             return RedirectToAction("Index", "Home");
         }
