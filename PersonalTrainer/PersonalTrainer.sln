@@ -24,6 +24,7 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PersonalTrainerCore.WebGUI", "src\PersonalTrainer\Modules\PersonalTrainerCore.WebGUI\PersonalTrainerCore.WebGUI.xproj", "{43FB9A33-0F5C-45A0-96D8-F693239AAA6B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F2010953-5284-4E4B-8EF0-23DDB01121BC} = {F2010953-5284-4E4B-8EF0-23DDB01121BC}
+		{4D34B1D8-BA6B-4EC4-8A9A-B9DF67478642} = {4D34B1D8-BA6B-4EC4-8A9A-B9DF67478642}
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PersonalTrainerDiet", "src\PersonalTrainer\Modules\PersonalTrainerDiet\PersonalTrainerDiet.xproj", "{6628E39E-16CD-45CC-921A-17DE5C97D52F}"

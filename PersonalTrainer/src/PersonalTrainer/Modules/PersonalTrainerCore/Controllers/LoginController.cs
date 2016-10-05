@@ -29,7 +29,7 @@ namespace PersonalTrainerCore.Controllers
                 userManagement.Login(user.Login, user.Password);
                 var item = userManagement.GetCurrentUser();
             }
-            catch (Exception exc)
+            catch (Exception)
             {
         
             }

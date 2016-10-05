@@ -33,8 +33,8 @@
                     <div class="field">
                         <label>Type</label>
                         <div class="ui selection dropdown" asp-for="Type">
-                            <input name="Type">
-                            <i class="dropdown icon"></i>
+                            <input name="Type" type="hidden">
+                       
                             <div class="default text">Type</div>
                             <div class="menu">
                             @foreach (var item in @Html.GetEnumSelectList(typeof(Framework.Models.ProductType)))
