@@ -2,6 +2,7 @@
 using Framework.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using PersonalTrainer.ViewNavigator;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -26,9 +28,14 @@ namespace PersonalTrainer
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = @"Server=(localdb)\mssqllocaldb;Database=PersonalTrainer;Trusted_Connection=True;";
+            services.AddDbContext<ProductContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
-
-            services.AddScoped<IUserManagement, UserManagement>();
+         
+            services.AddSession();
+       
+            services.AddSingleton<IUserManagement, UserManagement>();
+            services.AddSingleton<IProductManagement, ProductManagement>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var mvcBuilder = services.AddMvc();
             IList<ModuleInfo> modules = GetModules(hostingEnviroment);
@@ -45,11 +52,12 @@ namespace PersonalTrainer
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
-            
+
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
 
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
@@ -74,12 +82,11 @@ namespace PersonalTrainer
             {
                 var binFolder = new DirectoryInfo(Path.Combine(moduleFolder.FullName, "bin"));
                 if (!binFolder.Exists)
-                {
                     continue;
-                }
-
-                foreach (var file in binFolder.GetFileSystemInfos("*.dll", SearchOption.AllDirectories))
+                
+                foreach (var file in binFolder.GetFileSystemInfos(moduleFolder.Name + ".dll", SearchOption.AllDirectories))
                 {
+                  
                     Assembly assembly = null;
                     try
                     {
@@ -89,8 +96,7 @@ namespace PersonalTrainer
                     {
                         if (ex.Message == "Assembly with same name is already loaded")
                         {
-                            // Get loaded assembly
-                            assembly = Assembly.Load(new AssemblyName(Path.GetFileNameWithoutExtension(file.Name)));
+                                assembly = Assembly.Load(new AssemblyName(Path.GetFileNameWithoutExtension(file.Name)));
                         }
                         else
                         {
@@ -99,12 +105,15 @@ namespace PersonalTrainer
                     }
 
                     if (assembly.FullName.Contains(moduleFolder.Name))
-                        modules.Add(new ModuleInfo
-                        {
-                            Name = moduleFolder.Name,
-                            Assembly = assembly,
-                            Path = moduleFolder.FullName
-                        });
+                    {
+                        if(!modules.Any(x => x.Name.Equals(moduleFolder.Name)))
+                            modules.Add(new ModuleInfo
+                            {
+                                Name = moduleFolder.Name,
+                                Assembly = assembly,
+                                Path = moduleFolder.FullName
+                            });
+                    }
                 }
             }
             return modules;
