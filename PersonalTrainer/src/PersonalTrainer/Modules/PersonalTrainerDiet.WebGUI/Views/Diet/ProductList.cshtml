@@ -1,0 +1,38 @@
+﻿@model  IEnumerable<Framework.Models.ProductDto>
+@using System.Text.RegularExpressions
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Baza produktów";
+    Layout = "test";
+
+}
+
+<body>
+    <table class="ui sortable celled table">
+        <thead>
+            <tr>
+                <th class="sorted ascending">Product Name</th>
+                <th class="sorted ascending">Product Manufacturer</th>
+                <th>Calories</th>
+                <th>Carbohydrates</th>
+                <th>Fat</th>
+                <th>Protein</th>
+                <th>Fibre</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Manufacturer</td>
+                    <td>@item.Macro.Calories</td>
+                    <td>@item.Macro.Carbohydrates</td>
+                    <td>@item.Macro.Fat</td>
+                    <td>@item.Macro.Protein</td>
+                    <td>@item.Macro.Fibre</td>
+                </tr>
+            }
+        </tbody>
+   </table>
+</body>

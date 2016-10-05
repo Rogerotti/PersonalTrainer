@@ -1,0 +1,44 @@
+﻿@model  Framework.Models.UserDto
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Login";
+    Layout = "Layout";
+}
+<body>
+    <form class="ui form segment"  asp-controller="Login" asp-action="Login" method="post">
+
+        <div class="ui grid">
+
+            <div class="two column row">
+
+                <div class="column">
+                    <div class="field">
+                        <label>Login *</label>
+                        <input placeholder="Login" type="text" asp-for="Login">
+                        <span asp-validation-for="Login" class="ui red header"></span>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="field">
+                        <label>Password</label>
+                        <div class="ui left icon input">
+                            <input type="password" asp-for="Password">
+                            <i class="lock icon"></i>
+                        </div>
+                        <span asp-validation-for="Password" class="ui red header"></span>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+
+        <div class="column centered">
+            <button class="ui blue button" type="submit">
+                Login
+            </button>
+        </div>
+        </form>
+</body>
+
+

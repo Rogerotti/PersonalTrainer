@@ -1,0 +1,51 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "Layout";
+
+}
+<body>
+    @RenderBody()
+</body>
+
+@section LeftPanel
+{
+    <div class="ui left vertical menu">
+            <div class="ui large inverted blue left top vertical menu">
+                <div class="item">
+                    <div class="ui header">Dieta</div>
+                    <div class="menu">
+                        <a class="item" asp-controller="Diet" asp-action="Day">Dzisiaj</a>
+                        <a class="item">Consumer</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="header">Moje produkty</div>
+                    <div class="menu">
+                        <a class="item" asp-controller="Diet" asp-action="ProductList">Baza produktów</a>
+                        <a class="item" asp-controller="Diet" asp-action="AddProduct">Dodaj produkt</a>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="header">Hosting</div>
+                    <div class="menu">
+                        <a class="item">Shared</a>
+                        <a class="item">Dedicated</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script>  $('.ui.dropdown').dropdown();</script>
+
+<script>
+    $(document).ready(function () {
+        $('.sortable.table').tablesort();
+    });
+</script>
+}
+
+
