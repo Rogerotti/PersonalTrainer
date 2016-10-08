@@ -25,6 +25,8 @@ namespace PersonalTrainer.Migrations.Product
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<int>("ProductState");
+
                     b.Property<int>("ProductType");
 
                     b.Property<Guid>("UserId");

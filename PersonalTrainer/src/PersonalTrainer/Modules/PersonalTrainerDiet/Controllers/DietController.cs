@@ -33,6 +33,13 @@ namespace PersonalTrainerDiet.Controllers
         }
 
         [HttpPost]
+        public IActionResult AddProduct(ProductDto dto)
+        {
+            productManagement.AddProduct(dto);
+            return RedirectToAction("ProductList", "Diet");
+        }
+
+        [HttpPost]
         public IActionResult EditProduct(Guid productId)
         {
             return RedirectToAction("ProductList", "Diet");
@@ -45,7 +52,29 @@ namespace PersonalTrainerDiet.Controllers
             return RedirectToAction("ProductList", "Diet");
         }
 
+        [HttpPost]
+        public IActionResult SubscribeProduct(Guid productId)
+        {
+            productManagement.SubscribeProduct(productId);
+            return RedirectToAction("ProductList", "Diet");
+        }
+
+        [HttpPost]
+        public IActionResult CancelSubscription(Guid productId)
+        {
+            productManagement.CancelSubscription(productId);
+            return RedirectToAction("ProductList", "Diet");
+        }
+
+        [HttpPost]
+        public IActionResult ShowDetails(Guid productId)
+        {
+            //TODO
+           // productManagement.CancelSubscription(productId);
+            return RedirectToAction("ProductList", "Diet");
+        }
         
+
         /// <summary>
         /// Odpowiedzialny za wyświetlanie listy produktów.
         /// </summary>
@@ -57,12 +86,6 @@ namespace PersonalTrainerDiet.Controllers
             return View(products);
         }
 
-        [HttpPost]
-        public IActionResult AddProduct(ProductDto dto)
-        {
-            productManagement.AddProduct(dto);
 
-            return View(new ProductDto());
-        }
     }
 }

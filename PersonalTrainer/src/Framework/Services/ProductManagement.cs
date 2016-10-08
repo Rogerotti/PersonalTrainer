@@ -39,6 +39,7 @@ namespace Framework.Services
                 var productId = Guid.NewGuid();
 
                 Int32 productType = GetProductTypeValue(dto.Type);
+                Int32 productState = GetProductStateValue(dto.State);
 
                 context.Products.Add(new Product()
                 {
@@ -46,7 +47,9 @@ namespace Framework.Services
                     UserId = dto.UserId,
                     Name = dto.Name,
                     Manufacturer = dto.Manufacturer,
-                    ProductType = productType
+                    ProductType = productType,
+                    ProductState = productState
+
                 });
 
                 var quantityType = GetQuantityTypeValue(dto.Macro.QuantityType);
@@ -84,7 +87,48 @@ namespace Framework.Services
 
         public void UpdateProduct(Guid productId, ProductDto dto)
         {
-            throw new NotImplementedException();
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(productId));
+
+                p.Name = dto.Name;
+                p.Manufacturer = dto.Manufacturer;
+                p.ProductType = GetProductTypeValue(dto.Type);
+                p.ProductState = GetProductStateValue(dto.State);
+
+                pd.Calories = dto.Macro.Calories;
+                pd.Fat = dto.Macro.Fat;
+                pd.Fibre = dto.Macro.Fibre;
+                pd.Protein = dto.Macro.Protein;
+                pd.Quantity = dto.Macro.Quantity;
+                pd.QuantityType = GetQuantityTypeValue(dto.Macro.QuantityType);
+
+                context.SaveChanges();
+                trans.Commit();
+            }
+        }
+
+        public void SubscribeProduct(Guid productId)
+        {
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                p.ProductState = 1;
+                context.SaveChanges();
+                trans.Commit();
+            }
+        }
+
+        public void CancelSubscription(Guid productId)
+        {
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                p.ProductState = 0;
+                context.SaveChanges();
+                trans.Commit();
+            }
         }
 
         /// <summary>
@@ -109,6 +153,7 @@ namespace Framework.Services
                 Name = x.p.Name,
                 Manufacturer = x.p.Manufacturer,
                 Type = GetProductTypeEnum(x.p.ProductType),
+                State = GetProductStateEnum(x.p.ProductState),
                 Macro = new Macro()
                 {
                     Protein = x.pd.Protein,
@@ -121,7 +166,7 @@ namespace Framework.Services
                 }
             });
 
-            return list.ToList();
+            return list != null ? list.ToList() : new List<ProductDto>();
         }
 
         /// <summary>
@@ -151,6 +196,7 @@ namespace Framework.Services
                 Name = x.p.Name,
                 Manufacturer = x.p.Manufacturer,
                 Type = GetProductTypeEnum(x.p.ProductType),
+                State = GetProductStateEnum(x.p.ProductState),
                 Macro = new Macro()
                 {
                     Protein = x.pd.Protein,
@@ -215,7 +261,30 @@ namespace Framework.Services
         }
 
         /// <summary>
-        /// Konwertuje wartość typu produktu przechowywaną w bazie danych na typ enumeracyjny.
+        /// Konwertuje status produktu na wartość zapisaną do bazy danych.
+        /// </summary>
+        /// <param name="stateEnum"><see cref="ProductState"/></param>
+        /// <returns></returns>
+        private Int32 GetProductStateValue(ProductState stateEnum)
+        {
+            Int32 value = 0;
+
+            if (stateEnum == ProductState.Private)
+                value = 0;
+            else if (stateEnum == ProductState.Pending)
+                value = 1;
+            else if (stateEnum == ProductState.Denied)
+                value = 2;
+            else if (stateEnum == ProductState.Accepted)
+                value = 3;
+            else
+                throw new NotSupportedException(nameof(stateEnum));
+
+            return value;
+        }
+
+        /// <summary>
+        /// Konwertuje wartość typu produktu przechowywaną na typ enumeracyjny.
         /// </summary>
         /// <param name="typeValue"></param>
         /// <returns></returns>
@@ -239,7 +308,7 @@ namespace Framework.Services
         }
 
         /// <summary>
-        /// Konwertuje wartość typu pojemności produktu w bazie danych na typ enumeracyjny.
+        /// Konwertuje wartość typu pojemności produktu na typ enumeracyjny.
         /// </summary>
         /// <param name="typeValue"></param>
         /// <returns></returns>
@@ -259,5 +328,29 @@ namespace Framework.Services
 
             return type;
         }
+
+        /// <summary>
+        /// Konwertuje wartości stanu produktu na typ enumeracyjny.
+        /// </summary>
+        /// <param name="stateValue"></param>
+        /// <returns></returns>
+        private ProductState GetProductStateEnum(Int32 stateValue)
+        {
+            ProductState type;
+
+            if (stateValue == 0)
+                type = ProductState.Private;
+            else if (stateValue == 1)
+                type = ProductState.Pending;
+            else if (stateValue == 2)
+                type = ProductState.Denied;
+            else if (stateValue == 3)
+                type = ProductState.Accepted;
+            else throw new NotSupportedException(nameof(stateValue));
+
+            return type;
+        }
+
+
     }
 }

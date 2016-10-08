@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
+﻿using System;
 
 namespace Framework.Models
 {
@@ -16,5 +15,7 @@ namespace Framework.Models
         public ProductType Type { get; set; }
         
         public Macro Macro { get; set; }
+
+        public ProductState State { get; set; }
     }
 }

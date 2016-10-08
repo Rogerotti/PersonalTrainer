@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ProductStateAccepted" xml:space="preserve">
+    <value>Accepted</value>
+  </data>
+  <data name="ProductStateDenied" xml:space="preserve">
+    <value>Denied</value>
+  </data>
+  <data name="ProductStatePending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="ProductStatePrivate" xml:space="preserve">
+    <value>Private</value>
+  </data>
   <data name="ProductTypeDairyProducts" xml:space="preserve">
     <value>Dairy Products</value>
   </data>

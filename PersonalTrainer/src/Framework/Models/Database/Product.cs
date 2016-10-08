@@ -22,6 +22,16 @@ namespace Framework.Models.Database
         [Required]
         public Int32 ProductType { get; set; }
 
+        /// <summary>
+        /// Stan produktu.
+        /// 0 - Prywatny produkt użytkownika.
+        /// 1 - Produkt zlecony do zatwierdzenia przez administratora systemu.
+        /// 2 - Produkt odrzucony przez administratora
+        /// 3 - Produkt zaakceptowany przez administratora.
+        /// </summary>
+        [Required]
+        public Int32 ProductState {get;set;}
+
         [Required]
         public virtual ProductDetails ProductDetails { get; set; }
     }

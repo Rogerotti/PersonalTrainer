@@ -30,5 +30,7 @@ namespace Framework.Services
         /// </summary>
         /// <returns></returns>
         IEnumerable<ProductDto> GetProducts();
+        void SubscribeProduct(Guid productId);
+        void CancelSubscription(Guid productId);
     }
 }

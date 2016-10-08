@@ -6,48 +6,106 @@
     Layout = "DietLayout";
 }
 
+<style>
+    tr.green {
+      background: #198f28;
+    }
+    tr.red {
+      background:#9c0505
+    }
+    tr.yellow {
+      background :#eeca00
+    }
+</style>
+
 <body>
-    <table class="ui sortable celled table">
-        <thead>
-            <tr>
-                <th class="sorted ascending">Product Name</th>
-                <th class="sorted ascending">Product Manufacturer</th>
-                <th>Calories</th>
-                <th>Carbohydrates</th>
-                <th>Fat</th>
-                <th>Protein</th>
-                <th>Fibre</th>
-                <th>Type</th>
-                <th colspan="2">Operations</th>
-            </tr>
-        </thead>
-        <tbody asp-for="">
-            @foreach (var item in Model)
-            {
+    <div>
+        <table class="ui sortable celled  table">
+            <thead>
                 <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Manufacturer</td>
-                    <td>@item.Macro.Calories</td>
-                    <td>@item.Macro.Carbohydrates</td>
-                    <td>@item.Macro.Fat</td>
-                    <td>@item.Macro.Protein</td>
-                    <td>@item.Macro.Fibre</td>
-                    <td>@item.Type</td>
-                    <td>
-                            <form asp-controller="Diet" asp-action="EditProduct" method="post">
-                                <input type="hidden" name="productId" value="@item.ProductId"/>
-                                <button class="ui blue button" type="submit">Edit</button>
-                            </form>
-              
-                    </td>
-                    <td>
-                        <form asp-controller="Diet" asp-action="DeleteProduct" method="post">
-                            <input type="hidden" name="productId" value="@item.ProductId" />
-                            <button class="ui blue button" type="submit">Delete</button>
-                        </form>
-                    </td>
+                    <th class="sorted ascending">Product Name</th>
+                    <th>Product Manufacturer</th>
+                    <th>Calories</th>
+                    <th>Carbohydrates</th>
+                    <th>Fat</th>
+                    <th>Protein</th>
+                    <th>Fibre</th>
+                    <th>Type</th>
+                    <th colspan="3">Operations</th>
                 </tr>
-            }
-        </tbody>
-   </table>
+            </thead>
+            <tbody >
+                @foreach (var item in Model)
+                {
+                    var disableButtonState = (item.State != Framework.Models.ProductState.Private) && (item.State != Framework.Models.ProductState.Denied) ? "disabled" : "";
+                    if (item.State == Framework.Models.ProductState.Private)
+                    {
+                        @:<tr>
+                    }
+                    else if (item.State == Framework.Models.ProductState.Pending)
+                    {
+                        @:<tr class="yellow">
+                    }
+                    else if (item.State == Framework.Models.ProductState.Denied)
+                    {
+                        @:<tr class="red">
+                    }
+                    else if (item.State == Framework.Models.ProductState.Accepted)
+                    {
+                        @:<tr class="green">
+                    }
+                     
+                        <td>@item.Name</td>
+                        <td>@item.Manufacturer</td>
+                        <td>@item.Macro.Calories</td>
+                        <td>@item.Macro.Carbohydrates</td>
+                        <td>@item.Macro.Fat</td>
+                        <td>@item.Macro.Protein</td>
+                        <td>@item.Macro.Fibre</td>
+                        <td>@item.Type</td>
+                        <td>
+                            <form asp-controller="Diet" asp-action="EditProduct" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button class="ui blue tiny button" @disableButtonState type="submit">Edit</button>
+                            </form>
+                        </td>
+
+                        <td>
+                            <form asp-controller="Diet" asp-action="DeleteProduct" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button class="ui blue tiny button" @disableButtonState type="submit">Delete</button>
+                            </form>
+                        </td>
+                    if (item.State == Framework.Models.ProductState.Private)
+                    {
+                        <td>
+                            <form asp-controller="Diet" asp-action="SubscribeProduct" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button class="ui tiny blue button" type="submit">Subscribe</button>
+                            </form>
+                        </td>
+                    }
+                    else if (item.State == Framework.Models.ProductState.Pending)
+                    {
+                        <td>
+                            <form asp-controller="Diet" asp-action="CancelSubscription" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button class="ui tiny blue button" type="submit">Cancel Subscription</button>
+                            </form>
+                        </td>
+                    }
+                    else if (item.State == Framework.Models.ProductState.Denied)
+                    {
+                        <td>
+                            <form asp-controller="Diet" asp-action="ShowDetails" method="post">
+                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                <button class="ui tiny blue button" type="submit">Show Details</button>
+                            </form>
+                        </td>
+                    }
+                    @:</tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </body>

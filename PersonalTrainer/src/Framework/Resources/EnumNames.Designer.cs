@@ -60,6 +60,42 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Accepted.
+        /// </summary>
+        public static string ProductStateAccepted {
+            get {
+                return ResourceManager.GetString("ProductStateAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Denied.
+        /// </summary>
+        public static string ProductStateDenied {
+            get {
+                return ResourceManager.GetString("ProductStateDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string ProductStatePending {
+            get {
+                return ResourceManager.GetString("ProductStatePending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Private.
+        /// </summary>
+        public static string ProductStatePrivate {
+            get {
+                return ResourceManager.GetString("ProductStatePrivate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Dairy Products.
         /// </summary>
         public static string ProductTypeDairyProducts {
