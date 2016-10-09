@@ -85,12 +85,12 @@ namespace Framework.Services
             }
         }
 
-        public void UpdateProduct(Guid productId, ProductDto dto)
+        public void UpdateProduct(ProductDto dto)
         {
             using (var trans = context.Database.BeginTransaction())
             {
-                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
-                var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(productId));
+                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
+                var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
 
                 p.Name = dto.Name;
                 p.Manufacturer = dto.Manufacturer;
@@ -131,6 +131,35 @@ namespace Framework.Services
             }
         }
 
+        public ProductDto GetProduct(Guid productId)
+        {
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(productId));
+
+                return new ProductDto()
+                {
+                    Name = p.Name,
+                    Manufacturer = p.Manufacturer,
+                    ProductId = p.ProductId,
+                    UserId = p.UserId,
+                    State = GetProductStateEnum(p.ProductState),
+                    Type = GetProductTypeEnum(p.ProductType),
+                    Macro = new Macro()
+                    {
+                        Calories = pd.Calories,
+                        Fat = pd.Fat,
+                        Fibre = pd.Fibre,
+                        Carbohydrates = pd.Carbohydrates,
+                        Protein = pd.Protein,
+                        Quantity = pd.Quantity,
+                        QuantityType = GetQuantityTypeEnum(pd.QuantityType)
+                    }
+                };
+            }
+        }
+
         /// <summary>
         /// Pozyskuje listę wszystkich produktów w bazie danych.
         /// </summary>
@@ -165,7 +194,7 @@ namespace Framework.Services
                     QuantityType = GetQuantityTypeEnum(x.pd.QuantityType)
                 }
             });
-
+            
             return list != null ? list.ToList() : new List<ProductDto>();
         }
 
@@ -209,7 +238,7 @@ namespace Framework.Services
                 }
             });
 
-            return list.ToList();
+            return list != null  ? list.ToList() : new List<ProductDto>();
         }
 
         /// <summary>
@@ -350,7 +379,5 @@ namespace Framework.Services
 
             return type;
         }
-
-
     }
 }

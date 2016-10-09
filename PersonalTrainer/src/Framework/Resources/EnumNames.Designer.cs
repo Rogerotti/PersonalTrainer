@@ -139,5 +139,41 @@ namespace Framework.Resources {
                 return ResourceManager.GetString("ProductTypeVegetables", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Grams.
+        /// </summary>
+        public static string QuantityTypeGrams {
+            get {
+                return ResourceManager.GetString("QuantityTypeGrams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Mililiters.
+        /// </summary>
+        public static string QuantityTypeMilliliters {
+            get {
+                return ResourceManager.GetString("QuantityTypeMilliliters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Package.
+        /// </summary>
+        public static string QuantityTypePackage {
+            get {
+                return ResourceManager.GetString("QuantityTypePackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Piece.
+        /// </summary>
+        public static string QuantityTypePiece {
+            get {
+                return ResourceManager.GetString("QuantityTypePiece", resourceCulture);
+            }
+        }
     }
 }

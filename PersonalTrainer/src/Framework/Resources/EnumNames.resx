@@ -144,4 +144,16 @@
   <data name="ProductTypeVegetables" xml:space="preserve">
     <value>Vegetables</value>
   </data>
+  <data name="QuantityTypeGrams" xml:space="preserve">
+    <value>Grams</value>
+  </data>
+  <data name="QuantityTypeMilliliters" xml:space="preserve">
+    <value>Mililiters</value>
+  </data>
+  <data name="QuantityTypePackage" xml:space="preserve">
+    <value>Package</value>
+  </data>
+  <data name="QuantityTypePiece" xml:space="preserve">
+    <value>Piece</value>
+  </data>
 </root>

@@ -1,4 +1,7 @@
-﻿namespace Framework.Models
+﻿using Framework.Resources;
+using System.ComponentModel.DataAnnotations;
+
+namespace Framework.Models
 {
     /// <summary>
     /// Typ ilości pożywienia
@@ -9,9 +12,13 @@
     /// </summary>
     public enum QuantityType
     {
+        [Display(Name = nameof(EnumNames.QuantityTypeGrams), ResourceType = typeof(EnumNames))]
         Grams,
+        [Display(Name = nameof(EnumNames.QuantityTypeMilliliters), ResourceType = typeof(EnumNames))]
         Milliliters,
+        [Display(Name = nameof(EnumNames.QuantityTypePiece), ResourceType = typeof(EnumNames))]
         Piece,
+        [Display(Name = nameof(EnumNames.QuantityTypePackage), ResourceType = typeof(EnumNames))]
         Package
     }
 }

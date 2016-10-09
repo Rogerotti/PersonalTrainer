@@ -40,9 +40,17 @@ namespace PersonalTrainerDiet.Controllers
         }
 
         [HttpPost]
+        public IActionResult EditProduct2(ProductDto product)
+        {
+            productManagement.UpdateProduct(product);
+            return RedirectToAction("ProductList", "Diet");
+        }
+
+        [HttpPost]
         public IActionResult EditProduct(Guid productId)
         {
-            return RedirectToAction("ProductList", "Diet");
+            var product = productManagement.GetProduct(productId);
+            return View(product);
         }
 
         [HttpPost]
@@ -70,10 +78,9 @@ namespace PersonalTrainerDiet.Controllers
         public IActionResult ShowDetails(Guid productId)
         {
             //TODO
-           // productManagement.CancelSubscription(productId);
+            // productManagement.CancelSubscription(productId);
             return RedirectToAction("ProductList", "Diet");
         }
-        
 
         /// <summary>
         /// Odpowiedzialny za wyświetlanie listy produktów.
@@ -85,7 +92,5 @@ namespace PersonalTrainerDiet.Controllers
             var products = productManagement.GetProducts();
             return View(products);
         }
-
-
     }
 }

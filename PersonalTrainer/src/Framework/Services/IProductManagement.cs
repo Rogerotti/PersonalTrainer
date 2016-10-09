@@ -17,7 +17,7 @@ namespace Framework.Services
         /// </summary>
         /// <param name="productId">Id produktu.</param>
         /// <param name="dto">Dto produktu. <see cref="ProductDto"/></param>
-        void UpdateProduct(Guid productId, ProductDto dto);
+        void UpdateProduct(ProductDto dto);
 
         /// <summary>
         /// Usuwa produkt z bazy.
@@ -25,12 +25,22 @@ namespace Framework.Services
         /// <param name="productId">Id produktu.</param>
         void RemoveProduct(Guid productId);
 
+        ProductDto GetProduct(Guid productId);
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         IEnumerable<ProductDto> GetProducts();
+
+        /// <summary>
+        /// Pozyskuje listę wszystkich produktów dodanych przez użytkownika
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ProductDto> GetUserProducts();
+
         void SubscribeProduct(Guid productId);
+
         void CancelSubscription(Guid productId);
     }
 }
