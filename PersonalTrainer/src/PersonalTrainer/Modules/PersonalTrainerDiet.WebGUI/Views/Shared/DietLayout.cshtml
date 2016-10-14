@@ -38,14 +38,56 @@
 }
 
 @section Scripts
-{
+    {
+
     <script>  $('.ui.dropdown').dropdown();</script>
 
-<script>
-    $(document).ready(function () {
-        $('.sortable.table').tablesort();
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            $('.sortable.table').tablesort();
+        });
+    </script>
+
+    <script>
+
+        function show(b)
+        {
+           
+            var rows = $('#table > tbody > tr')
+            for (var i = 0; i < rows.length; i++)
+            {
+                rows.eq(i).attr('class', ' ');
+            }
+
+            $(b).attr('class', 'active')
+            var guidId = $("[id='selectedProductId']", b).val();
+            var data = { Id: guidId };
+
+            $.ajax({
+            url: '@Url.Action("GetProductDetails", "Diet")',
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (msg)
+            {
+                var name = "Product name: ";
+                name += msg.name;
+                $('#detailsName').text(name);
+            },
+
+            error: function (xhr, ajaxOptions, thrownError)
+            {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+
+
+
+        }
+    </script>
 }
+
 
 

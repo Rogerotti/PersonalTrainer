@@ -22,13 +22,13 @@ namespace Framework.Resources {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ProductLanguage {
+    public class UserLanguage {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal ProductLanguage() {
+        internal UserLanguage() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace Framework.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Framework.Resources.ProductLanguage", typeof(ProductLanguage).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Framework.Resources.UserLanguage", typeof(UserLanguage).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,65 +60,92 @@ namespace Framework.Resources {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Calories.
+        ///    Looks up a localized string similar to Age.
         /// </summary>
-        public static string Calories {
+        public static string Age {
             get {
-                return ResourceManager.GetString("Calories", resourceCulture);
+                return ResourceManager.GetString("Age", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Carbohydrates.
+        ///    Looks up a localized string similar to Confirm password.
         /// </summary>
-        public static string Carbohydrates {
+        public static string ConfirmPassword {
             get {
-                return ResourceManager.GetString("Carbohydrates", resourceCulture);
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Carbs.
+        ///    Looks up a localized string similar to Email.
         /// </summary>
-        public static string Carbs {
+        public static string Email {
             get {
-                return ResourceManager.GetString("Carbs", resourceCulture);
+                return ResourceManager.GetString("Email", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Fat.
+        ///    Looks up a localized string similar to Enter age.
         /// </summary>
-        public static string Fat {
+        public static string EnterAge {
             get {
-                return ResourceManager.GetString("Fat", resourceCulture);
+                return ResourceManager.GetString("EnterAge", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Fibre.
+        ///    Looks up a localized string similar to Gender.
         /// </summary>
-        public static string Fibre {
+        public static string Gender {
             get {
-                return ResourceManager.GetString("Fibre", resourceCulture);
+                return ResourceManager.GetString("Gender", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Protein.
+        ///    Looks up a localized string similar to Height.
         /// </summary>
-        public static string Protein {
+        public static string Height {
             get {
-                return ResourceManager.GetString("Protein", resourceCulture);
+                return ResourceManager.GetString("Height", resourceCulture);
             }
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Quantity.
+        ///    Looks up a localized string similar to Login.
         /// </summary>
-        public static string Quantity {
+        public static string Login {
             get {
-                return ResourceManager.GetString("Quantity", resourceCulture);
+                return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Weight.
+        /// </summary>
+        public static string Weight {
+            get {
+                return ResourceManager.GetString("Weight", resourceCulture);
             }
         }
     }

@@ -37,7 +37,12 @@ namespace PersonalTrainer
             services.AddSingleton<IProductManagement, ProductManagement>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            var mvcBuilder = services.AddMvc();
+            var mvcBuilder = services.AddMvc()
+                .AddJsonOptions(jsonOptions =>
+            {
+                jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            });
+
             IList<ModuleInfo> modules = GetModules(hostingEnviroment);
 
             foreach (var module in modules)

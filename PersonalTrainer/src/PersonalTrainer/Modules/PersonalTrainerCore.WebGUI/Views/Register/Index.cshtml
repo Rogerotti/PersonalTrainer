@@ -13,7 +13,7 @@
 
                 <div class="column">
                     <div class="field">
-                        <label>Login *</label>
+                        <label>@Framework.Resources.UserLanguage.Login</label>
                         <input placeholder="Login" type="text" asp-for="Login">
                         <span asp-validation-for="Login" class="ui red header"></span>
                     </div>
@@ -21,7 +21,7 @@
 
                 <div class="column">
                     <div class="field">
-                        <label>Email *</label>
+                        <label>@Framework.Resources.UserLanguage.Email</label>
                         <input placeholder="Email" type="text" asp-for="Email">
                         <span asp-validation-for="Email" class="ui red header"></span>
                     </div>
@@ -33,7 +33,7 @@
 
                 <div class="column">
                     <div class="field">
-                        <label>Password</label>
+                        <label>@Framework.Resources.UserLanguage.Password</label>
                         <div class="ui left icon input">
                             <input type="password" asp-for="Password">
                             <i class="lock icon"></i>
@@ -44,7 +44,7 @@
 
                 <div class="column">
                     <div class="field">
-                        <label>Confirm password</label>
+                        <label>@Framework.Resources.UserLanguage.ConfirmPassword</label>
                         <div class="ui left icon input">
                             <input type="password" asp-for="PasswordConfirmation">
                             <i class="lock icon"></i>
@@ -59,7 +59,7 @@
 
                 <div class="column">
                     <div class="field">
-                        <label>Gender</label>
+                        <label>@Framework.Resources.UserLanguage.Gender</label>
                         <div class="ui selection dropdown" asp-for="Gender">
                             <input name="gender" type="hidden">
                             <i class="dropdown icon"></i>
@@ -75,7 +75,7 @@
 
                 <div class="column">
                     <div class="field">
-                        <label>Height</label>
+                        <label>@Framework.Resources.UserLanguage.Height</label>
                         <div class="ui right labeled input">
                             <input placeholder="Enter height.." type="text" asp-for="Height">
                                 <div class="ui dropdown label" asp-for="HeightUnit">
@@ -96,12 +96,10 @@
 
                 <div class="column">
                     <div class="field">
-                        <label>Weight</label>
+                        <label>@Framework.Resources.UserLanguage.Weight</label>
                         <div class="ui right labeled input">
                             <input placeholder="Enter weight.." type="text" asp-for="Weight">
-                            <div class="ui basic label">
-                                kg
-                            </div>
+                            <div class="ui basic label"> kg</div>
                         </div>
                         <span asp-validation-for="Weight" class="ui red header"></span>
                     </div>
@@ -109,12 +107,9 @@
 
                 <div class="column">
                     <div class="field">
-                        <label>Age</label>
+                        <label>@Framework.Resources.UserLanguage.Age</label>
                         <div class="ui right labeled input">
-                            <input placeholder="Enter age..." type="text" asp-for="Age">
-                            <div class="ui basic label">
-                                Age
-                            </div>
+                            <input placeholder="@Framework.Resources.UserLanguage.EnterAge" type="text" asp-for="Age">
                         </div>
                         <span asp-validation-for="Age" class="ui red header"></span>
                     </div>
@@ -123,7 +118,7 @@
             </div>
 
             <div class="column centered"> 
-                <button class="ui blue button" type="submit" >Submit
+                <button class="ui blue button" type="submit" >@Framework.Resources.UserLanguage.Register
                 </button>
             </div>
 

@@ -9,10 +9,10 @@ namespace PersonalTrainerCore.Controllers
     public class LoginController : Controller
     {
         private readonly IUserManagement userManagement;
-        private readonly ILogger logger;
+        private readonly ILogger<LoginController> logger;
 
         public LoginController(IUserManagement userManagement,
-            ILogger logger)
+             ILogger<LoginController> logger)
         {
             this.userManagement = userManagement;
             this.logger = logger;

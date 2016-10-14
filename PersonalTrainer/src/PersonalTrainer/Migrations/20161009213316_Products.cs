@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PersonalTrainer.Migrations.Product
+namespace PersonalTrainer.Migrations
 {
-    public partial class uzytkownicy : Migration
+    public partial class Products : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +15,7 @@ namespace PersonalTrainer.Migrations.Product
                     ProductId = table.Column<Guid>(nullable: false),
                     Manufacturer = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: false),
+                    ProductState = table.Column<int>(nullable: false),
                     ProductType = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false)
                 },

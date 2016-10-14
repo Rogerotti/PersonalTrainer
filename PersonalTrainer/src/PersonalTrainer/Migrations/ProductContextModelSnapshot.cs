@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Framework.DataBaseContext;
 
-namespace PersonalTrainer.Migrations.Product
+namespace PersonalTrainer.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    [Migration("20161003213120_uzytkownicy")]
-    partial class uzytkownicy
+    partial class ProductContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -25,6 +24,8 @@ namespace PersonalTrainer.Migrations.Product
 
                     b.Property<string>("Name")
                         .IsRequired();
+
+                    b.Property<int>("ProductState");
 
                     b.Property<int>("ProductType");
 

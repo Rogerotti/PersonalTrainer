@@ -1,14 +1,16 @@
 ﻿using Framework.Models;
 using Framework.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PersonalTrainerDiet.Controllers
 {
     public class DietController : Controller
     {
         private readonly IProductManagement productManagement;
-
 
         public DietController(IProductManagement productManagement)
         {
@@ -90,7 +92,22 @@ namespace PersonalTrainerDiet.Controllers
         public IActionResult ProductList()
         {
             var products = productManagement.GetProducts();
-            return View(products);
+            var dto = new ProductListDto()
+            {
+                ProductList = products,
+                SelectedProduct = null
+            };
+            return View(dto);
+        }
+
+        [HttpPost]
+        public JsonResult GetProductDetails([FromBody]JToken jsonBody)
+        {
+            var id = jsonBody.Value<String>("Id");
+            var dto = new ProductListDto();
+            dto.ProductList = productManagement.GetProducts();
+            var productDetails = productManagement.GetProduct(new Guid(id));
+            return new JsonResult(productDetails);
         }
     }
 }
