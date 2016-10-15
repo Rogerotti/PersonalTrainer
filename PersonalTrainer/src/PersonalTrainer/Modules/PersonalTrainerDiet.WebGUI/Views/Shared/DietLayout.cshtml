@@ -49,15 +49,32 @@
     </script>
 
     <script>
-
-        function show(b)
+        function test(a)
         {
-           
+            var guid = $(a).val();
+            var data = { Id: guid };
+            $.ajax({
+                url: '@Url.Action("EditProduct", "Diet")',
+                type: "POST",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                success: function (msg)
+                {
+                    window.location.href = "../Diet/EditProduct";
+                },
+                error: function (xhr, ajaxOptions, thrownError)
+                {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            })
+        }
+
+        function showDetails(b)
+        {
             var rows = $('#table > tbody > tr')
             for (var i = 0; i < rows.length; i++)
-            {
                 rows.eq(i).attr('class', ' ');
-            }
 
             $(b).attr('class', 'active')
             var guidId = $("[id='selectedProductId']", b).val();
@@ -71,9 +88,17 @@
             contentType: "application/json; charset=utf-8",
             success: function (msg)
             {
-                var name = "Product name: ";
-                name += msg.name;
-                $('#detailsName').text(name);
+                $('#detailsName').text(msg.name);
+                $('#detailsManufacturer').text(msg.manufacturer);
+                $('#detailsCalories').text(msg.macro.calories);
+                $('#detailsProtein').text(msg.macro.protein);
+                $('#detailsFat').text(msg.macro.fat);
+                $('#detailsCarbs').text(msg.macro.carbohydrates);
+                $('#editButton').removeAttr('disabled');
+                $('#deleteButton').removeAttr('disabled');
+                $('input[name="productId"]').val(guidId);
+                $('input[name="productDeleteId"]').val(guidId);
+            
             },
 
             error: function (xhr, ajaxOptions, thrownError)
@@ -82,9 +107,6 @@
                 alert(thrownError);
             }
         });
-
-
-
         }
     </script>
 }

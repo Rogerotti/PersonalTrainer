@@ -48,17 +48,18 @@ namespace PersonalTrainerDiet.Controllers
             return RedirectToAction("ProductList", "Diet");
         }
 
+
         [HttpPost]
-        public IActionResult EditProduct(Guid productId)
+        public IActionResult EditProduct(String productId)
         {
-            var product = productManagement.GetProduct(productId);
+            var product = productManagement.GetProduct(new Guid(productId));
             return View(product);
         }
 
         [HttpPost]
-        public IActionResult DeleteProduct(Guid productId)
+        public IActionResult DeleteProduct(String productDeleteId)
         {
-            productManagement.RemoveProduct(productId);
+            productManagement.RemoveProduct(new Guid(productDeleteId));
             return RedirectToAction("ProductList", "Diet");
         }
 

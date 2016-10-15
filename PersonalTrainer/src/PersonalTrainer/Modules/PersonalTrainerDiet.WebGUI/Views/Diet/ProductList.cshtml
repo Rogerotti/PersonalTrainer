@@ -16,6 +16,13 @@
     tr.yellow {
       background :#eeca00
     }
+
+    .Bold{
+    font-weight: bold;
+    }
+
+    pad { padding-left: 2em; }
+
 </style>
 
 <body>
@@ -23,128 +30,134 @@
     <div class="ui two column middle aligned very relaxed stackable grid">
 
         <div class="eight wide column">
+
             <form method="post" asp-controller="Diet" asp-action="ProductList" id="showTest">
 
-            <table class="ui sortable selectable celled  table" id="table">
-                    <thead>
-                        <tr>
-                            <th class="sorted ascending">Product Name</th>
-                            <th>Product Manufacturer</th>
-                            <th>Calories</th>
-                            <th>@Framework.Resources.ProductLanguage.Carbs</th>
-                            <th>Fat</th>
-                            <th>Protein</th>
-                            <th>Type</th>
-                            <!-- <th colspan="3">Operations</th>-->
-                        </tr>
-                    </thead>
-                    <tbody>
-                   @foreach (var item in Model.ProductList)
-                   {
+                <table class="ui sortable selectable celled  table" id="table">
 
+                        <thead>
+                            <tr>
+                                <th class="sorted ascending">Product Name</th>
+                                <th>@Framework.Resources.ProductLanguage.Calories</th>
+                                <th>@Framework.Resources.ProductLanguage.Carbs</th>
+                                <th>@Framework.Resources.ProductLanguage.Fat</th>
+                                <th>@Framework.Resources.ProductLanguage.Protein</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
 
-                       var disableButtonState = (item.State != Framework.Models.ProductState.Private) && (item.State != Framework.Models.ProductState.Denied) ? "disabled" : "";
-                       if (item.State == Framework.Models.ProductState.Private)
-                       {
-                                @:<tr class="" onclick="show(this)">
-                            
+                        <tbody>
 
-                       }
-                       else if (item.State == Framework.Models.ProductState.Pending)
-                       {
+                           @foreach (var item in Model.ProductList)
+                           {
+                               if (item.State == Framework.Models.ProductState.Private)
+                               {
+                                @:<tr class="" onclick="showDetails(this)">
+                               }
+                               else if (item.State == Framework.Models.ProductState.Pending)
+                               {
                                 @:<tr class="yellow">
-                        }
-                        else if (item.State == Framework.Models.ProductState.Denied)
-                        {
+                               }
+                               else if (item.State == Framework.Models.ProductState.Denied)
+                               {
                                 @:<tr class="red">
-                        }
-                        else if (item.State == Framework.Models.ProductState.Accepted)
-                        {
+                               }
+                               else if (item.State == Framework.Models.ProductState.Accepted)
+                               {
                                 @:<tr class="green">
-                        }
+                               }
 
-                            <td hidden><input id="selectedProductId" type="hidden" value="@item.ProductId" /></td>
-                            <td>@item.Name</td>
-                            <td>@item.Manufacturer</td>
-                            <td>@item.Macro.Calories</td>
-                            <td>@item.Macro.Carbohydrates</td>
-                            <td>@item.Macro.Fat</td>
-                            <td>@item.Macro.Protein</td>
-                            <td>@item.Type 
-                       
-                            </td>
-                            <!--
-                                <td>
-                                    <form asp-controller="Diet" asp-action="EditProduct" method="post">
-                                        <input type="hidden" name="productId" value="@item.ProductId" />
-                                        <button class="ui blue tiny button" @disableButtonState type="submit">Edit</button>
-                                    </form>
-                                </td>
-
-                                <td>
-                                    <form asp-controller="Diet" asp-action="DeleteProduct" method="post">
-                                        <input type="hidden" name="productId" value="@item.ProductId" />
-                                        <button class="ui blue tiny button" @disableButtonState type="submit">Delete</button>
-                                    </form>
-                                </td>
-                            if (item.State == Framework.Models.ProductState.Private)
-                            {
-                                <td>
-                                    <form asp-controller="Diet" asp-action="SubscribeProduct" method="post">
-                                        <input type="hidden" name="productId" value="@item.ProductId" />
-                                        <button class="ui tiny blue button" type="submit">Subscribe</button>
-                                    </form>
-                                </td>
+                                    <td hidden><input id="selectedProductId" type="hidden" value="@item.ProductId" /></td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Macro.Calories</td>
+                                    <td>@item.Macro.Carbohydrates</td>
+                                    <td>@item.Macro.Fat</td>
+                                    <td>@item.Macro.Protein</td>
+                                    <td>@item.Type</td>
                             }
-                            else if (item.State == Framework.Models.ProductState.Pending)
-                            {
-                                <td>
-                                    <form asp-controller="Diet" asp-action="CancelSubscription" method="post">
-                                        <input type="hidden" name="productId" value="@item.ProductId" />
-                                        <button class="ui tiny blue button" type="submit">Cancel Subscription</button>
-                                    </form>
-                                </td>
-                            }
-                            else if (item.State == Framework.Models.ProductState.Denied)
-                            {
-                                <td>
-                                    <form asp-controller="Diet" asp-action="ShowDetails" method="post">
-                                        <input type="hidden" name="productId" value="@item.ProductId" />
-                                        <button class="ui tiny blue button" type="submit">Show Details</button>
-                                    </form>
-                                </td>
-                            }
-                            :</tr>
-                                      -->
-                        }
-                    </tr>
-                </tbody>
+                                </tr>
+                    </tbody>
              
-            </table>
-        </form>
+                </table>
+
+            </form>
+
          </div>
 
         <div class="ui vertical divider">Details</div>
 
         <div class="column" >
 
-            <div class="two column row">
+            <div class="ui seven column row">
 
-                <div class="column">
+                <div class="ui column">
                     <div class="field" >
-                        <label id="detailsName">Product name : </label>
+                        <div>
+                            <strong>Product name:</strong>
+                            <label id="detailsName"></label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="column">
+                <div class="ui column">
                     <div class="field">
-                        <label>Product Manufature @Model.SelectedProduct?.Manufacturer</label>
-</div>
+                        <strong>Product Manufacturer:</strong>
+                        <label id="detailsManufacturer"></label>
+                    </div>
                 </div>
 
-            </div>
+                <div class="ui column">
+                    <div class="field">
+                        <strong>@Framework.Resources.ProductLanguage.Calories:</strong>
+                        <label id="detailsCalories"></label>
+                    </div>
+                </div>
+
+                <div class="ui column">
+                    <div class="field">
+                        <strong>@Framework.Resources.ProductLanguage.Protein:</strong>
+                        <label id="detailsProtein"></label>
+                    </div>
+                </div>
+
+                <div class="ui column">
+                    <div class="field">
+                        <strong>@Framework.Resources.ProductLanguage.Fat:</strong>
+                        <label id="detailsFat"></label>
+                    </div>
+                </div>
+
+                <div class="ui column">
+                    <div class="field">
+                        <strong>@Framework.Resources.ProductLanguage.Carbs:</strong>
+                        <label id="detailsCarbs"></label>
+                    </div>
+                </div>
+
+                <div class="ui column">
+                    <div class="field">
+                        <form asp-controller="Diet" asp-action="EditProduct" method="post">
+                            <input type="hidden" name="productId" value=""/>
+                            <button disabled id="editButton" class="ui blue tiny button"  type="submit">Edit</button>
+                        </form>
+
+                        <form asp-controller="Diet" asp-action="DeleteProduct" method="post">
+                            <input type="hidden" name="productDeleteId" value="" />
+                            <button disabled id="deleteButton" class="ui blue tiny button" type="submit">Delete</button>
+                        </form>
+                      
+                    </div>
+                </div>
+
+            <div>
+
         </div>
 
-      </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </body>
 
