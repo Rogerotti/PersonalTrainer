@@ -30,7 +30,8 @@ namespace PersonalTrainer
             var connection = @"Server=(localdb)\mssqllocaldb;Database=PersonalTrainer;Trusted_Connection=True;";
             services.AddDbContext<ProductContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
-         
+            services.AddDbContext<MealContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
+
             services.AddSession();
        
             services.AddSingleton<IUserManagement, UserManagement>();

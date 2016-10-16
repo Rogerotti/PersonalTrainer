@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Framework.Models
 {
@@ -12,6 +14,7 @@ namespace Framework.Models
 
         public String Manufacturer { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ProductType Type { get; set; }
         
         public Macro Macro { get; set; }

@@ -16,7 +16,6 @@
                     <div class="ui header">Dieta</div>
                     <div class="menu">
                         <a class="item" asp-controller="Diet" asp-action="Day">Dzisiaj</a>
-                        <a class="item">Consumer</a>
                     </div>
                 </div>
                 <div class="item">
@@ -24,13 +23,6 @@
                     <div class="menu">
                         <a class="item" asp-controller="Diet" asp-action="ProductList">Baza produktów</a>
                         <a class="item" asp-controller="Diet" asp-action="AddProduct">Dodaj produkt</a>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="header">Hosting</div>
-                    <div class="menu">
-                        <a class="item">Shared</a>
-                        <a class="item">Dedicated</a>
                     </div>
                 </div>
             </div>
@@ -49,27 +41,6 @@
     </script>
 
     <script>
-        function test(a)
-        {
-            var guid = $(a).val();
-            var data = { Id: guid };
-            $.ajax({
-                url: '@Url.Action("EditProduct", "Diet")',
-                type: "POST",
-                data: JSON.stringify(data),
-                contentType: "application/json; charset=utf-8",
-                success: function (msg)
-                {
-                    window.location.href = "../Diet/EditProduct";
-                },
-                error: function (xhr, ajaxOptions, thrownError)
-                {
-                    alert(xhr.status);
-                    alert(thrownError);
-                }
-            })
-        }
-
         function showDetails(b)
         {
             var rows = $('#table > tbody > tr')
@@ -77,6 +48,7 @@
                 rows.eq(i).attr('class', ' ');
 
             $(b).attr('class', 'active')
+
             var guidId = $("[id='selectedProductId']", b).val();
             var data = { Id: guidId };
 
@@ -94,11 +66,33 @@
                 $('#detailsProtein').text(msg.macro.protein);
                 $('#detailsFat').text(msg.macro.fat);
                 $('#detailsCarbs').text(msg.macro.carbohydrates);
+                $('#detailsType').text(msg.type);
                 $('#editButton').removeAttr('disabled');
                 $('#deleteButton').removeAttr('disabled');
+              
                 $('input[name="productId"]').val(guidId);
                 $('input[name="productDeleteId"]').val(guidId);
-            
+                var state = msg.state;
+                if (state == 0 || state == 2)
+                {
+                    $('#cancelSubscribeButton').attr('disabled','');
+                    $('#subscribeButton').removeAttr('disabled');
+                    $('input[name="productSubscribeId"]').val(guidId);
+                }
+                else if (state == 1) {
+                    $('#cancelSubscribeButton').removeAttr('disabled');
+                    $('#subscribeButton').attr('disabled', '');
+                    $('input[name="productCancelSubscribeId"]').val(guidId);
+                }
+                else
+                {
+                    $('#editButton').attr('disabled', '');
+                    $('#deleteButton').attr('disabled', '');
+                    $('#subscribeButton').attr('disabled', '');
+                    $('#cancelSubscribeButton').attr('disabled', '');
+                } 
+                    
+              
             },
 
             error: function (xhr, ajaxOptions, thrownError)

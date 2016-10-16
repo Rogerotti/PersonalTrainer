@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace Framework.Models.Database
 {
@@ -26,5 +27,7 @@ namespace Framework.Models.Database
 
         [Required]
         public virtual UserDetails UserDetails { get; set; }
+
+        public virtual ICollection<Meal> Meals { get; set; }
     }
 }

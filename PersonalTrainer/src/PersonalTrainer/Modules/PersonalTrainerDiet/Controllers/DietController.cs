@@ -64,16 +64,16 @@ namespace PersonalTrainerDiet.Controllers
         }
 
         [HttpPost]
-        public IActionResult SubscribeProduct(Guid productId)
+        public IActionResult SubscribeProduct(String productSubscribeId)
         {
-            productManagement.SubscribeProduct(productId);
+            productManagement.SubscribeProduct(new Guid(productSubscribeId));
             return RedirectToAction("ProductList", "Diet");
         }
 
         [HttpPost]
-        public IActionResult CancelSubscription(Guid productId)
+        public IActionResult CancelSubscription(String productCancelSubscribeId)
         {
-            productManagement.CancelSubscription(productId);
+            productManagement.CancelSubscription(new Guid(productCancelSubscribeId));
             return RedirectToAction("ProductList", "Diet");
         }
 
@@ -105,8 +105,6 @@ namespace PersonalTrainerDiet.Controllers
         public JsonResult GetProductDetails([FromBody]JToken jsonBody)
         {
             var id = jsonBody.Value<String>("Id");
-            var dto = new ProductListDto();
-            dto.ProductList = productManagement.GetProducts();
             var productDetails = productManagement.GetProduct(new Guid(id));
             return new JsonResult(productDetails);
         }
