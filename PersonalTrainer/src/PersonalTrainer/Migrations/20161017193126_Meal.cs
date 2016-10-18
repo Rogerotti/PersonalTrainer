@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PersonalTrainer.Migrations.Meal
+namespace PersonalTrainer.Migrations
 {
     public partial class Meal : Migration
     {
@@ -64,19 +64,23 @@ namespace PersonalTrainer.Migrations.Meal
                 });
 
             migrationBuilder.CreateTable(
-                name: "Meal",
+                name: "DailyFood",
                 columns: table => new
                 {
-                    MealId = table.Column<Guid>(nullable: false),
+                    DayId = table.Column<Guid>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    MealType = table.Column<int>(nullable: false),
+                    TotalCalories = table.Column<int>(nullable: false),
+                    TotalCarbohydrates = table.Column<int>(nullable: false),
+                    TotalFat = table.Column<int>(nullable: false),
+                    TotalFibre = table.Column<int>(nullable: false),
+                    TotalProteins = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meal", x => x.MealId);
+                    table.PrimaryKey("PK_DailyFood", x => x.DayId);
                     table.ForeignKey(
-                        name: "FK_Meal_User_UserId",
+                        name: "FK_DailyFood_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
@@ -106,6 +110,33 @@ namespace PersonalTrainer.Migrations.Meal
                 });
 
             migrationBuilder.CreateTable(
+                name: "Meal",
+                columns: table => new
+                {
+                    MealId = table.Column<Guid>(nullable: false),
+                    DailyFoodDayId = table.Column<Guid>(nullable: true),
+                    Date = table.Column<DateTime>(nullable: false),
+                    MealType = table.Column<int>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Meal", x => x.MealId);
+                    table.ForeignKey(
+                        name: "FK_Meal_DailyFood_DailyFoodDayId",
+                        column: x => x.DailyFoodDayId,
+                        principalTable: "DailyFood",
+                        principalColumn: "DayId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Meal_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductMeal",
                 columns: table => new
                 {
@@ -128,6 +159,16 @@ namespace PersonalTrainer.Migrations.Meal
                         principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DailyFood_UserId",
+                table: "DailyFood",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Meal_DailyFoodDayId",
+                table: "Meal",
+                column: "DailyFoodDayId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Meal_UserId",
@@ -173,6 +214,9 @@ namespace PersonalTrainer.Migrations.Meal
 
             migrationBuilder.DropTable(
                 name: "Product");
+
+            migrationBuilder.DropTable(
+                name: "DailyFood");
 
             migrationBuilder.DropTable(
                 name: "User");

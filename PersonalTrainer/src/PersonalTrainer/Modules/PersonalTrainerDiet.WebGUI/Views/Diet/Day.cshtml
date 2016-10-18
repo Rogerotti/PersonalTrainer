@@ -1,4 +1,6 @@
-﻿@{
+﻿@model  Framework.Models.DailyFoodDto
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
     ViewData["Title"] = "test";
     Layout = "DietLayout";
 }
@@ -8,26 +10,113 @@
     <div class="ui medium header">Breakfest</div>
 
     <div class="ui divider"></div>
-   
-    <button class="ui basic button">
-        <i class="food icon"></i>
-        Add Meal
-    </button>
 
-    <div class="ui medium header">Dinner</div>
+    <form asp-action="Day" asp-controller="Diet" method="post">
+
+        <table id="BreakfestTable" class="ui sortable table">
+            <thead>
+                <tr>
+                    <th hidden>Product ID</th>
+                    <th class="sorted ascending">Name</th>
+                    <th>Fat</th>
+                    <th>Fibre</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var products in @Model?.Meals)
+                {
+
+                    if (products.MealType == Framework.Models.MealType.Breakfast)
+                    {
+                        @foreach (var product in products?.Products)
+                        {
+                            <tr>
+                                <td hidden id="@product.ProductId"><input type="hidden" /></td>
+                                <td>@product.Name</td>
+                                <td>@product.Macro.Calories</td>
+                                <td>@product.Macro.Fat</td>
+                                <td><button>X</button></td>
+                                <td><input type="hidden" name="productId" value="@product.ProductId" /></td>
+                                <td><input type="hidden" name="quantity" value="@product.Macro.Quantity" /></td>
+                                <td><input type="hidden" name="productMealType" value="0" /></td>
+                            </tr>
+                        }
+
+                    }
+                }
+
+            </tbody>
+        </table>
+
+        <button class="ui basic button" value="0" name="buttonType">
+            <i class="food icon"></i>
+            Add Meal
+        </button>
+
+
+
+
+        <div class="ui medium header">Dinner</div>
+
+        <table id="DinnerTable" class="ui sortable table">
+            <thead>
+                <tr>
+                    <th hidden>Product ID</th>
+                    <th class="sorted ascending">Name</th>
+                    <th>Fat</th>
+                    <th>Fibre</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var products in @Model?.Meals)
+            {
+
+                if (products.MealType == Framework.Models.MealType.Dinner)
+                {
+                        @foreach (var product in products?.Products)
+                    {
+                            <tr>
+                                <td hidden id="@product.ProductId"><input type="hidden" /></td>
+                                <td>@product.Name</td>
+                                <td>@product.Macro.Calories</td>
+                                <td>@product.Macro.Fat</td>
+                                <td><button>X</button></td>
+                                <td><input type="hidden" name="productId" value="@product.ProductId" /></td>
+                                <td><input type="hidden" name="quantity" value="@product.Macro.Quantity" /></td>
+                                <td><input type="hidden" name="productMealType" value="1" /></td>
+                            </tr>
+                        }
+
+                    }
+                }
+
+            </tbody>
+        </table>
+
+    <div class="ui divider"></div>
+            <button class="ui basic button" value="1" name="buttonType">
+                <i class="food icon"></i>
+                Add Meal
+            </button>
+        </form>
+
+
+
+    <div class="ui medium header">Supper</div>
 
     <div class="ui divider"></div>
 
-    <button class="ui basic button">
-        <i class="food icon"></i>
-        Add Meal
-    </button>
-
-    <div class="ui medium header">Sapper</div>
-
-    <div class="ui divider"></div>
-
-    <button class="ui basic button">
+    <button class="ui basic button" value="2" name="mealType">
         <i class="food icon"></i>
         Add Meal
     </button>
@@ -35,7 +124,7 @@
 
     <div class="ui divider"></div>
 
-    <button class="ui basic button">
+    <button class="ui basic button" value="3" name="mealType">
         <i class="food icon"></i>
         Add Meal
     </button>
@@ -43,50 +132,6 @@
     <div class="ui divider"></div>
 
     <button class="ui center blue button">Zatwierdź</button>
-    <!-- 
-    <table class="ui sortable celled structured very padded table">
-        <thead>
-            <tr>
-                <th colspan="7">Day</th>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <th>Fat</th>
-                <th>Fibre</th>
-                <th>Carbohydrates</th>
-                <th>Protein</th>
-                <th>Calories</th>
-                <th>Quanity</th>
-            </tr>
-    
-        </thead>
-
-        <tbody>
-            <tr>
-                <td>Monday</td>
-            </tr>
-            <tr>
-                <td>test</td>
-                <td>5</td>
-                <td>5</td>
-                <td>5</td>
-                <td>5</td>
-                <td>5</td>
-                <td>
-                    <div class="ui right labeled input">
-                        <input placeholder="Enter Quanity" type="text">
-                        <div class="ui basic label">
-                            G
-                        </div>
-                    </div>
-                </td>
-            </tr>
-    
-        </tbody>
-    </table>
-        -->
-    
-   
 </body>
 
 

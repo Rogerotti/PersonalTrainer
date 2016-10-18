@@ -5,20 +5,48 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Framework.DataBaseContext;
 
-namespace PersonalTrainer.Migrations.Meal
+namespace PersonalTrainer.Migrations
 {
     [DbContext(typeof(MealContext))]
-    partial class MealContextModelSnapshot : ModelSnapshot
+    [Migration("20161017193126_Meal")]
+    partial class Meal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Framework.Models.Database.DailyFood", b =>
+                {
+                    b.Property<Guid>("DayId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("TotalCalories");
+
+                    b.Property<int>("TotalCarbohydrates");
+
+                    b.Property<int>("TotalFat");
+
+                    b.Property<int>("TotalFibre");
+
+                    b.Property<int>("TotalProteins");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("DayId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DailyFood");
+                });
+
             modelBuilder.Entity("Framework.Models.Database.Meal", b =>
                 {
                     b.Property<Guid>("MealId");
+
+                    b.Property<Guid?>("DailyFoodDayId");
 
                     b.Property<DateTime>("Date");
 
@@ -27,6 +55,8 @@ namespace PersonalTrainer.Migrations.Meal
                     b.Property<Guid>("UserId");
 
                     b.HasKey("MealId");
+
+                    b.HasIndex("DailyFoodDayId");
 
                     b.HasIndex("UserId");
 
@@ -137,8 +167,20 @@ namespace PersonalTrainer.Migrations.Meal
                     b.ToTable("UserDetails");
                 });
 
+            modelBuilder.Entity("Framework.Models.Database.DailyFood", b =>
+                {
+                    b.HasOne("Framework.Models.Database.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Framework.Models.Database.Meal", b =>
                 {
+                    b.HasOne("Framework.Models.Database.DailyFood")
+                        .WithMany("Meals")
+                        .HasForeignKey("DailyFoodDayId");
+
                     b.HasOne("Framework.Models.Database.User", "User")
                         .WithMany("Meals")
                         .HasForeignKey("UserId")

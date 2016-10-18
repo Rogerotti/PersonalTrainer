@@ -5,12 +5,18 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.Linq;
 namespace PersonalTrainerDiet.Controllers
 {
     public class DietController : Controller
     {
         private readonly IProductManagement productManagement;
+
+        private const String additionalMealsId = nameof(additionalMealsId);
+        private const String productGuidId = nameof(productGuidId);
+        private const String productQuantityId = nameof(productQuantityId);
+        private const String productMealTypeId = nameof(productMealTypeId);
+        private const String mealTypeId = nameof(mealTypeId);
 
         public DietController(IProductManagement productManagement)
         {
@@ -22,10 +28,86 @@ namespace PersonalTrainerDiet.Controllers
             return View();
         }
 
-
+        //TODO
+        //1. Framework serwisy do dodawania posiłków do dnia oraz do typu posiłku.
+        //2. Wyszukiwanie produktów z baz danych.
+        //3. ustandaryzowanie dietCOntrollera
+        [HttpGet]
         public IActionResult Day()
         {
+            var additionalMeal = TempData[additionalMealsId] as Boolean?;
+            if (additionalMeal == null ? false : (Boolean)additionalMeal)
+            {
+               var guids = TempData[productGuidId] as IEnumerable<Guid>;
+               var quants =  TempData[productQuantityId] as IEnumerable<Int32>;
+               var mealType =  TempData[productMealTypeId] as IEnumerable<Int32>;
+               var enumMealType = TempData[mealTypeId]  as Int32?;
+            }
+
+
+           
+            var mealList = new List<MealDto>();
+            var productList = new List<ProductDto>();
+            productList.Add(new ProductDto() { Name = "ala", ProductId = Guid.NewGuid(),  Macro = new Macro() { Calories = 5, Fat = 10, Quantity = 10} });
+            productList.Add(new ProductDto() { Name = "ala2", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 15, Fat = 1, Quantity = 15} });
+            var meal1 = new MealDto();
+            meal1.Products = productList;
+            meal1.MealType = MealType.Breakfast;
+
+            var productList2 = new List<ProductDto>();
+            productList2.Add(new ProductDto() { Name = "ala3", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 1, Fat = 4, Quantity = 11 } });
+            productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 12 } });
+            productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 11 } });
+            var meal2 = new MealDto();
+            meal2.Products = productList2;
+            meal2.MealType = MealType.Dinner;
+
+
+            mealList.Add(meal1);
+            mealList.Add(meal2);
+            var dto = new DailyFoodDto()
+            {
+                Meals = mealList
+            };
+            return View(dto);
+        }
+
+        public class Test1
+        {
+            public Guid ids { get; set; }
+            public Int32 quants { get; set; }
+            public Int32 meal { get; set; }
+        }
+
+        [HttpPost]
+        public IActionResult Day(IEnumerable<Guid> productId, IEnumerable<Int32> quantity, IEnumerable<Int32> productMealType, Int32 buttonType)
+        {
+            TempData[productGuidId] = productId;
+            TempData[productQuantityId] = quantity;
+            TempData[productMealTypeId] = productMealType;
+            TempData[mealTypeId] = buttonType;
+
+            return RedirectToAction("AddFood", "Diet");
+        }
+
+        [HttpGet]
+        public IActionResult AddFood()
+        {
+
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddFood(Int32 test)
+        {
+            TempData[additionalMealsId] = true;
+            var test1 = TempData[productGuidId] as IEnumerable<Guid>;
+            var test44 = test1.ToList();
+            test44.Add(Guid.NewGuid());
+
+
+            TempData[productGuidId] = test44;
+            return RedirectToAction("Day", "Diet");
         }
 
         [HttpGet]

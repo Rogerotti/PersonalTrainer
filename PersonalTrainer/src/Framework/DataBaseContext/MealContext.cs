@@ -13,6 +13,8 @@ namespace Framework.DataBaseContext
 
         public DbSet<ProductMeal> ProductMeal { get; set; }
 
+        public DbSet<DailyFood> DailyFood { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ProductMeal>().HasKey(x => new { x.MealId, x.ProductId });
