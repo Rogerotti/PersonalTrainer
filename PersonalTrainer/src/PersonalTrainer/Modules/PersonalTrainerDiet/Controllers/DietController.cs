@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
 namespace PersonalTrainerDiet.Controllers
 {
@@ -35,6 +34,8 @@ namespace PersonalTrainerDiet.Controllers
         [HttpGet]
         public IActionResult Day()
         {
+            DailyFoodDto ProductDto = null;
+
             var additionalMeal = TempData[additionalMealsId] as Boolean?;
             if (additionalMeal == null ? false : (Boolean)additionalMeal)
             {
@@ -42,41 +43,28 @@ namespace PersonalTrainerDiet.Controllers
                var quants =  TempData[productQuantityId] as IEnumerable<Int32>;
                var mealType =  TempData[productMealTypeId] as IEnumerable<Int32>;
                var enumMealType = TempData[mealTypeId]  as Int32?;
+
+                List<DailyFoodProductDto> lista = new List<DailyFoodProductDto>();
+                var a = guids.ToArray();
+                var b = quants.ToArray();
+                var c = mealType.ToArray();
+                for (int i = 0; i < a.Length; i++)
+                {
+                    lista.Add(new DailyFoodProductDto()
+                    {
+                        ProductId = a[i],
+                        ProductQuantity = b[i],
+                        MealType = (MealType)c[i]
+                    });
+                }
+
+                ProductDto = productManagement.GetDailyFoodFromDailyFoodProductDto(DateTime.Today, lista);
             }
 
+            if (ProductDto == null)
+                ProductDto = productManagement.GetDailyFood(DateTime.Today);
 
-           
-            var mealList = new List<MealDto>();
-            var productList = new List<ProductDto>();
-            productList.Add(new ProductDto() { Name = "ala", ProductId = Guid.NewGuid(),  Macro = new Macro() { Calories = 5, Fat = 10, Quantity = 10} });
-            productList.Add(new ProductDto() { Name = "ala2", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 15, Fat = 1, Quantity = 15} });
-            var meal1 = new MealDto();
-            meal1.Products = productList;
-            meal1.MealType = MealType.Breakfast;
-
-            var productList2 = new List<ProductDto>();
-            productList2.Add(new ProductDto() { Name = "ala3", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 1, Fat = 4, Quantity = 11 } });
-            productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 12 } });
-            productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 11 } });
-            var meal2 = new MealDto();
-            meal2.Products = productList2;
-            meal2.MealType = MealType.Dinner;
-
-
-            mealList.Add(meal1);
-            mealList.Add(meal2);
-            var dto = new DailyFoodDto()
-            {
-                Meals = mealList
-            };
-            return View(dto);
-        }
-
-        public class Test1
-        {
-            public Guid ids { get; set; }
-            public Int32 quants { get; set; }
-            public Int32 meal { get; set; }
+            return View(ProductDto);
         }
 
         [HttpPost]
@@ -93,20 +81,22 @@ namespace PersonalTrainerDiet.Controllers
         [HttpGet]
         public IActionResult AddFood()
         {
-
             return View();
         }
 
         [HttpPost]
         public IActionResult AddFood(Int32 test)
         {
-            TempData[additionalMealsId] = true;
+            
             var test1 = TempData[productGuidId] as IEnumerable<Guid>;
-            var test44 = test1.ToList();
-            test44.Add(Guid.NewGuid());
-
-
-            TempData[productGuidId] = test44;
+            if (test1 != null)
+            {
+               // TempData[additionalMealsId] = true;
+              //  var test44 = test1.ToList();
+               // test44.Add(Guid.NewGuid());
+               // TempData[productGuidId] = test44;
+            }
+     
             return RedirectToAction("Day", "Diet");
         }
 
@@ -159,14 +149,6 @@ namespace PersonalTrainerDiet.Controllers
             return RedirectToAction("ProductList", "Diet");
         }
 
-        [HttpPost]
-        public IActionResult ShowDetails(Guid productId)
-        {
-            //TODO
-            // productManagement.CancelSubscription(productId);
-            return RedirectToAction("ProductList", "Diet");
-        }
-
         /// <summary>
         /// Odpowiedzialny za wyświetlanie listy produktów.
         /// </summary>
@@ -174,7 +156,7 @@ namespace PersonalTrainerDiet.Controllers
         [HttpGet]
         public IActionResult ProductList()
         {
-            var products = productManagement.GetProducts();
+            var products = productManagement.GetUserProducts();
             var dto = new ProductListDto()
             {
                 ProductList = products,
@@ -183,6 +165,11 @@ namespace PersonalTrainerDiet.Controllers
             return View(dto);
         }
 
+        /// <summary>
+        /// Pozyskuje informacje dotyczące zaznaczonego produktu.
+        /// </summary>
+        /// <param name="jsonBody"></param>
+        /// <returns></returns>
         [HttpPost]
         public JsonResult GetProductDetails([FromBody]JToken jsonBody)
         {

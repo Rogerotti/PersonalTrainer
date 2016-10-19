@@ -11,16 +11,76 @@ namespace Framework.Services
     public class ProductManagement : IProductManagement
     {
         private readonly ProductContext context;
+        private readonly MealContext mealContext;
         private readonly ISession session;
 
         private const String userId = nameof(userId);
         private const String userName = nameof(userName);
 
         public ProductManagement(ProductContext context,
+            MealContext mealContext,
             IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
+            this.mealContext = mealContext;
             session = httpContextAccessor.HttpContext.Session;
+        }
+
+        public void AddDailyFood(DateTime date, DailyFoodProductDto dto)
+        {
+          
+            throw new NotImplementedException();
+        }
+
+        public DailyFoodDto GetDailyFood(DateTime date)
+        {
+            using (var trans = mealContext.Database.BeginTransaction())
+            {
+                var userGuid = session.GetString(userId);
+
+                if (String.IsNullOrWhiteSpace(userGuid)) throw new KeyNotFoundException(nameof(userGuid));
+
+                var guid = Guid.Parse(userGuid);
+
+                var result = from d in mealContext.DailyFood
+                             join m in mealContext.Meal
+                             on d.UserId equals m.UserId
+                             where d.Date.Year == date.Year 
+                             && d.Date.Month == date.Month 
+                             && d.Date.Day == date.Day
+                             select new
+                             {
+                                d,
+                                m
+                             };
+                var dd = result.Select(x => x.d);
+                var test = dd.Select(x => x.Meals);
+
+                var mealList = new List<MealDto>();
+                var productList = new List<ProductDto>();
+                productList.Add(new ProductDto() { Name = "ala", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 5, Fat = 10, Quantity = 10 } });
+                productList.Add(new ProductDto() { Name = "ala2", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 15, Fat = 1, Quantity = 15 } });
+                var meal1 = new MealDto();
+                meal1.Products = productList;
+                meal1.MealType = MealType.Breakfast;
+
+                var productList2 = new List<ProductDto>();
+                productList2.Add(new ProductDto() { Name = "ala3", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 1, Fat = 4, Quantity = 11 } });
+                productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 12 } });
+                productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 11 } });
+                var meal2 = new MealDto();
+                meal2.Products = productList2;
+                meal2.MealType = MealType.Dinner;
+
+
+                mealList.Add(meal1);
+                mealList.Add(meal2);
+                return  new DailyFoodDto()
+                {
+                    Meals = mealList
+                };
+               
+            }
         }
 
         public void AddProduct(ProductDto dto)
@@ -33,11 +93,10 @@ namespace Framework.Services
 
                 if (!String.IsNullOrWhiteSpace(userGuid))
                     dto.UserId = Guid.Parse(userGuid);
-
-                dto.UserId = Guid.NewGuid();
+                else
+                    dto.UserId = new Guid();
 
                 var productId = Guid.NewGuid();
-
                 Int32 productType = GetProductTypeValue(dto.Type);
                 Int32 productState = GetProductStateValue(dto.State);
 
@@ -131,6 +190,11 @@ namespace Framework.Services
             }
         }
 
+        /// <summary>
+        /// Pozyskuje produkt o podanym id.
+        /// </summary>
+        /// <param name="productId">Id produktu.</param>
+        /// <returns></returns>
         public ProductDto GetProduct(Guid productId)
         {
             using (var trans = context.Database.BeginTransaction())
@@ -206,12 +270,14 @@ namespace Framework.Services
         {
             var userGuid = session.GetString(userId);
 
-            if (!String.IsNullOrWhiteSpace(userGuid)) throw new KeyNotFoundException(nameof(userGuid));
+            if (String.IsNullOrWhiteSpace(userGuid)) throw new KeyNotFoundException(nameof(userGuid));
+
+            var guid = Guid.Parse(userGuid);
 
             var result = from p in context.Products
                          join pd in context.ProductsDetails
                          on p.ProductId equals pd.ProductId
-                         where p.UserId.Equals(userGuid)
+                         where p.UserId.Equals(guid)
                          select new
                          {
                              p,
@@ -378,6 +444,32 @@ namespace Framework.Services
             else throw new NotSupportedException(nameof(stateValue));
 
             return type;
+        }
+
+        public DailyFoodDto GetDailyFoodFromDailyFoodProductDto(DateTime date, IEnumerable<DailyFoodProductDto> dto )
+        {
+            var breakfastMeals = dto.Where(x => x.MealType == MealType.Breakfast)
+                .Select(y => new KeyValuePair<Guid,Int32>(y.ProductId,y.ProductQuantity));
+
+            List<ProductDto> products = new List<ProductDto>();
+            foreach (var item in breakfastMeals)
+            {
+                var p = GetProduct(item.Key);
+                p.Macro.Quantity = item.Value;
+                products.Add(p);
+            }
+
+            List<MealDto> meals = new List<MealDto>();
+            var meal = new MealDto()
+            {
+                MealType = MealType.Breakfast,
+                Products = products
+            };
+
+            return new DailyFoodDto()
+            {
+                Meals = meals
+            };
         }
     }
 }

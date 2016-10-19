@@ -40,6 +40,13 @@ namespace PersonalTrainerCore.Controllers
         }
 
         [HttpGet]
+        public IActionResult AdminLogin()
+        {
+            userManagement.Login("Rogerotti", "Roger!994");
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
         public IActionResult Logout()
         {
             userManagement.Logout();

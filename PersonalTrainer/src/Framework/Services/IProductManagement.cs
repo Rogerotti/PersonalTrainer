@@ -6,6 +6,12 @@ namespace Framework.Services
 {
     public interface IProductManagement
     {
+        void AddDailyFood(DateTime date, DailyFoodProductDto dto);
+
+        DailyFoodDto GetDailyFood(DateTime date);
+
+        DailyFoodDto GetDailyFoodFromDailyFoodProductDto(DateTime date, IEnumerable<DailyFoodProductDto> dto);
+     
         /// <summary>
         /// Dodaje produkt do bazy.
         /// </summary>
@@ -26,6 +32,8 @@ namespace Framework.Services
         void RemoveProduct(Guid productId);
 
         ProductDto GetProduct(Guid productId);
+
+
 
         /// <summary>
         /// 

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PersonalTrainer.ViewNavigator;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,8 +33,11 @@ namespace PersonalTrainer
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
             services.AddDbContext<MealContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
 
-            services.AddSession();
-       
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.CookieName = ".PersonalTrainer";
+            });
+
             services.AddSingleton<IUserManagement, UserManagement>();
             services.AddSingleton<IProductManagement, ProductManagement>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
