@@ -103,6 +103,47 @@
         });
         }
     </script>
+
+    <script>
+        $('.tabular.menu .item').tab();
+    </script>
+
+    <script>
+        $('#search-field').on('keyup', function (e) {
+            if ('' != this.value) {
+                var reg = new RegExp(this.value, 'i'); // case-insesitive
+
+                $('.table tbody').find('tr').each(function () {
+                    var $me = $(this);
+                    if (!$me.children('td:eq(2)').text().match(reg)) {
+                        $me.hide();
+                    } else {
+                        $me.show();
+                    }
+                });
+            } else {
+                $('.table tbody').find('tr').show();
+            }
+        });
+    </script>
+ 
+    <script>
+        $('.test2').on('keyup', function (e)
+        {
+            
+            if (!this.value.trim())
+            {
+                this.value = 0;
+            }
+            else
+            {
+                if (!$.isNumeric(this.value))
+                    this.value = this.value.substring(0, this.value.length - 1);
+                if(this.value.length > 10)
+                    this.value = this.value.substring(0, this.value.length - 1);
+            }
+        });
+    </script>
 }
 
 

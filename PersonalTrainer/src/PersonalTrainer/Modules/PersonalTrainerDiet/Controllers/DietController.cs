@@ -81,13 +81,40 @@ namespace PersonalTrainerDiet.Controllers
         [HttpGet]
         public IActionResult AddFood()
         {
-            return View();
+          
+            var allProducts = productManagement.GetProducts();
+            var userProducts = productManagement.GetUserProducts();
+            var dto = new SearchProductsDto()
+            {
+                AllProducts = allProducts.ToList(),
+                UserProducts = userProducts.ToList(),
+                RecentProducts = userProducts.ToList()
+            };
+            return View(dto);
         }
 
         [HttpPost]
-        public IActionResult AddFood(Int32 test)
+        public IActionResult AddFood(List<Guid> ids, List<Int32> quantity, List<Boolean> checkboxes)
         {
-            
+            //Wynika to ze zwracania zaznaczonych checkboxów 2 wartości true oraz false a w przypadku braku zaznaczenia false przez co po wartości true zawsze musi być false.
+            List<Boolean> realBooleanValues = new List<Boolean>();
+            if (checkboxes != null && checkboxes.Count < 2)
+                realBooleanValues = checkboxes;
+            else
+            {
+                for (int i = 0; i < checkboxes.Count; i++)
+                {
+                    if (checkboxes[i])
+                    {
+                        i++;
+                        realBooleanValues.Add(true);
+                    }
+                    else
+                        realBooleanValues.Add(false);
+                }
+
+            }
+       
             var test1 = TempData[productGuidId] as IEnumerable<Guid>;
             if (test1 != null)
             {

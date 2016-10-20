@@ -1,15 +1,119 @@
-﻿@{
+﻿@model  Framework.Models.SearchProductsDto
+@{
     ViewData["Title"] = "Index";
     Layout = "DietLayout";
 }
 
+<style>
+    green {
+        background: #198f28;
+    }
+
+    red {
+        background: #9c0505;
+    }
+
+    yellow {
+        background: #eeca00;
+    }
+
+    .Bold {
+        font-weight: bold;
+    }
+
+    pad-left {
+        padding-left: 2em;
+    }
+
+    pad-right {
+        padding-right: 2em;
+    }
+
+    pad-top {
+        padding-top: 2em;
+    }
+
+    pad-bottom {
+        padding-bottom: 2em;
+    }
+
+    margin-top {
+        margin-top: 2em;
+    }
+
+    form {
+        display: inline-block;
+    }
+</style>
 <body>
-    <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
-        <input type="submit"  name="test" value="1"/>
-        <div class="ui left icon input">
-            <input placeholder="Search food..." type="text">
-            <i class="food icon"></i>
-        </div>
-    </form>
+    <div class="ui tabular menu">
+        <div class="item" data-tab="AllProducts">All Products</div>
+        <div class="item" data-tab="UserProducts">User Products</div>
+    </div>
+
+    
+    <div class="ui active tab" data-tab="AllProducts">
+
+            <div class="ui left icon input">
+                <input id="search-field" placeholder="Search food..." type="text">
+                <i class="food icon"></i>
+            </div>
+
+        <div>
+            <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
+
+                <table id="table" class="ui sortable selectable celled  table">
+
+                    <thead>
+                        <tr>
+                            <th hidden>Id column</th>
+                            <th>Add</th>
+                            <th class="sorted ascending">Product Name</th>
+                            <th>@Framework.Resources.ProductLanguage.Calories</th>
+                            <th>@Framework.Resources.ProductLanguage.Carbs</th>
+                            <th>@Framework.Resources.ProductLanguage.Fat</th>
+                            <th>@Framework.Resources.ProductLanguage.Protein</th>
+                            <th>@Framework.Resources.ProductLanguage.Quantity</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var product in @Model.AllProducts)
+            {
+                            <tr>
+                                <td hidden><input type="hidden" name="ids" value="@product.ProductId" /></td>
+                                <td>
+                                    @Html.CheckBox("checkboxes")
+                                </td>
+                                <td>@product.Name</td>
+                                <td>@product.Macro.Calories</td>
+                                <td>@product.Macro.Carbohydrates</td>
+                                <td>@product.Macro.Fat</td>
+                                <td>@product.Macro.Protein</td>
+                                <td><input class="test2"  name="quantity" type="text"  value="@product.Macro.Quantity"/></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <input type="submit" name="test33" value="1" />
+     
+            </form>
+</div>
+
+</div>
+
+    <div class="ui tab" data-tab="UserProducts">
+        <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
+
+            <input type="submit" name="test" value="1" />
+            <div class="ui left icon input">
+                <input placeholder="Search food..." type="text">
+                <i class="food icon"></i>
+            </div>
+
+
+        </form>
+    </div>
+
 </body>
 
