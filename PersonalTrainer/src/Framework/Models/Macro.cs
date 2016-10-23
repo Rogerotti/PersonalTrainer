@@ -9,28 +9,41 @@ namespace Framework.Models
         private const Int32 carbohydratesRatio = 4;
         private const Int32 fibreRatio = 2;
 
-        public Int32 Protein { get; set; }
+        private Int32 qua;
 
-        public Int32 Fat { get; set; }
+        public Decimal Protein { get; set; }
 
-        public Int32 Carbohydrates { get; set; }
+        public Decimal Fat { get; set; }
 
-        public Int32 Fibre { get; set; }
+        public Decimal Carbohydrates { get; set; }
 
-        public Int32 Calories { get; set; }
+        public Decimal Fibre { get; set; }
+
+        public Decimal Calories { get; set; }
 
         public QuantityType QuantityType { get; set; }
 
-        public Int32 Quantity { get; set; }
+        public Decimal Quantity { get; set; }
+        
 
         public void CountCalories()
         {
+            var previousQuantity = Quantity;
+
             var proteinCalories = Protein > 0 ? Protein * proteinRatio : 0;
             var fatCalories = Fat > 0 ? Fat * fatRation : 0;
             var carbohydratesCalories = Carbohydrates > 0 ? Carbohydrates * carbohydratesRatio : 0;
             var fibreCalories = Fibre > 0 ? Fibre * fibreRatio : 0;
 
             Calories = proteinCalories + fatCalories + carbohydratesCalories + fibreCalories;
+        }
+
+        public void CountMacro(Int32 quanity)
+        {
+            var previousQuantity = Quantity;
+          //  var ratio = Quantity / (float)quanity;
+         //   Protein = Math.Round( Protein * ratio;
+            //Decimal
         }
 
     }

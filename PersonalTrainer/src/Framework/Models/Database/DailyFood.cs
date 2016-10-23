@@ -32,6 +32,6 @@ namespace Framework.Models.Database
         public virtual User User { get; set; }
 
         [Required]
-        public virtual ICollection<Meal> Meals { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

@@ -13,25 +13,25 @@ namespace Framework.Models.Database
         public Guid ProductId { get; set; }
 
         [Required]
-        public Int32 Protein { get; set; }
+        public Decimal Protein { get; set; }
 
         [Required]
-        public Int32 Fat { get; set; }
+        public Decimal Fat { get; set; }
 
         [Required]
-        public Int32 Carbohydrates { get; set; }
+        public Decimal Carbohydrates { get; set; }
 
         [Required]
-        public Int32 Fibre { get; set; }
+        public Decimal Fibre { get; set; }
 
         [Required]
-        public Int32 Calories { get; set; }
+        public Decimal Calories { get; set; }
 
         [Required]
         public Int32 QuantityType { get; set; }
 
         [Required]
-        public Int32 Quantity { get; set; }
+        public Decimal Quantity { get; set; }
 
         [Required]
         public virtual Product Product { get; set; }

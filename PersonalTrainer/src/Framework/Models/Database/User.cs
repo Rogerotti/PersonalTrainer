@@ -28,6 +28,6 @@ namespace Framework.Models.Database
         [Required]
         public virtual UserDetails UserDetails { get; set; }
 
-        public virtual ICollection<Meal> Meals { get; set; }
+        public virtual ICollection<DailyFood> DailyFood { get; set; }
     }
 }

@@ -11,18 +11,18 @@ namespace Framework.Services
     public class ProductManagement : IProductManagement
     {
         private readonly ProductContext context;
-        private readonly MealContext mealContext;
+        private readonly DailyFoodContext dailyFoodContext;
         private readonly ISession session;
 
         private const String userId = nameof(userId);
         private const String userName = nameof(userName);
 
         public ProductManagement(ProductContext context,
-            MealContext mealContext,
+            DailyFoodContext dailyFoodContext,
             IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
-            this.mealContext = mealContext;
+            this.dailyFoodContext = dailyFoodContext;
             session = httpContextAccessor.HttpContext.Session;
         }
 
@@ -34,7 +34,7 @@ namespace Framework.Services
 
         public DailyFoodDto GetDailyFood(DateTime date)
         {
-            using (var trans = mealContext.Database.BeginTransaction())
+            using (var trans = dailyFoodContext.Database.BeginTransaction())
             {
                 var userGuid = session.GetString(userId);
 
@@ -42,43 +42,100 @@ namespace Framework.Services
 
                 var guid = Guid.Parse(userGuid);
 
-                var result = from d in mealContext.DailyFood
-                             join m in mealContext.Meal
-                             on d.UserId equals m.UserId
+                var result = from d in dailyFoodContext.DailyFood
+                             join dp in dailyFoodContext.DailyFoodProduct
+                             on d.DayId equals dp.DailyFoodId
                              where d.Date.Year == date.Year 
                              && d.Date.Month == date.Month 
                              && d.Date.Day == date.Day
+                             && d.UserId.Equals(userGuid)
                              select new
                              {
                                 d,
-                                m
-                             };
-                var dd = result.Select(x => x.d);
-                var test = dd.Select(x => x.Meals);
+                                dp
+                            };
 
-                var mealList = new List<MealDto>();
-                var productList = new List<ProductDto>();
-                productList.Add(new ProductDto() { Name = "ala", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 5, Fat = 10, Quantity = 10 } });
-                productList.Add(new ProductDto() { Name = "ala2", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 15, Fat = 1, Quantity = 15 } });
-                var meal1 = new MealDto();
-                meal1.Products = productList;
-                meal1.MealType = MealType.Breakfast;
+              
+                var dailyFood = result.Select(x => x.d).FirstOrDefault();
 
-                var productList2 = new List<ProductDto>();
-                productList2.Add(new ProductDto() { Name = "ala3", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 1, Fat = 4, Quantity = 11 } });
-                productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 12 } });
-                productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 11 } });
-                var meal2 = new MealDto();
-                meal2.Products = productList2;
-                meal2.MealType = MealType.Dinner;
-
-
-                mealList.Add(meal1);
-                mealList.Add(meal2);
-                return  new DailyFoodDto()
+                if (dailyFood != null)
                 {
-                    Meals = mealList
+                    List<DailyProductDto> daily = new List<DailyProductDto>();
+                    var foodTypes = result.Select(x => x.dp);
+                    foreach (var item in foodTypes)
+                    {
+                        //  item.Product
+                        var productDetails = item.Product.ProductDetails;
+                        var a = new ProductDto()
+                        {
+                            Name = item.Product.Name,
+                            Manufacturer = item.Product.Manufacturer,
+                            ProductId = item.ProductId,
+                            UserId = item.Product.UserId,
+                            Macro = new Macro()
+                            {
+                                Quantity = productDetails.Quantity,
+                                Calories = productDetails.Calories,
+                                Carbohydrates = productDetails.Carbohydrates,
+                                Fat = productDetails.Fat,
+                                Fibre = productDetails.Fibre,
+                                Protein = productDetails.Protein,
+                                QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
+                            },
+                            Type = GetProductTypeEnum(item.Product.ProductType),
+                            State = GetProductStateEnum(item.Product.ProductState)
+
+                        };
+
+                       // a.Macro.CountCalories(item.Quantity);
+                     //   var a = new DailyProductDto()
+                     //   {
+                    //        Product =
+                        //};
+                      //  var product = item.Product;
+                      //  product.
+                        daily.Add(new DailyProductDto()
+                        {
+                             Product = new ProductDto(),
+                             
+                        });
+                    }
+                }
+
+                var dailyProduct = new DailyProductDto();
+
+                return new DailyFoodDto()
+                {
+                    Day = date,
+                    DayCalories = 0,
+                    DayProteins = 0,
+                    DayFibre = 0,
+                    DayCarbohydrates = 0,
+                    DayFat = 0
                 };
+               // var dd = result.Select(x => x.d);
+               // var test = dd.Select(x => x.Meals);
+
+                // var mealList = new List<MealDto>();
+                //var productList = new List<ProductDto>();
+                //productList.Add(new ProductDto() { Name = "ala", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 5, Fat = 10, Quantity = 10 } });
+                //productList.Add(new ProductDto() { Name = "ala2", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 15, Fat = 1, Quantity = 15 } });
+                //var meal1 = new MealDto();
+                //meal1.Products = productList;
+                //meal1.MealType = MealType.Breakfast;
+
+                //var productList2 = new List<ProductDto>();
+                //productList2.Add(new ProductDto() { Name = "ala3", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 1, Fat = 4, Quantity = 11 } });
+                //productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 12 } });
+                //productList2.Add(new ProductDto() { Name = "ala4", ProductId = Guid.NewGuid(), Macro = new Macro() { Calories = 2, Fat = 3, Quantity = 11 } });
+                //var meal2 = new MealDto();
+                //meal2.Products = productList2;
+                //meal2.MealType = MealType.Dinner;
+
+
+                // mealList.Add(meal1);
+                // mealList.Add(meal2);
+                return null;
                
             }
         }
@@ -112,7 +169,7 @@ namespace Framework.Services
                 });
 
                 var quantityType = GetQuantityTypeValue(dto.Macro.QuantityType);
-
+                //,
                 context.ProductsDetails.Add(new ProductDetails()
                 {
                     ProductId = productId,
@@ -455,21 +512,23 @@ namespace Framework.Services
             foreach (var item in breakfastMeals)
             {
                 var p = GetProduct(item.Key);
-                p.Macro.Quantity = item.Value;
+               // p.Macro.Quantity = item.Value;
                 products.Add(p);
             }
 
-            List<MealDto> meals = new List<MealDto>();
-            var meal = new MealDto()
-            {
-                MealType = MealType.Breakfast,
-                Products = products
-            };
+            return null;
+            //List<MealDto> meals = new List<MealDto>();
+            //var meal = new MealDto()
+            //{
+            //    MealType = MealType.Breakfast,
+            //    Products = products
+            //};
 
-            return new DailyFoodDto()
-            {
-                Meals = meals
-            };
+            //meals.Add(meal);
+            //return new DailyFoodDto()
+            //{
+            //    Meals = meals
+            //};
         }
     }
 }

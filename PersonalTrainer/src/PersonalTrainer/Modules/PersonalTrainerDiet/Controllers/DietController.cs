@@ -70,9 +70,9 @@ namespace PersonalTrainerDiet.Controllers
         [HttpPost]
         public IActionResult Day(IEnumerable<Guid> productId, IEnumerable<Int32> quantity, IEnumerable<Int32> productMealType, Int32 buttonType)
         {
-            TempData[productGuidId] = productId;
-            TempData[productQuantityId] = quantity;
-            TempData[productMealTypeId] = productMealType;
+            TempData[productGuidId] = productId.ToList();
+            TempData[productQuantityId] = quantity.ToList();
+            TempData[productMealTypeId] = productMealType.ToList();
             TempData[mealTypeId] = buttonType;
 
             return RedirectToAction("AddFood", "Diet");
@@ -81,7 +81,6 @@ namespace PersonalTrainerDiet.Controllers
         [HttpGet]
         public IActionResult AddFood()
         {
-          
             var allProducts = productManagement.GetProducts();
             var userProducts = productManagement.GetUserProducts();
             var dto = new SearchProductsDto()
@@ -98,6 +97,9 @@ namespace PersonalTrainerDiet.Controllers
         {
             //Wynika to ze zwracania zaznaczonych checkboxów 2 wartości true oraz false a w przypadku braku zaznaczenia false przez co po wartości true zawsze musi być false.
             List<Boolean> realBooleanValues = new List<Boolean>();
+            List<Guid> properIds = new List<Guid>();
+            List<Int32> properQuantities = new List<int>();
+
             if (checkboxes != null && checkboxes.Count < 2)
                 realBooleanValues = checkboxes;
             else
@@ -114,15 +116,36 @@ namespace PersonalTrainerDiet.Controllers
                 }
 
             }
-       
-            var test1 = TempData[productGuidId] as IEnumerable<Guid>;
-            if (test1 != null)
+
+            for (int i = 0; i < realBooleanValues.Count(); i++)
             {
-               // TempData[additionalMealsId] = true;
-              //  var test44 = test1.ToList();
-               // test44.Add(Guid.NewGuid());
-               // TempData[productGuidId] = test44;
+                if (realBooleanValues[i])
+                {
+                    properIds.Add(ids[i]);
+                    properQuantities.Add(quantity[i]);
+                }
             }
+
+            List<Int32> properMealTypes = new List<int>();
+            var enumMealType = TempData[mealTypeId] as Int32?;
+            for (int i = 0; i < properIds.Count(); i++)
+                properMealTypes.Add((Int32)enumMealType);
+
+            var guids = TempData[productGuidId] as IEnumerable<Guid>;
+            if (guids != null && guids.Count() != 0)
+            {
+                var quants = TempData[productQuantityId] as IEnumerable<Int32>;
+                var mealType = TempData[productMealTypeId] as IEnumerable<Int32>;
+                properIds.AddRange(guids);
+                properQuantities.AddRange(quants);
+                properMealTypes.AddRange(mealType);
+            }
+
+            TempData[additionalMealsId] = true;
+            TempData[productGuidId] = properIds;
+            TempData[productQuantityId] = properQuantities;
+            TempData[productMealTypeId] = properMealTypes;
+            TempData[mealTypeId] = enumMealType;
      
             return RedirectToAction("Day", "Diet");
         }

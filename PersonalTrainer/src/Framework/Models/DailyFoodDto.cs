@@ -5,7 +5,7 @@ namespace Framework.Models
 {
     public class DailyFoodDto
     {
-        public List<MealDto> Meals { get; set; }
+        public List<DailyProductDto> DailyProduct { get; set; }
 
         public DateTime Day { get; set; }
 
