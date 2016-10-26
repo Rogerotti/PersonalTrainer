@@ -1,0 +1,39 @@
+﻿@model Framework.Models.DailyFoodDto
+<body>
+    <table id="BreakfestTable" class="ui sortable table">
+        <thead>
+            <tr>
+                <th hidden>Product ID</th>
+                <th class="sorted ascending">Name</th>
+                <th>Fat</th>
+                <th>Fibre</th>
+                <th></th>
+                <th hidden></th>
+                <th hidden></th>
+                <th hidden></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in @Model?.DailyProduct)
+            {
+
+                if (item.MealType == Framework.Models.MealType.Breakfast)
+                {
+                    <tr>
+                        <td hidden id="@item.Product"><input type="hidden" /></td>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Product.Macro.Calories</td>
+                        <td>@item.Product.Macro.Fat</td>
+                        <td><button>X</button></td>
+                        <td hidden><input type="hidden" name="productId" value="@item.Product.ProductId" /></td>
+                        <td hidden><input type="hidden" name="quantity" value="@item.Product.Macro.Quantity" /></td>
+                        <td hidden><input type="hidden" name="productMealType" value="0" /></td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</body>
+

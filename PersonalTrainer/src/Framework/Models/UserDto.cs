@@ -7,6 +7,8 @@ namespace Framework.Models
 {
     public class UserDto
     {
+        public Guid UserId { get; set; }
+
         [Required(ErrorMessageResourceType = typeof(ErrorLanguage),
         ErrorMessageResourceName = nameof(ErrorLanguage.LoginRequired))]
 

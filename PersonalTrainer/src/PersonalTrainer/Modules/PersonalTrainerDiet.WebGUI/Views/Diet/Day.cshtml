@@ -28,24 +28,24 @@
             </thead>
 
             <tbody>
-                @foreach (var products in @Model?.Meals)
+                @foreach (var item in @Model.DailyProduct)
                 {
 
-                    if (products.MealType == Framework.Models.MealType.Breakfast)
+                    if (item.MealType == Framework.Models.MealType.Breakfast)
                     {
-                        @foreach (var product in products?.Products)
-                        {
+                      
+                        
                             <tr>
-                                <td hidden id="@product.ProductId"><input type="hidden" /></td>
-                                <td>@product.Name</td>
-                                <td>@product.Macro.Calories</td>
-                                <td>@product.Macro.Fat</td>
+                                <td hidden id="@item.Product.ProductId"><input type="hidden" /></td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.Macro.Calories</td>
+                                <td>@item.Product.Macro.Fat</td>
                                 <td><button>X</button></td>
-                                <td hidden><input type="hidden" name="productId" value="@product.ProductId" /></td>
-                                <td hidden><input type="hidden" name="quantity" value="@product.Macro.Quantity" /></td>
+                                <td hidden><input type="hidden" name="productId" value="@item.Product.ProductId" /></td>
+                                <td hidden><input type="hidden" name="quantity" value="@item.Product.Macro.Quantity" /></td>
                                 <td hidden><input type="hidden" name="productMealType" value="0" /></td>
                             </tr>
-                        }
+                        
 
                     }
                 }
@@ -78,24 +78,24 @@
             </thead>
 
             <tbody>
-                @foreach (var products in @Model?.Meals)
+                @foreach (var item in @Model.DailyProduct)
             {
 
-                if (products.MealType == Framework.Models.MealType.Dinner)
+                if (item.MealType == Framework.Models.MealType.Dinner)
                 {
-                        @foreach (var product in products?.Products)
-                    {
+                     
+                    
                             <tr>
-                                <td hidden id="@product.ProductId"><input type="hidden" /></td>
-                                <td>@product.Name</td>
-                                <td>@product.Macro.Calories</td>
-                                <td>@product.Macro.Fat</td>
+                                <td hidden id="@item.Product.ProductId"><input type="hidden" /></td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.Macro.Calories</td>
+                                <td>@item.Product.Macro.Fat</td>
                                 <td><button>X</button></td>
-                                <td hidden><input type="hidden" name="productId" value="@product.ProductId" /></td>
-                                <td hidden><input type="hidden" name="quantity" value="@product.Macro.Quantity" /></td>
+                                <td hidden><input type="hidden" name="productId" value="@item.Product.ProductId" /></td>
+                                <td hidden><input type="hidden" name="quantity" value="@item.Product.Macro.Quantity" /></td>
                                 <td hidden><input type="hidden" name="productMealType" value="1" /></td>
                             </tr>
-                        }
+                        
 
                     }
                 }

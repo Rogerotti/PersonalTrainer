@@ -8,9 +8,10 @@ using Framework.DataBaseContext;
 namespace PersonalTrainer.Migrations
 {
     [DbContext(typeof(DailyFoodContext))]
-    partial class MealContextModelSnapshot : ModelSnapshot
+    [Migration("20161024221600_DailyFood")]
+    partial class DailyFood
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -49,6 +50,8 @@ namespace PersonalTrainer.Migrations
 
                     b.Property<int>("MealType");
 
+                    b.Property<int>("Quantity");
+
                     b.HasKey("DailyFoodId", "ProductId");
 
                     b.HasIndex("DailyFoodId");
@@ -86,15 +89,15 @@ namespace PersonalTrainer.Migrations
                 {
                     b.Property<Guid>("ProductId");
 
-                    b.Property<int>("Calories");
+                    b.Property<decimal>("Calories");
 
-                    b.Property<int>("Carbohydrates");
+                    b.Property<decimal>("Carbohydrates");
 
-                    b.Property<int>("Fat");
+                    b.Property<decimal>("Fat");
 
-                    b.Property<int>("Fibre");
+                    b.Property<decimal>("Fibre");
 
-                    b.Property<int>("Protein");
+                    b.Property<decimal>("Protein");
 
                     b.Property<int>("Quantity");
 

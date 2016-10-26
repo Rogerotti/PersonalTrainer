@@ -28,7 +28,7 @@ namespace PersonalTrainer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=(localdb)\Test;Database=PersonalTrainer;Trusted_Connection=True;";
+            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=PersonalTrainer;Trusted_Connection=True;";
             services.AddDbContext<ProductContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
             services.AddDbContext<UserContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
             services.AddDbContext<DailyFoodContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
@@ -38,9 +38,10 @@ namespace PersonalTrainer
                 options.CookieName = ".PersonalTrainer";
             });
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserManagement, UserManagement>();
             services.AddSingleton<IProductManagement, ProductManagement>();
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+      
 
             var mvcBuilder = services.AddMvc()
                 .AddJsonOptions(jsonOptions =>

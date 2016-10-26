@@ -34,7 +34,7 @@ namespace PersonalTrainerCore.Controllers
             }
             catch (Exception exc)
             {
-                logger.LogDebug("Dodawanie uzytkownika", new[] { exc.Message });
+                logger.LogDebug("Logowanie przez użytkownika", new[] { exc.Message });
             }
             return RedirectToAction("Index", "Home");
         }
@@ -42,14 +42,30 @@ namespace PersonalTrainerCore.Controllers
         [HttpGet]
         public IActionResult AdminLogin()
         {
-            userManagement.Login("Rogerotti", "Roger!994");
+            try
+            {
+                userManagement.Login("Rogerottii", "Roger!994");
+            }
+            catch (Exception exc)
+            {
+                logger.LogDebug("Logowanie przez administratora", new[] { exc.Message });
+            }
+         
             return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         public IActionResult Logout()
         {
-            userManagement.Logout();
+            try
+            {
+                userManagement.Logout();
+            }
+            catch (Exception exc)
+            {
+                logger.LogDebug("Wylogowanie", new[] { exc.Message });
+            }
+
             return RedirectToAction("Index", "Home");
         }
 

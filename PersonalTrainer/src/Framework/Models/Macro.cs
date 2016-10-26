@@ -9,8 +9,6 @@ namespace Framework.Models
         private const Int32 carbohydratesRatio = 4;
         private const Int32 fibreRatio = 2;
 
-        private Int32 qua;
-
         public Decimal Protein { get; set; }
 
         public Decimal Fat { get; set; }
@@ -23,7 +21,7 @@ namespace Framework.Models
 
         public QuantityType QuantityType { get; set; }
 
-        public Decimal Quantity { get; set; }
+        public Int32 Quantity { get; set; }
         
 
         public void CountCalories()

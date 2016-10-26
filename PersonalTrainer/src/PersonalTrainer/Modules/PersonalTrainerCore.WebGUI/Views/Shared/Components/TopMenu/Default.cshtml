@@ -1,0 +1,27 @@
+﻿@model  Framework.Models.TopMenuDto
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="ui massive inverted blue menu">
+        <div class="left menu">
+            <a class="item" asp-controller="Home" asp-action="Index">HomePage</a>
+        </div>
+        <div class="right menu">
+
+            @{
+                if (Model.IsLogedIn)
+                {
+                    <div class="ui label">Witaj @Model.UserName</div>
+                    <a class="item" asp-controller="Diet" asp-action="Diet">Diet</a>
+                    <a class="item" asp-controller="Login" asp-action="Logout">Wyloguj</a>
+                               
+                }
+                else
+                {
+                    <a class="item" asp-controller="Register" asp-action="Index">Sign Up</a>
+                    <a class="item" asp-controller="Login" asp-action="Login">Login</a>
+                    <a class="item" asp-controller="Login" asp-action="AdminLogin">Admin</a>
+
+                }
+            }
+        </div>
+    </div>
+ <div class="ui hidden divider"></div>

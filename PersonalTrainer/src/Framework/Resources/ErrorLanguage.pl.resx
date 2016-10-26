@@ -159,6 +159,12 @@
   <data name="UsernameLength" xml:space="preserve">
     <value>Długość nazwy użytkownika powinna zawierać się pomiędzy 3 i 20 znakami.</value>
   </data>
+  <data name="UserNameOrPasswordWrong" xml:space="preserve">
+    <value>Podana nazwa użytkownika lub hasło jest niepoprawne.</value>
+  </data>
+  <data name="UserNotLoggedIn" xml:space="preserve">
+    <value>Użytkownik nie jest zalogowany.</value>
+  </data>
   <data name="WeightEmpty" xml:space="preserve">
     <value>Waga jest pusta</value>
   </data>

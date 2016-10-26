@@ -28,7 +28,7 @@ namespace Framework.Services
 
         public void RegisterUser(String username, String email, String password, Int32 gender, Decimal height, Decimal weight, Int32 age)
         {
-            using( var trans = context.Database.BeginTransaction() )
+            using (var trans = context.Database.BeginTransaction())
             {
                 CheckUsername(username);
                 CheckEmail(email);
@@ -71,7 +71,10 @@ namespace Framework.Services
         {
             var userList = context.Users;
             var user = userList.FirstOrDefault(x => x.UserName.Equals(username));
-          
+
+            if (user == null) throw new UnauthorizedAccessException(ErrorLanguage.UserNameOrPasswordWrong);
+
+
             byte[] salt = Convert.FromBase64String(user.Salt);
             byte[] pass = Encoding.UTF8.GetBytes(password);
 
@@ -83,6 +86,8 @@ namespace Framework.Services
                 session.SetString(userId, user.UserId.ToString());
                 session.SetString(userName, user.UserName);
             }
+            else
+                throw new UnauthorizedAccessException(ErrorLanguage.UserNameOrPasswordWrong);
         }
 
         public void Logout()
@@ -91,15 +96,40 @@ namespace Framework.Services
             session.Remove(userName);
         }
 
+        public Boolean UserLogedIn()
+        {
+            var id = session.GetString(userId);
+            return String.IsNullOrWhiteSpace(id) ? false : true;
+        }
+
+        public Guid GetCurrentUserId()
+        {
+            var id = session.GetString(userId);
+
+            if (String.IsNullOrWhiteSpace(id)) throw new UnauthorizedAccessException(ErrorLanguage.UserNotLoggedIn);
+
+            return new Guid(id);
+        }
+
+        public String GetCurrentUserName()
+        {
+            var currentUserName = session.GetString(userName);
+
+            if (String.IsNullOrWhiteSpace(currentUserName)) throw new UnauthorizedAccessException(ErrorLanguage.UserNotLoggedIn);
+
+            return currentUserName;
+        }
+
         public UserDto GetCurrentUser()
         {
-           var id = session.GetString(userId);
-           Guid userGuid = new Guid(id);
-           var userDto = context.Users.FirstOrDefault(x => x.UserId.Equals(userGuid));
-           var userDetails = context.UsersDetails.FirstOrDefault(x => x.UserId.Equals(userGuid));
+            Guid userGuid = GetCurrentUserId();
 
-            return  new UserDto()
+            var userDto = context.Users.FirstOrDefault(x => x.UserId.Equals(userGuid));
+            var userDetails = context.UsersDetails.FirstOrDefault(x => x.UserId.Equals(userGuid));
+
+            return new UserDto()
             {
+                UserId = userGuid,
                 Age = userDetails.Age,
                 Height = userDetails.Height,
                 HeightUnit = GetHeightUnitType(userDetails.HeightUnit),
@@ -110,11 +140,6 @@ namespace Framework.Services
                 Weight = userDetails.Weight,
                 Gender = userDetails.Gender
             };
-        }
-
-        public Boolean Validation(String userName)
-        {
-            return true;
         }
 
         private HeightUnit? GetHeightUnitType(Int32 heightNumber)
@@ -154,9 +179,13 @@ namespace Framework.Services
             if (!Regex.Match(email, emailPatern).Success) throw new UnauthorizedAccessException(ErrorLanguage.EmailRegex);
         }
 
+        /// <summary>
+        /// Sprawdza płeć
+        /// </summary>
+        /// <param name="gender">Płeć użytkownika</param>
         private void CheckGender(Int32 gender)
         {
-            if(gender != 0 && gender != 1 && gender != 2 && gender != 9)
+            if (gender != 0 && gender != 1 && gender != 2 && gender != 9)
                 throw new UnauthorizedAccessException(ErrorLanguage.GenderError);
         }
 

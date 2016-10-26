@@ -31,7 +31,7 @@ namespace Framework.Models.Database
         public Int32 QuantityType { get; set; }
 
         [Required]
-        public Decimal Quantity { get; set; }
+        public Int32 Quantity { get; set; }
 
         [Required]
         public virtual Product Product { get; set; }

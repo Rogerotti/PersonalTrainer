@@ -4,26 +4,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PersonalTrainer.Migrations
 {
-    public partial class Meal : Migration
+    public partial class DailyFood : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Product",
-                columns: table => new
-                {
-                    ProductId = table.Column<Guid>(nullable: false),
-                    Manufacturer = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: false),
-                    ProductState = table.Column<int>(nullable: false),
-                    ProductType = table.Column<int>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.ProductId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
@@ -37,30 +21,6 @@ namespace PersonalTrainer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductDetails",
-                columns: table => new
-                {
-                    ProductId = table.Column<Guid>(nullable: false),
-                    Calories = table.Column<int>(nullable: false),
-                    Carbohydrates = table.Column<int>(nullable: false),
-                    Fat = table.Column<int>(nullable: false),
-                    Fibre = table.Column<int>(nullable: false),
-                    Protein = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
-                    QuantityType = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductDetails", x => x.ProductId);
-                    table.ForeignKey(
-                        name: "FK_ProductDetails_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,50 +70,72 @@ namespace PersonalTrainer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Meal",
+                name: "Product",
                 columns: table => new
                 {
-                    MealId = table.Column<Guid>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: false),
                     DailyFoodDayId = table.Column<Guid>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    MealType = table.Column<int>(nullable: false),
+                    Manufacturer = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    ProductState = table.Column<int>(nullable: false),
+                    ProductType = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Meal", x => x.MealId);
+                    table.PrimaryKey("PK_Product", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_Meal_DailyFood_DailyFoodDayId",
+                        name: "FK_Product_DailyFood_DailyFoodDayId",
                         column: x => x.DailyFoodDayId,
                         principalTable: "DailyFood",
                         principalColumn: "DayId",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DailyFoodProduct",
+                columns: table => new
+                {
+                    DailyFoodId = table.Column<Guid>(nullable: false),
+                    ProductId = table.Column<Guid>(nullable: false),
+                    MealType = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DailyFoodProduct", x => new { x.DailyFoodId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_Meal_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
+                        name: "FK_DailyFoodProduct_DailyFood_DailyFoodId",
+                        column: x => x.DailyFoodId,
+                        principalTable: "DailyFood",
+                        principalColumn: "DayId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DailyFoodProduct_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductMeal",
+                name: "ProductDetails",
                 columns: table => new
                 {
-                    MealId = table.Column<Guid>(nullable: false),
-                    ProductId = table.Column<Guid>(nullable: false)
+                    ProductId = table.Column<Guid>(nullable: false),
+                    Calories = table.Column<decimal>(nullable: false),
+                    Carbohydrates = table.Column<decimal>(nullable: false),
+                    Fat = table.Column<decimal>(nullable: false),
+                    Fibre = table.Column<decimal>(nullable: false),
+                    Protein = table.Column<decimal>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    QuantityType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductMeal", x => new { x.MealId, x.ProductId });
+                    table.PrimaryKey("PK_ProductDetails", x => x.ProductId);
                     table.ForeignKey(
-                        name: "FK_ProductMeal_Meal_MealId",
-                        column: x => x.MealId,
-                        principalTable: "Meal",
-                        principalColumn: "MealId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductMeal_Product_ProductId",
+                        name: "FK_ProductDetails_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
                         principalColumn: "ProductId",
@@ -166,30 +148,25 @@ namespace PersonalTrainer.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Meal_DailyFoodDayId",
-                table: "Meal",
-                column: "DailyFoodDayId");
+                name: "IX_DailyFoodProduct_DailyFoodId",
+                table: "DailyFoodProduct",
+                column: "DailyFoodId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Meal_UserId",
-                table: "Meal",
-                column: "UserId");
+                name: "IX_DailyFoodProduct_ProductId",
+                table: "DailyFoodProduct",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_DailyFoodDayId",
+                table: "Product",
+                column: "DailyFoodDayId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductDetails_ProductId",
                 table: "ProductDetails",
                 column: "ProductId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductMeal_MealId",
-                table: "ProductMeal",
-                column: "MealId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductMeal_ProductId",
-                table: "ProductMeal",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserDetails_UserId",
@@ -201,16 +178,13 @@ namespace PersonalTrainer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "DailyFoodProduct");
+
+            migrationBuilder.DropTable(
                 name: "ProductDetails");
 
             migrationBuilder.DropTable(
-                name: "ProductMeal");
-
-            migrationBuilder.DropTable(
                 name: "UserDetails");
-
-            migrationBuilder.DropTable(
-                name: "Meal");
 
             migrationBuilder.DropTable(
                 name: "Product");

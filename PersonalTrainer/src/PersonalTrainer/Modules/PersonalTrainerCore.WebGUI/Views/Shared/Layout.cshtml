@@ -19,88 +19,54 @@
         </environment>
 
     </head>
-@{
-    byte[] test;
-    var res = Context.Session.TryGetValue("userName", out test);
-}
+
     <body>
-
         <header>
-            <div class="ui massive inverted blue menu">
+            @{
+                byte[] name;
+                var result = Context.Session.TryGetValue("userName", out name);
+            }
 
-                <div class="left menu">
-                    <a class="item" asp-controller="Home" asp-action="Index">HomePage</a>
-                    @{
-                        if (res)
-                        {
-                            <a class="item" asp-controller="Diet" asp-action="Diet">Diet</a>
-                        }
-                    }
-                </div>
-
-                <div class="right menu">
-                    
-                         @{
-                             if (res)
-                             {
-                                 string result = System.Text.Encoding.UTF8.GetString(test);
-                                <p> Witaj @result </p>
-                                <a class="item" asp-controller="Login" asp-action="Logout">Wyloguj</a>
-                             }
-                             else
-                             {
-                                <a class="item" asp-controller="Diet" asp-action="Diet">Diet</a>
-                                <a class="item" asp-controller="Register" asp-action="Index">Sign Up</a>
-                                <a class="item" asp-controller="Login" asp-action="Login">Login</a>
-                                <a class="item" asp-controller="Login" asp-action="AdminLogin">Admin</a>
-
-                             }
-                        }
-                </div>
-
-            </div>
-            <div class="ui hidden divider"></div>
+        @await Component.InvokeAsync("TopMenu", new { loggedIn = result, username = name }));
         </header>
-
-
-        <div class="ui internaly grid">
-            <div class="row">
-                <div class="three wide column">
-                    @RenderSection("LeftPanel", required: false)
-                </div>
-                <div class="eleven wide column">
-                    <div class="ui center content ">
-                        @RenderBody()
+            <div class="ui internaly grid">
+                <div class="row">
+                    <div class="three wide column">
+                        @RenderSection("LeftPanel", required: false)
+                    </div>
+                    <div class="eleven wide column">
+                        <div class="ui center content ">
+                            @RenderBody()
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <environment names="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/semantic/dist/semantic.js"></script>
-            <script src="http://semantic-ui.com/javascript/library/tablesort.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
+            <environment names="Development">
+                <script src="~/lib/jquery/dist/jquery.js"></script>
+                <script src="~/lib/semantic/dist/semantic.js"></script>
+                <script src="http://semantic-ui.com/javascript/library/tablesort.js"></script>
+                <script src="~/js/site.js" asp-append-version="true"></script>
 
-        </environment>
+            </environment>
 
-        <environment names="Staging,Production">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery">
-            </script>
+            <environment names="Staging,Production">
+                <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                        asp-fallback-test="window.jQuery">
+                </script>
 
-            <script src="http://semantic-ui.com/javascript/library/tablesort.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"
-                    asp-fallback-src="~/lib/semantic/dist/js/semantic.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.site">
+                <script src="http://semantic-ui.com/javascript/library/tablesort.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.2/semantic.min.js"
+                        asp-fallback-src="~/lib/semantic/dist/js/semantic.min.js"
+                        asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.site">
 
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-      
-        </environment>
+                </script>
+                <script src="~/js/site.min.js" asp-append-version="true"></script>
 
-        @RenderSection("scripts", required: false)
+            </environment>
+
+            @RenderSection("scripts", required: false)
 
 </body>
 

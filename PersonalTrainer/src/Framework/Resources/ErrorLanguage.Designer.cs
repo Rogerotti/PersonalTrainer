@@ -186,6 +186,24 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Wrong username or password.
+        /// </summary>
+        public static string UserNameOrPasswordWrong {
+            get {
+                return ResourceManager.GetString("UserNameOrPasswordWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to User is not logged in..
+        /// </summary>
+        public static string UserNotLoggedIn {
+            get {
+                return ResourceManager.GetString("UserNotLoggedIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The weight is empty..
         /// </summary>
         public static string WeightEmpty {

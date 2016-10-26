@@ -12,18 +12,18 @@ namespace Framework.Services
     {
         private readonly ProductContext context;
         private readonly DailyFoodContext dailyFoodContext;
-        private readonly ISession session;
+        private readonly IUserManagement userManagement;
 
         private const String userId = nameof(userId);
         private const String userName = nameof(userName);
 
         public ProductManagement(ProductContext context,
             DailyFoodContext dailyFoodContext,
-            IHttpContextAccessor httpContextAccessor)
+            IUserManagement userManagement)
         {
             this.context = context;
             this.dailyFoodContext = dailyFoodContext;
-            session = httpContextAccessor.HttpContext.Session;
+            this.userManagement = userManagement;
         }
 
         public void AddDailyFood(DateTime date, DailyFoodProductDto dto)
@@ -36,11 +36,13 @@ namespace Framework.Services
         {
             using (var trans = dailyFoodContext.Database.BeginTransaction())
             {
-                var userGuid = session.GetString(userId);
 
-                if (String.IsNullOrWhiteSpace(userGuid)) throw new KeyNotFoundException(nameof(userGuid));
+                var user = userManagement.GetCurrentUser();
+                var userGuid = user.UserId;
 
-                var guid = Guid.Parse(userGuid);
+                if (String.IsNullOrWhiteSpace(userGuid.ToString())) throw new KeyNotFoundException(nameof(userGuid));
+
+                var guid = userGuid;
 
                 var result = from d in dailyFoodContext.DailyFood
                              join dp in dailyFoodContext.DailyFoodProduct
@@ -146,12 +148,7 @@ namespace Framework.Services
             {
                 if (dto == null) throw new ArgumentNullException(nameof(dto));
 
-                var userGuid = session.GetString(userId);
-
-                if (!String.IsNullOrWhiteSpace(userGuid))
-                    dto.UserId = Guid.Parse(userGuid);
-                else
-                    dto.UserId = new Guid();
+                dto.UserId = userManagement.GetCurrentUserId();
 
                 var productId = Guid.NewGuid();
                 Int32 productType = GetProductTypeValue(dto.Type);
@@ -169,7 +166,7 @@ namespace Framework.Services
                 });
 
                 var quantityType = GetQuantityTypeValue(dto.Macro.QuantityType);
-                //,
+
                 context.ProductsDetails.Add(new ProductDetails()
                 {
                     ProductId = productId,
@@ -325,11 +322,7 @@ namespace Framework.Services
         /// <returns></returns>
         public IEnumerable<ProductDto> GetUserProducts()
         {
-            var userGuid = session.GetString(userId);
-
-            if (String.IsNullOrWhiteSpace(userGuid)) throw new KeyNotFoundException(nameof(userGuid));
-
-            var guid = Guid.Parse(userGuid);
+            var guid = userManagement.GetCurrentUserId();
 
             var result = from p in context.Products
                          join pd in context.ProductsDetails
