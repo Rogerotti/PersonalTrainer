@@ -9,7 +9,7 @@
             @{
                 if (Model.IsLogedIn)
                 {
-                    <div class="ui label">Witaj @Model.UserName</div>
+                    <div class="ui small header item">Witaj @Model.UserName</div>
                     <a class="item" asp-controller="Diet" asp-action="Diet">Diet</a>
                     <a class="item" asp-controller="Login" asp-action="Logout">Wyloguj</a>
                                

@@ -153,7 +153,7 @@ namespace PersonalTrainerDiet.Controllers
         [HttpGet]
         public IActionResult AddProduct()
         {
-            return View(new ProductDto());
+            return View(new ProductDto() {Macro = new Macro() });
         }
 
         [HttpPost]

@@ -99,13 +99,31 @@ namespace Framework.Services
                         daily.Add(new DailyProductDto()
                         {
                              Product = new ProductDto(),
-                             
+                             CurrentMacro =  new Macro()
+                             {
+                                 Quantity = productDetails.Quantity,
+                                 Calories = productDetails.Calories,
+                                 Carbohydrates = productDetails.Carbohydrates,
+                                 Fat = productDetails.Fat,
+                                 Fibre = productDetails.Fibre,
+                                 Protein = productDetails.Protein,
+                                 QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
+                             },
+                             MealType = MealType.Breakfast
+
                         });
                     }
+                    return new DailyFoodDto()
+                    {
+                        Day = date,
+                        DayCalories = 0,
+                        DayProteins = 0,
+                        DayFibre = 0,
+                        DayCarbohydrates = 0,
+                        DayFat = 0,
+                        DailyProduct = daily
+                    };
                 }
-
-                var dailyProduct = new DailyProductDto();
-
                 return new DailyFoodDto()
                 {
                     Day = date,
@@ -113,10 +131,14 @@ namespace Framework.Services
                     DayProteins = 0,
                     DayFibre = 0,
                     DayCarbohydrates = 0,
-                    DayFat = 0
+                    DayFat = 0,
+                    DailyProduct = new List<DailyProductDto>()
                 };
-               // var dd = result.Select(x => x.d);
-               // var test = dd.Select(x => x.Meals);
+
+
+
+                // var dd = result.Select(x => x.d);
+                // var test = dd.Select(x => x.Meals);
 
                 // var mealList = new List<MealDto>();
                 //var productList = new List<ProductDto>();
@@ -137,8 +159,7 @@ namespace Framework.Services
 
                 // mealList.Add(meal1);
                 // mealList.Add(meal2);
-                return null;
-               
+
             }
         }
 

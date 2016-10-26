@@ -156,6 +156,7 @@ namespace Framework.Services
 
         /// <summary>
         /// Sprawdza nazwę użytkownika.
+        /// Gdy nazwa jest krótsza lub równa 2 znakom lub dłuższa od 20 znaków rzucany jest wyjątek. <see cref="UnauthorizedAccessException"/>
         /// </summary>
         /// <param name="username">Nazwa użytkownika.</param>
         private void CheckUsername(String username)
@@ -181,6 +182,12 @@ namespace Framework.Services
 
         /// <summary>
         /// Sprawdza płeć
+        /// Zgodnie z ISO/IEC 5218
+        /// 0 - nie wiadomo.
+        /// 1 = meżczyzna.
+        /// 2 = kobieta.
+        /// 9 = nie zaaplikowano.
+        /// W przypadku innej wartości rzuca wyjątkiem <see cref="UnauthorizedAccessException"/>
         /// </summary>
         /// <param name="gender">Płeć użytkownika</param>
         private void CheckGender(Int32 gender)
@@ -191,13 +198,12 @@ namespace Framework.Services
 
         /// <summary>
         /// Sprawdza wiek
-        /// od 6 lat do 99 lat.
+        /// od 12 lat do 99 lat.
         /// </summary>
         /// <param name="age">Wiek.</param>
         private void CheckAge(Int32 age)
         {
-            if (age >= 100 || age < 6)
-                throw new UnauthorizedAccessException(ErrorLanguage.AgeRange);
+            if (age > 99 || age < 12) throw new UnauthorizedAccessException(ErrorLanguage.AgeRange);
         }
 
         private Byte[] CreateSalt(Int32 size)

@@ -36,6 +36,7 @@ namespace PersonalTrainerCore.Controllers
             {
                 logger.LogDebug("Logowanie przez użytkownika", new[] { exc.Message });
             }
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -68,6 +69,5 @@ namespace PersonalTrainerCore.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

@@ -8,11 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Framework.Resources {
+namespace Framework.Resources
+{
     using System;
     using System.Reflection;
-    
-    
+
+
     /// <summary>
     ///    A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,102 +23,124 @@ namespace Framework.Resources {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ProductLanguage {
-        
+    public class ProductLanguage
+    {
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
-        internal ProductLanguage() {
+
+        internal ProductLanguage()
+        {
         }
-        
+
         /// <summary>
         ///    Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        public static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Framework.Resources.ProductLanguage", typeof(ProductLanguage).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///    Overrides the current thread's CurrentUICulture property for all
         ///    resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
-            get {
+        public static global::System.Globalization.CultureInfo Culture
+        {
+            get
+            {
                 return resourceCulture;
             }
-            set {
+            set
+            {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Calories.
         /// </summary>
-        public static string Calories {
-            get {
+        public static string Calories
+        {
+            get
+            {
                 return ResourceManager.GetString("Calories", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Carbohydrates.
         /// </summary>
-        public static string Carbohydrates {
-            get {
+        public static string Carbohydrates
+        {
+            get
+            {
                 return ResourceManager.GetString("Carbohydrates", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Carbs.
         /// </summary>
-        public static string Carbs {
-            get {
+        public static string Carbs
+        {
+            get
+            {
                 return ResourceManager.GetString("Carbs", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Fat.
         /// </summary>
-        public static string Fat {
-            get {
+        public static string Fat
+        {
+            get
+            {
                 return ResourceManager.GetString("Fat", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Fibre.
         /// </summary>
-        public static string Fibre {
-            get {
+        public static string Fibre
+        {
+            get
+            {
                 return ResourceManager.GetString("Fibre", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Protein.
         /// </summary>
-        public static string Protein {
-            get {
+        public static string Protein
+        {
+            get
+            {
                 return ResourceManager.GetString("Protein", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///    Looks up a localized string similar to Quantity.
         /// </summary>
-        public static string Quantity {
-            get {
+        public static string Quantity
+        {
+            get
+            {
                 return ResourceManager.GetString("Quantity", resourceCulture);
             }
         }

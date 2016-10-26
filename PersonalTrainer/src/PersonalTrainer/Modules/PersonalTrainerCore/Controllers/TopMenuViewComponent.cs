@@ -36,8 +36,6 @@ namespace PersonalTrainerCore.Controllers
             {
                 return View(dto);
             });
-
         }
-
     }
 }

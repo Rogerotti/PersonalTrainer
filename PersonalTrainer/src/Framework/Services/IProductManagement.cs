@@ -33,8 +33,6 @@ namespace Framework.Services
 
         ProductDto GetProduct(Guid productId);
 
-
-
         /// <summary>
         /// 
         /// </summary>
