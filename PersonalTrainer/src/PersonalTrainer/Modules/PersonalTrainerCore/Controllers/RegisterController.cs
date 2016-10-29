@@ -34,18 +34,11 @@ namespace PersonalTrainerCore.Controllers
                 logger.LogDebug("rejestracja nie powiodła się.", new[] { exc.Message });
             }
 
-            return View(user);
-
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         public IActionResult Index()
-        {
-            return View(new UserDto());
-        }
-
-        [HttpPost]
-        public IActionResult Register(UserDto user)
         {
             return View(new UserDto());
         }

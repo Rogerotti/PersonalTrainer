@@ -27,7 +27,7 @@
                 var result = Context.Session.TryGetValue("userName", out name);
             }
 
-        @await Component.InvokeAsync("TopMenu", new { loggedIn = result, username = name }));
+        @await Component.InvokeAsync("TopMenu", new { loggedIn = result, username = name })
         </header>
             <div class="ui internaly grid">
                 <div class="row">
@@ -68,6 +68,7 @@
 
             @RenderSection("scripts", required: false)
 
+        @await Component.InvokeAsync("ErrorDisplayer")
 </body>
 
 </html>

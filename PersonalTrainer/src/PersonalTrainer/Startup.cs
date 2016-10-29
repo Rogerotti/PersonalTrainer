@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -42,8 +43,9 @@ namespace PersonalTrainer
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserManagement, UserManagement>();
             services.AddSingleton<IProductManagement, ProductManagement>();
-
-           // services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddSingleton<IErrorDisplayer, ErrorDisplayer>();
+     
+            // services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             var mvcBuilder = services.AddMvc()
                 .AddJsonOptions(jsonOptions =>

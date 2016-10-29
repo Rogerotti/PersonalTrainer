@@ -20,20 +20,20 @@ namespace PersonalTrainerCore.Controllers
 
         public async Task<IViewComponentResult> InvokeAsync(Boolean loggedIn, String username)
         {
-            var dto = new TopMenuDto();
-            if (userManagement.UserLogedIn())
-            {
-                dto.IsLogedIn = true;
-                dto.UserName = userManagement.GetCurrentUser().Login;
-            }
-            else
-            {
-                dto.IsLogedIn = false;
-                dto.UserName = String.Empty;
-            }
-
             return await Task.Run(() =>
             {
+                var dto = new TopMenuDto();
+                if (userManagement.UserLogedIn())
+                {
+                    dto.IsLogedIn = true;
+                    dto.UserName = userManagement.GetCurrentUser().Login;
+                }
+                else
+                {
+                    dto.IsLogedIn = false;
+                    dto.UserName = String.Empty;
+                }
+
                 return View(dto);
             });
         }
