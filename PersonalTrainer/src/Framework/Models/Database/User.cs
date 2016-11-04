@@ -29,5 +29,7 @@ namespace Framework.Models.Database
         public virtual UserDetails UserDetails { get; set; }
 
         public virtual ICollection<DailyFood> DailyFood { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

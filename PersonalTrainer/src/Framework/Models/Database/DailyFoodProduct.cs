@@ -4,17 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Framework.Models.Database
 {
-    [Table("DailyFoodProduct")]
+    [Table(nameof(DailyFoodProduct))]
     public class DailyFoodProduct
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [ForeignKey("DailyFood")]
-        public Guid DailyFoodId { get; set; }
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public Guid DailyFoodProductId { get; set; }
 
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [ForeignKey("Product")]
+        [ForeignKey(nameof(DailyFood))]
+        public Guid DailyFoodId { get; set; }
+
+        [ForeignKey(nameof(Product))]
         public Guid ProductId { get; set; }
 
         public Int32 MealType { get; set; }

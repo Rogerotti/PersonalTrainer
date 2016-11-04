@@ -5,133 +5,107 @@
     Layout = "DietLayout";
 }
 
+<style>
+        pad-right {
+        padding-right: 2em;
+    }
+
+    pad-top {
+        padding-top: 2em;
+    }
+
+    pad-bottom {
+        padding-bottom: 2em;
+    }
+
+    .margin-top {
+        margin-top: 2em;
+    }
+
+        .margin-bottom {
+        margin-bottom: 2em;
+    }
+</style>
+
 <body>
 
-    <div class="ui medium header">Breakfest</div>
-
-    <div class="ui divider"></div>
-
     <form asp-action="Day" asp-controller="Diet" method="post">
-
-        <table id="BreakfestTable" class="ui sortable table">
-            <thead>
-                <tr>
-                    <th hidden>Product ID</th>
-                    <th class="sorted ascending">Name</th>
-                    <th>Fat</th>
-                    <th>Fibre</th>
-                    <th></th>
-                    <th hidden></th>
-                    <th hidden></th>
-                    <th hidden></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var item in @Model.DailyProduct)
+        <div class="ui medium header">Breakfest</div>
+        <div class="ui divider"></div>
+        <div class="margin-bottom" >
+            @{
+                if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Breakfast))
                 {
-
-                    if (item.MealType == Framework.Models.MealType.Breakfast)
-                    {
-                      
-                        
-                            <tr>
-                                <td hidden id="@item.Product.ProductId"><input type="hidden" /></td>
-                                <td>@item.Product.Name</td>
-                                <td>@item.Product.Macro.Calories</td>
-                                <td>@item.Product.Macro.Fat</td>
-                                <td><button>X</button></td>
-                                <td hidden><input type="hidden" name="productId" value="@item.Product.ProductId" /></td>
-                                <td hidden><input type="hidden" name="quantity" value="@item.Product.Macro.Quantity" /></td>
-                                <td hidden><input type="hidden" name="productMealType" value="0" /></td>
-                            </tr>
-                        
-
-                    }
+                    var result = Model.DailyProduct.Where(x => x.MealType == Framework.Models.MealType.Breakfast);
+                    @await Component.InvokeAsync("DailyProductTable", new { list = result.ToList() })
                 }
-
-            </tbody>
-        </table>
-
+            }
+        </div>
         <button class="ui basic button" value="0" name="buttonType">
             <i class="food icon"></i>
             Add Meal
         </button>
 
-
-
-
         <div class="ui medium header">Dinner</div>
-
-        <table id="DinnerTable" class="ui sortable table">
-            <thead>
-                <tr>
-                    <th hidden>Product ID</th>
-                    <th class="sorted ascending">Name</th>
-                    <th>Fat</th>
-                    <th>Fibre</th>
-                    <th></th>
-                    <th hidden></th>
-                    <th hidden></th>
-                    <th hidden></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach (var item in @Model.DailyProduct)
-            {
-
-                if (item.MealType == Framework.Models.MealType.Dinner)
+        <div class="ui divider"></div>
+        <div class="margin-bottom">
+            @{
+                if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Dinner))
                 {
-                     
-                    
-                            <tr>
-                                <td hidden id="@item.Product.ProductId"><input type="hidden" /></td>
-                                <td>@item.Product.Name</td>
-                                <td>@item.Product.Macro.Calories</td>
-                                <td>@item.Product.Macro.Fat</td>
-                                <td><button>X</button></td>
-                                <td hidden><input type="hidden" name="productId" value="@item.Product.ProductId" /></td>
-                                <td hidden><input type="hidden" name="quantity" value="@item.Product.Macro.Quantity" /></td>
-                                <td hidden><input type="hidden" name="productMealType" value="1" /></td>
-                            </tr>
-                        
-
-                    }
+                    var result = Model.DailyProduct.Where(x => x.MealType == Framework.Models.MealType.Dinner);
+                    @await Component.InvokeAsync("DailyProductTable", new { list = result.ToList() })
                 }
+            }
+        </div>
+        <button class="ui basic button" value="1" name="buttonType">
+            <i class="food icon"></i>
+            Add Meal
+        </button>
 
-            </tbody>
-        </table>
+        <div class="ui medium header">Supper</div>
+        <div class="ui divider"></div>
+        <div class="margin-bottom">
+            @{
+                if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Supper))
+                {
+                    var result = Model.DailyProduct.Where(x => x.MealType == Framework.Models.MealType.Supper);
+                    @await Component.InvokeAsync("DailyProductTable", new { list = result.ToList() })
+                }
+            }
+        </div>
+        <button class="ui basic button" value="2" name="buttonType">
+            <i class="food icon"></i>
+            Add Meal
+        </button>
 
-    <div class="ui divider"></div>
-            <button class="ui basic button" value="1" name="buttonType">
-                <i class="food icon"></i>
-                Add Meal
-            </button>
-        </form>
+        <div class="ui medium header">Snacks</div>
+        <div class="ui divider"></div>
+        <div class="margin-bottom">
+            @{
+                if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Snacks))
+                {
+                    var result = Model.DailyProduct.Where(x => x.MealType == Framework.Models.MealType.Snacks);
+                    @await Component.InvokeAsync("DailyProductTable", new { list = result.ToList() })
+                }
+            }
+        </div>
+        <button class="ui basic button" value="3" name="buttonType">
+            <i class="food icon"></i>
+            Add Meal
+        </button>
 
+        <div class="ui divider"></div>
+        <button class="ui blue button" value="4" name="buttonType">
+            Zatwierdź
+        </button>
+    </form>
+    @*<div class="ui progress success">
+        <div class="bar">
+            <div class="progress"></div>
+        </div>
+        <div class="label">Everything worked, your file is all ready.</div>
+    </div>*@
 
-
-    <div class="ui medium header">Supper</div>
-
-    <div class="ui divider"></div>
-
-    <button class="ui basic button" value="2" name="mealType">
-        <i class="food icon"></i>
-        Add Meal
-    </button>
-    <div class="ui medium header">Snacks</div>
-
-    <div class="ui divider"></div>
-
-    <button class="ui basic button" value="3" name="mealType">
-        <i class="food icon"></i>
-        Add Meal
-    </button>
-
-    <div class="ui divider"></div>
-
-    <button class="ui center blue button">Zatwierdź</button>
 </body>
 
 

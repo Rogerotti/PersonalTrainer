@@ -31,7 +31,9 @@ namespace PersonalTrainerCore.Controllers
             }
             catch (Exception exc)
             {
+                ModelState.AddModelError("AdditionalValidation", exc.Message);
                 logger.LogDebug("rejestracja nie powiodła się.", new[] { exc.Message });
+                return View(user);
             }
 
             return RedirectToAction("Index", "Home");

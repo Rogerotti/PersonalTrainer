@@ -9,15 +9,15 @@ namespace Framework.Models
 
         public DateTime Day { get; set; }
 
-        public Int32 DayCalories { get; set; }
+        public Decimal DayCalories { get; set; }
 
-        public Int32 DayProteins { get; set; }
+        public Decimal DayProteins { get; set; }
 
-        public Int32 DayFat { get; set; }
+        public Decimal DayFat { get; set; }
 
-        public Int32 DayCarbohydrates { get; set; }
+        public Decimal DayCarbohydrates { get; set; }
 
-        public Int32 DayFibre { get; set; }
+        public Decimal DayFibre { get; set; }
 
     }
 }

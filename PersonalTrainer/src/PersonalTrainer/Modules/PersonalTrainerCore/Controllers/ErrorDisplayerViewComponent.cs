@@ -1,42 +1,39 @@
 ﻿using Framework.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PersonalTrainerCore.Controllers
 {
+    /// <summary>
+    /// Odpowiada za wyświetlanie błędów logicznych.
+    /// </summary>
     public class ErrorDisplayerViewComponent : ViewComponent
     {
-        private readonly ITempDataDictionaryFactory tempDataDictionaryFactory;
-        private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly IErrorDisplayer errorDisplayer;
         private const String errorDisplayeId = nameof(errorDisplayeId);
 
-        public ErrorDisplayerViewComponent(
-            IHttpContextAccessor httpContextAccessor,
-            ITempDataDictionaryFactory tempDataDictionaryFactory,
-            IErrorDisplayer errorDisplayer)
+        public ErrorDisplayerViewComponent()
         {
-            this.httpContextAccessor = httpContextAccessor;
-            this.tempDataDictionaryFactory = tempDataDictionaryFactory;
-            this.errorDisplayer = errorDisplayer;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(HttpContext context)
+        public IViewComponentResult Invoke()
         {
-            object ErrorList;
-            var tempDataDictionary = tempDataDictionaryFactory.GetTempData(httpContextAccessor.HttpContext);
-            tempDataDictionary.TryGetValue(errorDisplayeId, out ErrorList);
-
-            var list =   ErrorList as List<String>;
-            return await Task.Run(() =>
+             List<String> errorList = new List<String>();
+            var AllKeys = ModelState.Keys;
+            var keysEnumerator = AllKeys.GetEnumerator();
+            while (keysEnumerator.MoveNext())
             {
-                return View(ErrorList);
-            });
+                if (keysEnumerator.Current.Contains("AdditionalValidation"))
+                {
+                    foreach (var item2 in ModelState[keysEnumerator.Current].Errors)
+                        errorList.Add(item2.ErrorMessage); 
+                    
+                }
+          
+            }
+            return View(errorList);
         }
     }
 }

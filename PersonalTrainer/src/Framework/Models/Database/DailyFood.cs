@@ -10,7 +10,7 @@ namespace Framework.Models.Database
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public Guid DayId { get; set; }
+        public Guid DailyFoodId { get; set; }
 
         [ForeignKey("User")]
         public Guid UserId { get; set; }
@@ -18,20 +18,19 @@ namespace Framework.Models.Database
         [Required]
         public DateTime Date { get; set; }
 
-        public Int32 TotalCalories { get; set; }
+        public Decimal TotalCalories { get; set; }
 
-        public Int32 TotalProteins { get; set; }
+        public Decimal TotalProteins { get; set; }
 
-        public Int32 TotalFat { get; set; }
+        public Decimal TotalFat { get; set; }
 
-        public Int32 TotalFibre { get; set; }
+        public Decimal TotalFibre { get; set; }
 
-        public Int32 TotalCarbohydrates { get; set; }
+        public Decimal TotalCarbohydrates { get; set; }
 
         [Required]
         public virtual User User { get; set; }
 
-        [Required]
-        public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<DailyFoodProduct> DailyFoodProducts { get; set; }
     }
 }

@@ -8,8 +8,8 @@ using Framework.DataBaseContext;
 namespace PersonalTrainer.Migrations
 {
     [DbContext(typeof(DailyFoodContext))]
-    [Migration("20161024221600_DailyFood")]
-    partial class DailyFood
+    [Migration("20161103175118_daily2")]
+    partial class daily2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,23 +19,23 @@ namespace PersonalTrainer.Migrations
 
             modelBuilder.Entity("Framework.Models.Database.DailyFood", b =>
                 {
-                    b.Property<Guid>("DayId");
+                    b.Property<Guid>("DailyFoodId");
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<int>("TotalCalories");
+                    b.Property<decimal>("TotalCalories");
 
-                    b.Property<int>("TotalCarbohydrates");
+                    b.Property<decimal>("TotalCarbohydrates");
 
-                    b.Property<int>("TotalFat");
+                    b.Property<decimal>("TotalFat");
 
-                    b.Property<int>("TotalFibre");
+                    b.Property<decimal>("TotalFibre");
 
-                    b.Property<int>("TotalProteins");
+                    b.Property<decimal>("TotalProteins");
 
                     b.Property<Guid>("UserId");
 
-                    b.HasKey("DayId");
+                    b.HasKey("DailyFoodId");
 
                     b.HasIndex("UserId");
 
@@ -65,8 +65,6 @@ namespace PersonalTrainer.Migrations
                 {
                     b.Property<Guid>("ProductId");
 
-                    b.Property<Guid?>("DailyFoodDayId");
-
                     b.Property<string>("Manufacturer");
 
                     b.Property<string>("Name")
@@ -80,7 +78,7 @@ namespace PersonalTrainer.Migrations
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("DailyFoodDayId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Product");
                 });
@@ -165,7 +163,7 @@ namespace PersonalTrainer.Migrations
             modelBuilder.Entity("Framework.Models.Database.DailyFoodProduct", b =>
                 {
                     b.HasOne("Framework.Models.Database.DailyFood", "DailyFood")
-                        .WithMany()
+                        .WithMany("DailyFoodProducts")
                         .HasForeignKey("DailyFoodId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -177,9 +175,10 @@ namespace PersonalTrainer.Migrations
 
             modelBuilder.Entity("Framework.Models.Database.Product", b =>
                 {
-                    b.HasOne("Framework.Models.Database.DailyFood")
-                        .WithMany("Product")
-                        .HasForeignKey("DailyFoodDayId");
+                    b.HasOne("Framework.Models.Database.User")
+                        .WithMany("Products")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Framework.Models.Database.ProductDetails", b =>

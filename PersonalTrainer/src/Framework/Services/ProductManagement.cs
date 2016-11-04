@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Framework.DataBaseContext;
-using Microsoft.AspNetCore.Http;
 using Framework.Models;
 using Framework.Models.Database;
 using System.Collections.Generic;
@@ -26,31 +25,67 @@ namespace Framework.Services
             this.userManagement = userManagement;
         }
 
-        public void AddDailyFood(DateTime date, DailyFoodProductDto dto)
+        public void SubmitDailyFood(DateTime date, IEnumerable<DailyFoodProductDto> food)
         {
-          
-            throw new NotImplementedException();
+            using (var trans = dailyFoodContext.Database.BeginTransaction())
+            {
+                var guid = userManagement.GetCurrentUserId();
+
+                var day = dailyFoodContext.DailyFood.Where(x => x.UserId.Equals(guid) &&
+                x.Date.Year == date.Year &&
+                x.Date.Month == date.Month &&
+                x.Date.Day == date.Day);
+              
+                List<DailyFoodProduct> foodList = new List<DailyFoodProduct>();
+
+                var dailyFoodId = Guid.NewGuid();
+
+
+                foreach (var item in food)
+                {
+                    foodList.Add(new DailyFoodProduct()
+                    {
+                        Quantity = item.ProductQuantity,
+                        ProductId = item.ProductId,
+                        MealType = (Int32)item.MealType,
+                        Product = context.Products.FirstOrDefault(x => x.ProductId.Equals(item.ProductId)),
+                        DailyFoodId = dailyFoodId
+                    });
+                }
+
+              
+
+                if (day == null)
+                {
+                    dailyFoodContext.DailyFood.Add(new DailyFood()
+                    {
+                        Date = date,
+                        UserId = guid,
+                        DailyFoodId = dailyFoodId,
+                        DailyFoodProducts = foodList,
+                        TotalCalories = foodList.Sum(x => x.Product.ProductDetails.Calories),
+                        TotalFat = foodList.Sum(x => x.Product.ProductDetails.Fat),
+                        TotalFibre = foodList.Sum(x => x.Product.ProductDetails.Fibre),
+                        TotalProteins = foodList.Sum(x => x.Product.ProductDetails.Protein),
+                        TotalCarbohydrates = foodList.Sum(x => x.Product.ProductDetails.Carbohydrates)
+                    });
+                }
+            }
         }
 
         public DailyFoodDto GetDailyFood(DateTime date)
         {
             using (var trans = dailyFoodContext.Database.BeginTransaction())
             {
-
-                var user = userManagement.GetCurrentUser();
-                var userGuid = user.UserId;
-
-                if (String.IsNullOrWhiteSpace(userGuid.ToString())) throw new KeyNotFoundException(nameof(userGuid));
-
-                var guid = userGuid;
+                var guid = userManagement.GetCurrentUserId();
 
                 var result = from d in dailyFoodContext.DailyFood
                              join dp in dailyFoodContext.DailyFoodProduct
-                             on d.DayId equals dp.DailyFoodId
+                             on d.DailyFoodId equals dp.DailyFoodId
                              where d.Date.Year == date.Year 
                              && d.Date.Month == date.Month 
                              && d.Date.Day == date.Day
-                             && d.UserId.Equals(userGuid)
+                             && d.UserId.Equals(guid)
                              select new
                              {
                                 d,
@@ -264,6 +299,7 @@ namespace Framework.Services
                 trans.Commit();
             }
         }
+
 
         /// <summary>
         /// Pozyskuje produkt o podanym id.
@@ -519,30 +555,53 @@ namespace Framework.Services
 
         public DailyFoodDto GetDailyFoodFromDailyFoodProductDto(DateTime date, IEnumerable<DailyFoodProductDto> dto )
         {
-            var breakfastMeals = dto.Where(x => x.MealType == MealType.Breakfast)
-                .Select(y => new KeyValuePair<Guid,Int32>(y.ProductId,y.ProductQuantity));
+            //var breakfastMeals = dto.Where(x => x.MealType == MealType.Breakfast)
+            //    .Select(y => new KeyValuePair<Guid,Int32>(y.ProductId,y.ProductQuantity));
 
-            List<ProductDto> products = new List<ProductDto>();
-            foreach (var item in breakfastMeals)
+
+            List<DailyProductDto> products = new List<DailyProductDto>();
+            foreach (var item in dto)
             {
-                var p = GetProduct(item.Key);
-               // p.Macro.Quantity = item.Value;
-                products.Add(p);
+                var p = GetProduct(item.ProductId);
+                var quantity = item.ProductQuantity;
+                var res = (decimal)quantity / p.Macro.Quantity;
+                var currentMacro = new Macro()
+                {
+                    QuantityType = p.Macro.QuantityType,
+                    Calories = p.Macro.Calories * res,
+                    Fat = p.Macro.Fat * res,
+                    Protein = p.Macro.Protein * res,
+                    Fibre = p.Macro.Fibre * res,
+                    Carbohydrates = p.Macro.Carbohydrates * res,
+                    Quantity = quantity
+                };
+        
+                products.Add(new DailyProductDto()
+                {
+                    Product = p,
+                    MealType = item.MealType,
+                    CurrentMacro = currentMacro
+                });
             }
 
-            return null;
-            //List<MealDto> meals = new List<MealDto>();
-            //var meal = new MealDto()
-            //{
-            //    MealType = MealType.Breakfast,
-            //    Products = products
-            //};
+            var totalFat = products.Sum(x => x.CurrentMacro.Fat);
+            var totalFibre = products.Sum(x => x.CurrentMacro.Fibre);
+            var totalCarbohydrates = products.Sum(x => x.CurrentMacro.Carbohydrates);
+            var totalCalories = products.Sum(x => x.CurrentMacro.Calories);
+            var totalProtein = products.Sum(x => x.CurrentMacro.Protein);
 
-            //meals.Add(meal);
-            //return new DailyFoodDto()
-            //{
-            //    Meals = meals
-            //};
+
+            return new DailyFoodDto()
+            {
+                DailyProduct = products,
+                Day = date,
+                DayCalories = totalCalories,
+                DayCarbohydrates = totalCarbohydrates,
+                DayFat = totalFat,
+                DayFibre = totalFibre,
+                DayProteins = totalProtein
+            };
+
         }
     }
 }

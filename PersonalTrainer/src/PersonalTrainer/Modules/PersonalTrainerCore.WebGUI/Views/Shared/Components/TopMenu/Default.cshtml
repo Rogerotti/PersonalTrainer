@@ -10,14 +10,14 @@
                 if (Model.IsLogedIn)
                 {
                     <div class="ui small header item">Witaj @Model.UserName</div>
-                    <a class="item" asp-controller="Diet" asp-action="Diet">Diet</a>
+                    <a class="item" asp-controller="Diet" asp-action="Index">Diet</a>
                     <a class="item" asp-controller="Login" asp-action="Logout">Wyloguj</a>
                                
                 }
                 else
                 {
                     <a class="item" asp-controller="Register" asp-action="Index">Sign Up</a>
-                    <a class="item" asp-controller="Login" asp-action="Login">Login</a>
+                    <a class="item" asp-controller="Login" asp-action="Index">Login</a>
                     <a class="item" asp-controller="Login" asp-action="AdminLogin">Admin</a>
 
                 }

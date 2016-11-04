@@ -9,6 +9,7 @@ namespace Framework.DataBaseContext
 
         public DbSet<UserDetails> UsersDetails{ get;set;}
 
+
         public UserContext(DbContextOptions<UserContext> options)
             : base(options)
         {

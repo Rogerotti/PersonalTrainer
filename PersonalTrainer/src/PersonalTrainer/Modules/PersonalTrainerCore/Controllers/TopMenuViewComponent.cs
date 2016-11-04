@@ -27,6 +27,7 @@ namespace PersonalTrainerCore.Controllers
                 {
                     dto.IsLogedIn = true;
                     dto.UserName = userManagement.GetCurrentUser().Login;
+                  
                 }
                 else
                 {

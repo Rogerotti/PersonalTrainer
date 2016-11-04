@@ -6,7 +6,12 @@ namespace Framework.Services
 {
     public interface IProductManagement
     {
-        void AddDailyFood(DateTime date, DailyFoodProductDto dto);
+        /// <summary>
+        /// Rejestruje dzień żywieniowy dla podanego dnia.
+        /// </summary>
+        /// <param name="date">Data dnia rejestrującego produkty.</param>
+        /// <param name="food">Lista produktów.</param>
+        void SubmitDailyFood(DateTime date, IEnumerable<DailyFoodProductDto> food);
 
         DailyFoodDto GetDailyFood(DateTime date);
 

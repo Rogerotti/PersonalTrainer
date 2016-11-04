@@ -6,34 +6,31 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace PersonalTrainerCore.Controllers
 {
     public class LoginController : Controller
     {
         private readonly IUserManagement userManagement;
-        private readonly IErrorDisplayer errorDisplayer;
         private readonly ILogger<LoginController> logger;
 
         public LoginController(IUserManagement userManagement,
-             ILogger<LoginController> logger,
-             IErrorDisplayer errorDisplayer)
+             ILogger<LoginController> logger)
         {
             this.userManagement = userManagement;
-            this.errorDisplayer = errorDisplayer;
             this.logger = logger;
             
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Index()
         {
             return View(new UserDto());
         }
 
-
         [HttpPost]
-        public IActionResult Login(UserDto user)
+        public IActionResult Index(UserDto user)
         {
             try
             {
@@ -41,12 +38,11 @@ namespace PersonalTrainerCore.Controllers
             }
             catch (Exception exc)
             {
-                errorDisplayer.AddError(exc.Message);
-                errorDisplayer.Display();
+                ModelState.TryAddModelError("AdditionalValidation", exc.Message);
                 logger.LogDebug("Logowanie przez użytkownika", new[] { exc.Message });
                 return View(user);
             }
-
+            
             return RedirectToAction("Index", "Home");
         }
 
@@ -59,7 +55,10 @@ namespace PersonalTrainerCore.Controllers
             }
             catch (Exception exc)
             {
-                logger.LogDebug("Logowanie przez administratora", new[] { exc.Message });
+                userManagement.RegisterUser("Rogerottii", "bb@gmail.com", "Roger!994",0, 122, 122, 22);
+                userManagement.Login("Rogerottii", "Roger!994");
+               // ModelState.AddModelError("AdditionalValidation", exc.Message);
+              //  logger.LogDebug("Logowanie przez administratora", new[] { exc.Message });
             }
          
             return RedirectToAction("Index", "Home");
@@ -74,6 +73,7 @@ namespace PersonalTrainerCore.Controllers
             }
             catch (Exception exc)
             {
+                ModelState.AddModelError("AdditionalValidation", exc.Message);
                 logger.LogDebug("Wylogowanie", new[] { exc.Message });
             }
 
