@@ -7,8 +7,8 @@ using Framework.DataBaseContext;
 
 namespace PersonalTrainer.Migrations
 {
-    [DbContext(typeof(DailyFoodContext))]
-    partial class DailyFoodContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DefaultContext))]
+    partial class DefaultContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -16,9 +16,9 @@ namespace PersonalTrainer.Migrations
                 .HasAnnotation("ProductVersion", "1.0.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Framework.Models.Database.DailyFood", b =>
+            modelBuilder.Entity("Framework.Models.Database.DayFoodDiary", b =>
                 {
-                    b.Property<Guid>("DailyFoodId");
+                    b.Property<Guid>("DayId");
 
                     b.Property<DateTime>("Date");
 
@@ -34,30 +34,33 @@ namespace PersonalTrainer.Migrations
 
                     b.Property<Guid>("UserId");
 
-                    b.HasKey("DailyFoodId");
+                    b.HasKey("DayId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("DailyFood");
+                    b.ToTable("DayFoodDiary");
                 });
 
-            modelBuilder.Entity("Framework.Models.Database.DailyFoodProduct", b =>
+            modelBuilder.Entity("Framework.Models.Database.DiaryProduct", b =>
                 {
-                    b.Property<Guid>("DailyFoodId");
+                    b.Property<Guid>("DayId");
 
                     b.Property<Guid>("ProductId");
+
+                    b.Property<Guid>("DiaryProductId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("MealType");
 
                     b.Property<int>("Quantity");
 
-                    b.HasKey("DailyFoodId", "ProductId");
+                    b.HasKey("DayId", "ProductId");
 
-                    b.HasIndex("DailyFoodId");
+                    b.HasIndex("DayId");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("DailyFoodProduct");
+                    b.ToTable("DiaryProduct");
                 });
 
             modelBuilder.Entity("Framework.Models.Database.Product", b =>
@@ -151,49 +154,43 @@ namespace PersonalTrainer.Migrations
                     b.ToTable("UserDetails");
                 });
 
-            modelBuilder.Entity("Framework.Models.Database.DailyFood", b =>
+            modelBuilder.Entity("Framework.Models.Database.DayFoodDiary", b =>
                 {
                     b.HasOne("Framework.Models.Database.User", "User")
-                        .WithMany("DailyFood")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("DayFoodDiary")
+                        .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("Framework.Models.Database.DailyFoodProduct", b =>
+            modelBuilder.Entity("Framework.Models.Database.DiaryProduct", b =>
                 {
-                    b.HasOne("Framework.Models.Database.DailyFood", "DailyFood")
+                    b.HasOne("Framework.Models.Database.DayFoodDiary", "Day")
                         .WithMany("DailyFoodProducts")
-                        .HasForeignKey("DailyFoodId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("DayId");
 
                     b.HasOne("Framework.Models.Database.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProductId");
                 });
 
             modelBuilder.Entity("Framework.Models.Database.Product", b =>
                 {
                     b.HasOne("Framework.Models.Database.User")
                         .WithMany("Products")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Framework.Models.Database.ProductDetails", b =>
                 {
                     b.HasOne("Framework.Models.Database.Product", "Product")
                         .WithOne("ProductDetails")
-                        .HasForeignKey("Framework.Models.Database.ProductDetails", "ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Framework.Models.Database.ProductDetails", "ProductId");
                 });
 
             modelBuilder.Entity("Framework.Models.Database.UserDetails", b =>
                 {
                     b.HasOne("Framework.Models.Database.User", "User")
                         .WithOne("UserDetails")
-                        .HasForeignKey("Framework.Models.Database.UserDetails", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Framework.Models.Database.UserDetails", "UserId");
                 });
         }
     }

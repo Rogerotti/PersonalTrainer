@@ -53,7 +53,7 @@ namespace PersonalTrainerCore.Controllers
             {
                 userManagement.Login("Rogerottii", "Roger!994");
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 userManagement.RegisterUser("Rogerottii", "bb@gmail.com", "Roger!994",0, 122, 122, 22);
                 userManagement.Login("Rogerottii", "Roger!994");

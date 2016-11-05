@@ -9,47 +9,44 @@ namespace Framework.Services
 {
     public class ProductManagement : IProductManagement
     {
-        private readonly ProductContext context;
-        private readonly DailyFoodContext dailyFoodContext;
+        private readonly DefaultContext context;
         private readonly IUserManagement userManagement;
 
         private const String userId = nameof(userId);
         private const String userName = nameof(userName);
 
-        public ProductManagement(ProductContext context,
-            DailyFoodContext dailyFoodContext,
+        public ProductManagement(DefaultContext context,
             IUserManagement userManagement)
         {
             this.context = context;
-            this.dailyFoodContext = dailyFoodContext;
             this.userManagement = userManagement;
         }
 
         public void SubmitDailyFood(DateTime date, IEnumerable<DailyFoodProductDto> food)
         {
-            using (var trans = dailyFoodContext.Database.BeginTransaction())
+            using (var trans = context.Database.BeginTransaction())
             {
                 var guid = userManagement.GetCurrentUserId();
 
-                var day = dailyFoodContext.DailyFood.Where(x => x.UserId.Equals(guid) &&
+                var day = context.DailyFood.Where(x => x.UserId.Equals(guid) &&
                 x.Date.Year == date.Year &&
                 x.Date.Month == date.Month &&
                 x.Date.Day == date.Day);
               
-                List<DailyFoodProduct> foodList = new List<DailyFoodProduct>();
+                List<DiaryProduct> foodList = new List<DiaryProduct>();
 
                 var dailyFoodId = Guid.NewGuid();
 
 
                 foreach (var item in food)
                 {
-                    foodList.Add(new DailyFoodProduct()
+                    foodList.Add(new DiaryProduct()
                     {
                         Quantity = item.ProductQuantity,
                         ProductId = item.ProductId,
                         MealType = (Int32)item.MealType,
-                        Product = context.Products.FirstOrDefault(x => x.ProductId.Equals(item.ProductId)),
-                        DailyFoodId = dailyFoodId
+                        Product = context.Product.FirstOrDefault(x => x.ProductId.Equals(item.ProductId)),
+                        DayId = dailyFoodId
                     });
                 }
 
@@ -57,11 +54,11 @@ namespace Framework.Services
 
                 if (day == null)
                 {
-                    dailyFoodContext.DailyFood.Add(new DailyFood()
+                    context.DailyFood.Add(new DayFoodDiary()
                     {
                         Date = date,
                         UserId = guid,
-                        DailyFoodId = dailyFoodId,
+                        DayId = dailyFoodId,
                         DailyFoodProducts = foodList,
                         TotalCalories = foodList.Sum(x => x.Product.ProductDetails.Calories),
                         TotalFat = foodList.Sum(x => x.Product.ProductDetails.Fat),
@@ -75,13 +72,13 @@ namespace Framework.Services
 
         public DailyFoodDto GetDailyFood(DateTime date)
         {
-            using (var trans = dailyFoodContext.Database.BeginTransaction())
+            using (var trans = context.Database.BeginTransaction())
             {
                 var guid = userManagement.GetCurrentUserId();
 
-                var result = from d in dailyFoodContext.DailyFood
-                             join dp in dailyFoodContext.DailyFoodProduct
-                             on d.DailyFoodId equals dp.DailyFoodId
+                var result = from d in context.DailyFood
+                             join dp in context.DailyFoodProduct
+                             on d.DayId equals dp.DayId
                              where d.Date.Year == date.Year 
                              && d.Date.Month == date.Month 
                              && d.Date.Day == date.Day
@@ -210,7 +207,7 @@ namespace Framework.Services
                 Int32 productType = GetProductTypeValue(dto.Type);
                 Int32 productState = GetProductStateValue(dto.State);
 
-                context.Products.Add(new Product()
+                context.Product.Add(new Product()
                 {
                     ProductId = productId,
                     UserId = dto.UserId,
@@ -244,10 +241,10 @@ namespace Framework.Services
         {
             using (var trans = context.Database.BeginTransaction())
             {
-                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(productId));
                 var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(productId));
                 context.ProductsDetails.Remove(pd);
-                context.Products.Remove(p);
+                context.Product.Remove(p);
 
                 context.SaveChanges();
                 trans.Commit();
@@ -258,7 +255,7 @@ namespace Framework.Services
         {
             using (var trans = context.Database.BeginTransaction())
             {
-                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
+                var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
                 var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
 
                 p.Name = dto.Name;
@@ -282,7 +279,7 @@ namespace Framework.Services
         {
             using (var trans = context.Database.BeginTransaction())
             {
-                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(productId));
                 p.ProductState = 1;
                 context.SaveChanges();
                 trans.Commit();
@@ -293,7 +290,7 @@ namespace Framework.Services
         {
             using (var trans = context.Database.BeginTransaction())
             {
-                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(productId));
                 p.ProductState = 0;
                 context.SaveChanges();
                 trans.Commit();
@@ -310,7 +307,7 @@ namespace Framework.Services
         {
             using (var trans = context.Database.BeginTransaction())
             {
-                var p = context.Products.FirstOrDefault(x => x.ProductId.Equals(productId));
+                var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(productId));
                 var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(productId));
 
                 return new ProductDto()
@@ -341,7 +338,7 @@ namespace Framework.Services
         /// <returns></returns>
         public IEnumerable<ProductDto> GetProducts()
         {
-            var result = from p in context.Products
+            var result = from p in context.Product
                          join pd in context.ProductsDetails
                          on p.ProductId equals pd.ProductId
                          select new
@@ -381,7 +378,7 @@ namespace Framework.Services
         {
             var guid = userManagement.GetCurrentUserId();
 
-            var result = from p in context.Products
+            var result = from p in context.Product
                          join pd in context.ProductsDetails
                          on p.ProductId equals pd.ProductId
                          where p.UserId.Equals(guid)

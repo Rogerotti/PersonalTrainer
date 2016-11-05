@@ -13,13 +13,13 @@ namespace Framework.Services
 {
     public class UserManagement : IUserManagement
     {
-        private readonly UserContext context;
+        private readonly DefaultContext context;
         private readonly ISession session;
 
         private const String userId = nameof(userId);
         private const String userName = nameof(userName);
 
-        public UserManagement(UserContext context,
+        public UserManagement(DefaultContext context,
             IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
@@ -69,7 +69,7 @@ namespace Framework.Services
 
         public void Login(String username, String password)
         {  
-            var userList = context.Users;
+            var userList = context.User;
             if (!userList.Any()) throw new UnauthorizedAccessException("No people in database.");
             var user = userList.FirstOrDefault(x => x.UserName.Equals(username));
 
@@ -125,7 +125,7 @@ namespace Framework.Services
         {
             Guid userGuid = GetCurrentUserId();
 
-            var userDto = context.Users.FirstOrDefault(x => x.UserId.Equals(userGuid));
+            var userDto = context.User.FirstOrDefault(x => x.UserId.Equals(userGuid));
             var userDetails = context.UsersDetails.FirstOrDefault(x => x.UserId.Equals(userGuid));
 
             return new UserDto()
@@ -165,7 +165,7 @@ namespace Framework.Services
             if (String.IsNullOrWhiteSpace(username)) throw new UnauthorizedAccessException(ErrorLanguage.UsernameEmpty);
             if (username.Length <= 2 || username.Length > 20) throw new UnauthorizedAccessException(ErrorLanguage.UsernameLength);
 
-            var users = context.Users;
+            var users = context.User;
             if (users.Any(x => x.UserName.Equals(username))) throw new UnauthorizedAccessException(ErrorLanguage.UsernameExist);
         }
 

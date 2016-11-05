@@ -1,24 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Framework.Models.Database
 {
-    [Table("Product")]
+    /// <summary>
+    /// Tabela przedstawiająca produkty dodawane przez użytkowników.
+    /// </summary>
+    [Table(nameof(Product))]
     public class Product
     {
+        /// <summary>
+        /// Id produktu.
+        /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid ProductId { get; set; }
 
+        [Required]
+        /// <summary>
+        /// Id użytkownika dodającego produkt.
+        /// </summary>
         public Guid UserId { get; set; }
 
+        /// <summary>
+        /// Nazwa produktu.
+        /// </summary>
         [Required]
         public String Name { get; set; }
 
+        /// <summary>
+        /// Nazwa producenta.
+        /// </summary>
         public String Manufacturer { get; set; }
 
+        /// <summary>
+        /// Typ produktu.
+        /// 0 - Nabiał
+        /// TODO..
+        /// </summary>
         [Required]
         public Int32 ProductType { get; set; }
 

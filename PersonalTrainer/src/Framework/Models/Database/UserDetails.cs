@@ -5,12 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Framework.Models.Database
 {
-    [Table("UserDetails")]
+    /// <summary>
+    /// Tabela przedstawiająca dane dodatkowe użytkowników.
+    /// </summary>
+    [Table(nameof(UserDetails))]
     public class UserDetails
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        [ForeignKey("User")]
+        [ForeignKey(nameof(Database.User))]
         public Guid UserId { get; set; }
 
         /// <summary>
@@ -47,6 +50,9 @@ namespace Framework.Models.Database
         /// </summary>
         public Int32 Age { get; set; }
 
+        /// <summary>
+        /// Użytkownik.
+        /// </summary>
         [Required]
         public virtual User User { get; set; }
     }
