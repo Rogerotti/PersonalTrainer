@@ -1,15 +1,15 @@
 {
   "version": "1.0.0-*",
 
-  "dependencies": {
-    "Framework": "1.0.0-*",
-    "NETStandard.Library": "1.6.0",
-    "PersonalTrainerCore.WebGUI": "1.0.0-*",
-    "Microsoft.AspNetCore.Mvc": "1.0.1",
-    "Microsoft.AspNetCore.Razor": "1.0.0",
-    "Microsoft.AspNetCore.Session": "1.0.0",
-    "Microsoft.AspNetCore.Http.Extensions": "1.0.0"
-  },
+    "dependencies": {
+        "Framework": "1.0.0-*",
+        "NETStandard.Library": "1.6.0",
+        "PersonalTrainerCore.WebGUI": "1.0.0-*",
+        "Microsoft.AspNetCore.Mvc": "1.0.1",
+        "Microsoft.AspNetCore.Razor": "1.0.0",
+        "Microsoft.AspNetCore.Session": "1.0.0",
+        "Microsoft.AspNetCore.Http.Extensions": "1.0.0"
+    },
 
   "frameworks": {
     "netstandard1.6": {

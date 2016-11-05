@@ -17,12 +17,6 @@ namespace PersonalTrainerDiet.Controllers
         private const String productMealTypeId = nameof(productMealTypeId);
         private const String mealTypeId = nameof(mealTypeId);
 
-        private const String additionalMealsId2 = nameof(additionalMealsId2);
-        private const String productGuidId2 = nameof(productGuidId2);
-        private const String productQuantityId2 = nameof(productQuantityId2);
-        private const String productMealTypeId2 = nameof(productMealTypeId2);
-        private const String mealTypeId2 = nameof(mealTypeId2);
-
         public DietController(IProductManagement productManagement)
         {
             this.productManagement = productManagement;

@@ -40,7 +40,6 @@ namespace PersonalTrainer
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserManagement, UserManagement>();
             services.AddSingleton<IProductManagement, ProductManagement>();
-     
             // services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             var mvcBuilder = services.AddMvc()

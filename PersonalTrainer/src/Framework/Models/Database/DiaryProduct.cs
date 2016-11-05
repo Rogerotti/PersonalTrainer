@@ -14,7 +14,7 @@ namespace Framework.Models.Database
         /// Id produktu żywieniowego.
         /// </summary>
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid DiaryProductId { get; set; }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Framework.Models.Database
         /// <summary>
         /// Id produktu.
         /// </summary>
-        [ForeignKey(nameof(Database.Product))]
+        [ForeignKey(nameof(Product))]
         public Guid ProductId { get; set; }
 
         /// <summary>
@@ -39,8 +39,10 @@ namespace Framework.Models.Database
         /// </summary>
         public Int32 Quantity { get; set; }
 
+        [Required]
         public virtual DayFoodDiary Day { get; set; }
 
+        [Required]
         public virtual Product Product { get; set; }
     }
 }
