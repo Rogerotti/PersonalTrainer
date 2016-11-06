@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -54,5 +55,7 @@ namespace Framework.Models.Database
 
         [Required]
         public virtual ProductDetails ProductDetails { get; set; }
+
+        public virtual ICollection<DiaryProduct> DiaryProducts { get; set; }
     }
 }

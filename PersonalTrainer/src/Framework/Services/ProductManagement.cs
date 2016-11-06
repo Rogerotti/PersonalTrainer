@@ -73,13 +73,13 @@ namespace Framework.Services
                     });
                 }
 
-                var foods = context.DailyFoodProduct.Where(x => x.DayId.Equals(dailyFoodId));
+                var foods = context.DiaryProducts.Where(x => x.DayId.Equals(dailyFoodId));
                 foreach (var item in foods)
                 {
-                    context.DailyFoodProduct.Remove(item);
+                    context.DiaryProducts.Remove(item);
                 }
 
-                context.DailyFoodProduct.AddRange(foodList);
+                context.DiaryProducts.AddRange(foodList);
                 context.SaveChanges();
                 trans.Commit();
             }
@@ -87,6 +87,7 @@ namespace Framework.Services
 
         public DailyFoodDto GetDailyFood(DateTime date)
         {
+
                 var guid = userManagement.GetCurrentUserId();
             var test = context.DailyFood.Where(d => d.Date.Year == date.Year
                              && d.Date.Month == date.Month
@@ -96,7 +97,7 @@ namespace Framework.Services
 
 
                 var result = (from d in context.DailyFood
-                             join dp in context.DailyFoodProduct on d.DayId equals dp.DayId
+                             join dp in context.DiaryProducts on d.DayId equals dp.DayId
                              join p in context.Product on  dp.ProductId equals p.ProductId
                              join pd in context.ProductsDetails on p.ProductId equals pd.ProductId
                              where d.Date.Year == date.Year 
@@ -119,7 +120,7 @@ namespace Framework.Services
                     List<DailyProductDto> daily = new List<DailyProductDto>();
                     var foodTypes = result.Select(x => x.dp).ToList();
                      var products = result.Select(x => x.p).ToList();
-                     foreach (var item in test.DailyFoodProducts)
+                     foreach (var item in result.Select(x => x.dp).ToList())
                     {
                         var prod = products.First(x => x.ProductId.Equals(item.ProductId));
                         var pd = result.Select(x => x.pd);

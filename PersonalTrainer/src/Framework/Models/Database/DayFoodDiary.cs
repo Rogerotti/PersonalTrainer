@@ -61,6 +61,6 @@ namespace Framework.Models.Database
         /// <summary>
         /// Lista posiłków spożytych podczas danego dnia żywieniowego.
         /// </summary>
-        public virtual ICollection<DiaryProduct> DailyFoodProducts { get; set; }
+        public virtual ICollection<DiaryProduct> DiaryProducts { get; set; }
     }
 }

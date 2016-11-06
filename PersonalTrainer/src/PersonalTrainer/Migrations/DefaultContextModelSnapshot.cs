@@ -47,8 +47,7 @@ namespace PersonalTrainer.Migrations
 
                     b.Property<Guid>("ProductId");
 
-                    b.Property<Guid>("DiaryProductId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<Guid>("DiaryProductId");
 
                     b.Property<int>("MealType");
 
@@ -164,11 +163,11 @@ namespace PersonalTrainer.Migrations
             modelBuilder.Entity("Framework.Models.Database.DiaryProduct", b =>
                 {
                     b.HasOne("Framework.Models.Database.DayFoodDiary", "Day")
-                        .WithMany("DailyFoodProducts")
+                        .WithMany("DiaryProducts")
                         .HasForeignKey("DayId");
 
                     b.HasOne("Framework.Models.Database.Product", "Product")
-                        .WithMany()
+                        .WithMany("DiaryProducts")
                         .HasForeignKey("ProductId");
                 });
 

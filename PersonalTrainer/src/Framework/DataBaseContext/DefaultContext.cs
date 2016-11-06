@@ -17,11 +17,22 @@ namespace Framework.DataBaseContext
 
         public DbSet<DayFoodDiary> DailyFood { get; set; }
 
-        public DbSet<DiaryProduct> DailyFoodProduct { get; set; }
+        public DbSet<DiaryProduct> DiaryProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<DiaryProduct>().Has
             modelBuilder.Entity<DiaryProduct>().HasKey(x => new { x.DayId, x.ProductId });
+
+            modelBuilder.Entity<DiaryProduct>()
+                .HasOne(p =>p.Day)
+                .WithMany(dp => dp.DiaryProducts)
+                .HasForeignKey(fk => fk.DayId);
+
+            modelBuilder.Entity<DiaryProduct>()
+                .HasOne(p => p.Product)
+                .WithMany(t => t.DiaryProducts)
+                .HasForeignKey(fk => fk.ProductId);
 
             foreach (IMutableForeignKey mutableForeignKey in modelBuilder.Model.GetEntityTypes().SelectMany(x => x.GetForeignKeys()))
             {

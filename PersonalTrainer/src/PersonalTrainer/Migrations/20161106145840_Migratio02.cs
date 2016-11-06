@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PersonalTrainer.Migrations
 {
-    public partial class Migration01 : Migration
+    public partial class Migratio02 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
