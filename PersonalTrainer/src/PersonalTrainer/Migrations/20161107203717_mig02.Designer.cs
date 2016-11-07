@@ -8,9 +8,10 @@ using Framework.DataBaseContext;
 namespace PersonalTrainer.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    partial class DefaultContextModelSnapshot : ModelSnapshot
+    [Migration("20161107203717_mig02")]
+    partial class mig02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -153,31 +154,6 @@ namespace PersonalTrainer.Migrations
                     b.ToTable("UserDetails");
                 });
 
-            modelBuilder.Entity("Framework.Models.Database.UserGoal", b =>
-                {
-                    b.Property<Guid>("UserId");
-
-                    b.Property<decimal>("BodyFat");
-
-                    b.Property<int>("Calories");
-
-                    b.Property<decimal>("Carbohydrates");
-
-                    b.Property<decimal>("Fat");
-
-                    b.Property<decimal>("Fibre");
-
-                    b.Property<decimal>("Proteins");
-
-                    b.Property<int>("Weight");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserGoal");
-                });
-
             modelBuilder.Entity("Framework.Models.Database.DayFoodDiary", b =>
                 {
                     b.HasOne("Framework.Models.Database.User", "User")
@@ -215,13 +191,6 @@ namespace PersonalTrainer.Migrations
                     b.HasOne("Framework.Models.Database.User", "User")
                         .WithOne("UserDetails")
                         .HasForeignKey("Framework.Models.Database.UserDetails", "UserId");
-                });
-
-            modelBuilder.Entity("Framework.Models.Database.UserGoal", b =>
-                {
-                    b.HasOne("Framework.Models.Database.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
         }
     }

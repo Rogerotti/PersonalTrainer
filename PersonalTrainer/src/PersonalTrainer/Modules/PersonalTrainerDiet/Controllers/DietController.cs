@@ -10,6 +10,7 @@ namespace PersonalTrainerDiet.Controllers
     public class DietController : Controller
     {
         private readonly IProductManagement productManagement;
+        private readonly IUserGoalsManagement userGoalsManamgenet;
 
         private const String additionalMealsId = nameof(additionalMealsId);
         private const String productGuidId = nameof(productGuidId);
@@ -17,9 +18,11 @@ namespace PersonalTrainerDiet.Controllers
         private const String productMealTypeId = nameof(productMealTypeId);
         private const String mealTypeId = nameof(mealTypeId);
 
-        public DietController(IProductManagement productManagement)
+        public DietController(IProductManagement productManagement,
+            IUserGoalsManagement userGoalsManamgenet)
         {
             this.productManagement = productManagement;
+            this.userGoalsManamgenet = userGoalsManamgenet;
         }
 
         public IActionResult Index()
@@ -237,6 +240,13 @@ namespace PersonalTrainerDiet.Controllers
         {
             productManagement.CancelSubscription(new Guid(productCancelSubscribeId));
             return RedirectToAction("ProductList", "Diet");
+        }
+
+        [HttpGet]
+        public IActionResult UserGoals()
+        {
+            var goals = userGoalsManamgenet.GetCurrentUserGoals();
+            return View(goals);
         }
 
         /// <summary>

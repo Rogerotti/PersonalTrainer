@@ -15,6 +15,8 @@ namespace Framework.DataBaseContext
 
         public DbSet<UserDetails> UsersDetails { get; set; }
 
+        public DbSet<UserGoal> UserGoal { get; set; }
+
         public DbSet<DayFoodDiary> DailyFood { get; set; }
 
         public DbSet<DiaryProduct> DiaryProducts { get; set; }
@@ -22,8 +24,7 @@ namespace Framework.DataBaseContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<DiaryProduct>().Has
-            modelBuilder.Entity<DiaryProduct>().HasKey(x => new { x.DayId, x.ProductId });
-
+            modelBuilder.Entity<DiaryProduct>().HasKey(x => x.DiaryProductId);
             modelBuilder.Entity<DiaryProduct>()
                 .HasOne(p =>p.Day)
                 .WithMany(dp => dp.DiaryProducts)

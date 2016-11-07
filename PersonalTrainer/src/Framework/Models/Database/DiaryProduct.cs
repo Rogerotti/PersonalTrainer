@@ -10,23 +10,22 @@ namespace Framework.Models.Database
     [Table(nameof(DiaryProduct))]
     public class DiaryProduct
     {
-        /// <summary>
-        /// Id produktu żywieniowego.
-        /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        /// <summary>
+        /// Id dnia żywieniowego.
+        /// </summary>
         public Guid DiaryProductId { get; set; }
+
 
         /// <summary>
         /// Id dnia żywieniowego.
         /// </summary>
-        [ForeignKey(nameof(DayFoodDiary))]
         public Guid DayId { get; set; }
 
         /// <summary>
         /// Id produktu.
         /// </summary>
-        [ForeignKey(nameof(Product))]
         public Guid ProductId { get; set; }
 
         /// <summary>

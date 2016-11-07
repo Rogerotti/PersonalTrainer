@@ -28,9 +28,11 @@ namespace PersonalTrainer
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Server=(LocalDB)\Personal;Database=PersonalTrainers;Trusted_Connection=True;";
+            var connection = @"Server=(localdb)\MSSQLLocalDB;Database=PersonalTrainer;Trusted_Connection=True;";
 
-            services.AddDbContext<DefaultContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer")));
+            services.AddDbContext<DefaultContext>(
+                options => options.UseSqlServer(connection, b => b.MigrationsAssembly("PersonalTrainer"))
+                , ServiceLifetime.Scoped);
 
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -39,7 +41,8 @@ namespace PersonalTrainer
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IUserManagement, UserManagement>();
-            services.AddSingleton<IProductManagement, ProductManagement>();
+            services.AddScoped<IProductManagement, ProductManagement>();
+            services.AddScoped<IUserGoalsManagement, UserGoalsManagement>();
             // services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             var mvcBuilder = services.AddMvc()

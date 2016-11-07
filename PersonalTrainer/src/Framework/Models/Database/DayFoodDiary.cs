@@ -55,6 +55,9 @@ namespace Framework.Models.Database
         /// </summary>
         public Decimal TotalCarbohydrates { get; set; }
 
+        /// <summary>
+        /// Użytkownik do którego dany dzień żywieniowy należy.
+        /// </summary>
         [Required]
         public virtual User User { get; set; }
 

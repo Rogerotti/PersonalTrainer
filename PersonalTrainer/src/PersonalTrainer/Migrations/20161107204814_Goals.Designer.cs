@@ -8,8 +8,8 @@ using Framework.DataBaseContext;
 namespace PersonalTrainer.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20161106145840_Migratio02")]
-    partial class Migratio02
+    [Migration("20161107204814_Goals")]
+    partial class Goals
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,17 +44,17 @@ namespace PersonalTrainer.Migrations
 
             modelBuilder.Entity("Framework.Models.Database.DiaryProduct", b =>
                 {
-                    b.Property<Guid>("DayId");
-
-                    b.Property<Guid>("ProductId");
-
                     b.Property<Guid>("DiaryProductId");
+
+                    b.Property<Guid>("DayId");
 
                     b.Property<int>("MealType");
 
+                    b.Property<Guid>("ProductId");
+
                     b.Property<int>("Quantity");
 
-                    b.HasKey("DayId", "ProductId");
+                    b.HasKey("DiaryProductId");
 
                     b.HasIndex("DayId");
 
@@ -154,6 +154,31 @@ namespace PersonalTrainer.Migrations
                     b.ToTable("UserDetails");
                 });
 
+            modelBuilder.Entity("Framework.Models.Database.UserGoal", b =>
+                {
+                    b.Property<Guid>("UserId");
+
+                    b.Property<decimal>("BodyFat");
+
+                    b.Property<int>("Calories");
+
+                    b.Property<decimal>("Carbohydrates");
+
+                    b.Property<decimal>("Fat");
+
+                    b.Property<decimal>("Fibre");
+
+                    b.Property<decimal>("Proteins");
+
+                    b.Property<int>("Weight");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserGoal");
+                });
+
             modelBuilder.Entity("Framework.Models.Database.DayFoodDiary", b =>
                 {
                     b.HasOne("Framework.Models.Database.User", "User")
@@ -191,6 +216,13 @@ namespace PersonalTrainer.Migrations
                     b.HasOne("Framework.Models.Database.User", "User")
                         .WithOne("UserDetails")
                         .HasForeignKey("Framework.Models.Database.UserDetails", "UserId");
+                });
+
+            modelBuilder.Entity("Framework.Models.Database.UserGoal", b =>
+                {
+                    b.HasOne("Framework.Models.Database.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
         }
     }

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PersonalTrainer.Migrations
 {
-    public partial class Migratio02 : Migration
+    public partial class mig01 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,15 +95,15 @@ namespace PersonalTrainer.Migrations
                 name: "DiaryProduct",
                 columns: table => new
                 {
+                    DiaryProductId = table.Column<Guid>(nullable: false),
                     DayId = table.Column<Guid>(nullable: false),
                     ProductId = table.Column<Guid>(nullable: false),
-                    DiaryProductId = table.Column<Guid>(nullable: false),
                     MealType = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DiaryProduct", x => new { x.DayId, x.ProductId });
+                    table.PrimaryKey("PK_DiaryProduct", x => new { x.DiaryProductId, x.DayId, x.ProductId });
                     table.ForeignKey(
                         name: "FK_DiaryProduct_DayFoodDiary_DayId",
                         column: x => x.DayId,

@@ -47,16 +47,17 @@ namespace Framework.Services
                         Quantity = item.ProductQuantity,
                         ProductId = item.ProductId,
                         MealType = (Int32)item.MealType,
-                        DayId = dailyFoodId,
-                        Product = context.Product.FirstOrDefault(x => x.ProductId.Equals(item.ProductId))
+                        DayId = dailyFoodId
                     });
                 }
+                var productsIds = foodList.Select(x => x.ProductId).ToList();
+                var productDetails = context.ProductsDetails.Where(pd => !productsIds.Any(p => p == pd.ProductId));
 
-                var TotalCalories = foodList.Sum(x => x.Product.ProductDetails.Calories);
-                var TotalFat = foodList.Sum(x => x.Product.ProductDetails.Fat);
-                var TotalFibre = foodList.Sum(x => x.Product.ProductDetails.Fibre);
-                var TotalProteins = foodList.Sum(x => x.Product.ProductDetails.Protein);
-                var TotalCarbohydrates = foodList.Sum(x => x.Product.ProductDetails.Carbohydrates);
+                var TotalCalories = productDetails.Sum(x => x.Calories);
+                var TotalFat = productDetails.Sum(x => x.Fat);//foodList.Sum(x => x.Product.ProductDetails.Fat);
+                var TotalFibre = productDetails.Sum(x => x.Fibre);//foodList.Sum(x => x.Product.ProductDetails.Fibre);
+                var TotalProteins = productDetails.Sum(x => x.Protein); //foodList.Sum(x => x.Product.ProductDetails.Protein);
+                var TotalCarbohydrates = productDetails.Sum(x => x.Carbohydrates); //foodList.Sum(x => x.Product.ProductDetails.Carbohydrates);
 
                 if (day == null)
                 {
@@ -75,10 +76,8 @@ namespace Framework.Services
 
                 var foods = context.DiaryProducts.Where(x => x.DayId.Equals(dailyFoodId));
                 foreach (var item in foods)
-                {
                     context.DiaryProducts.Remove(item);
-                }
-
+                context.SaveChanges();
                 context.DiaryProducts.AddRange(foodList);
                 context.SaveChanges();
                 trans.Commit();
@@ -131,6 +130,7 @@ namespace Framework.Services
                             Manufacturer = item.Product.Manufacturer,
                             ProductId = item.ProductId,
                             UserId = item.Product.UserId,
+                            
                             Macro = new Macro()
                             {
                                 Quantity = productDetails.Quantity,
@@ -159,8 +159,7 @@ namespace Framework.Services
                                  Protein = productDetails.Protein,
                                  QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
                              },
-                             MealType = MealType.Breakfast
-
+                             MealType = (MealType)item.MealType
                         });
                     }
 
@@ -175,7 +174,7 @@ namespace Framework.Services
                         DailyProduct = daily
                     };
                 }
-
+            
                 return new DailyFoodDto()
                 {
                     Day = date,
