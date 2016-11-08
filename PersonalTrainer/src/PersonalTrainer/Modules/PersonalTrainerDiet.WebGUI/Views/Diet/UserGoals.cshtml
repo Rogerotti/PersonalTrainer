@@ -4,6 +4,41 @@
     ViewData["Title"] = "UserGoals";
     Layout = "DietLayout";
 }
+<div class="ui grid">
 
-<p>@Model.BodyFat</p>
-<p>@Model.Calories</p>
+    <div class="one column row">
+        <div class="column">
+            <div class="field">
+                <div class="ui small header">
+                    <label>Kalorie</label>
+                </div>
+                <div class="ui input">
+                    <input placeholder="Kalorie" type="text" asp-for="Calories">
+                </div>
+                <span asp-validation-for="Calories" class="ui red header"></span>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="field">
+                <div class="ui small header">
+                    <label>Białko</label>
+                </div>
+                <div class="ui input">
+                    <input placeholder="Białko" type="text" asp-for="Proteins">
+                </div>
+                <span asp-validation-for="Proteins" class="ui red header"></span>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="field">
+                <label>Kalorie</label>
+                <div class="ui input">
+                    <input placeholder="Tłuszcze" type="text" asp-for="Fat">
+                </div>
+                    <span asp-validation-for="Fat" class="ui red header"></span>
+                </div>
+        </div>
+    </div>
+</div>
