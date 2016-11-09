@@ -246,7 +246,34 @@ namespace PersonalTrainerDiet.Controllers
         public IActionResult UserGoals()
         {
             var goals = userGoalsManamgenet.GetCurrentUserGoals();
-            return View(goals);
+
+
+            if (goals.Calories == 0)
+                goals.Calories = 1;
+
+            var view = new UserGoalsView()
+            {
+                BodyFat = goals.BodyFat,
+                Calories = goals.Calories,
+                Carbohydrates = goals.Carbohydrates,
+                Fat = goals.Fat,
+                Fibre = goals.Fibre,
+                Proteins = goals.Proteins,
+                UserId = goals.UserId,
+                Weight = goals.Weight,
+                PercentageCarbs = goals.Carbohydrates * 3 * 100 / goals.Calories,
+                PercentageFat = goals.Fat * 4 * 100 / goals.Calories,
+                PercentageFibre = goals.Fibre * 3 * 100 / goals.Calories,
+                PercentageProtein = goals.Proteins * 3 * 100 / goals.Calories,
+            };
+
+            return View(view);
+        }
+
+        [HttpPost]
+        public IActionResult UserGoals(UserGoalsView dto)
+        {
+            return View(dto);
         }
 
         /// <summary>

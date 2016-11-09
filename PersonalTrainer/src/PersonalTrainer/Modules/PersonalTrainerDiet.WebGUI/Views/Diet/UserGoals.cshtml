@@ -1,44 +1,149 @@
-﻿@model  Framework.Models.UserGoalsDto
+﻿@model  Framework.Models.UserGoalsView
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "UserGoals";
     Layout = "DietLayout";
 }
-<div class="ui grid">
+<Style>
+    .margin-top {
+        margin-top: 2em;
+    }
 
-    <div class="one column row">
-        <div class="column">
-            <div class="field">
-                <div class="ui small header">
-                    <label>Kalorie</label>
+        .Medium-margin-top {
+        margin-top: 2em;
+    }
+</style>
+
+<form class="ui form segment" asp-controller="Diet" asp-action="UserGoals" method="post">
+
+    <div class="ui grid">
+
+        <div class="column row">
+            <div class="eight wide column">
+                <div class="field">
+                    <div class="ui small header">Kalorie </div>
+                    <div class="ui input">
+                        <input placeholder="Kalorie" type="text" asp-for="Calories">
+                        <span asp-validation-for="Calories" class="ui red header"></span>
+                    </div>
                 </div>
-                <div class="ui input">
-                    <input placeholder="Kalorie" type="text" asp-for="Calories">
-                </div>
-                <span asp-validation-for="Calories" class="ui red header"></span>
             </div>
         </div>
 
-        <div class="column">
-            <div class="field">
-                <div class="ui small header">
-                    <label>Białko</label>
-                </div>
-                <div class="ui input">
-                    <input placeholder="Białko" type="text" asp-for="Proteins">
-                </div>
-                <span asp-validation-for="Proteins" class="ui red header"></span>
-            </div>
-        </div>
 
-        <div class="column">
-            <div class="field">
-                <label>Kalorie</label>
-                <div class="ui input">
-                    <input placeholder="Tłuszcze" type="text" asp-for="Fat">
+        <div class="four column row">
+      
+            <div class="left floated four wide column">
+                <div class="field">
+                    <div class="ui small header">Białko </div>
+                    <div class="ui input">
+                        <input placeholder="Białko" type="text" asp-for="Proteins">
+                    </div>
+                    <span asp-validation-for="Proteins" class="ui red header"></span>
                 </div>
+            </div>
+
+            <div class="left floated four wide column">
+                <div class="field">
+                    <div class="ui small header">Węglowodany </div>
+                    <div class="ui input">
+                        <input placeholder="Węglowodany" type="text" asp-for="Carbohydrates">
+                    </div>
+                    <span asp-validation-for="Carbohydrates" class="ui red header"></span>
+                </div>
+            </div>
+
+            <div class="left floated four wide column">
+                <div class="field">
+                    <div class="ui small header">Tłuszcze </div>
+                    <div class="ui input">
+                        <input placeholder="Tłuszcze" type="text" asp-for="Fat">
+                    </div>
                     <span asp-validation-for="Fat" class="ui red header"></span>
                 </div>
+            </div>
+
+            <div class="left floated four wide column">
+                <div class="field">
+                    <div class="ui small header">Błonnik </div>
+                    <div class="ui input">
+                        <input placeholder="Błonnik" type="text" asp-for="Fibre">
+                    </div>
+                    <span asp-validation-for="Fibre" class="ui red header"></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="four column row">
+
+            <div class="left floated four wide column">
+
+                <div class="field">
+                    <div class="ui input">
+                        <input placeholder="%" type="text" asp-for="PercentageProtein">
+                        <div class="ui basic label">%</div>
+                        <span asp-validation-for="PercentageProtein" class="ui red header"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="left floated four wide column">
+
+                <div class="field">
+                    <div class="ui input">
+                        <input placeholder="%" type="text" asp-for="PercentageCarbs">
+                        <div class="ui basic label">%</div>
+                        <span asp-validation-for="PercentageCarbs" class="ui red header"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="left floated four wide column">
+
+                <div class="field">
+                    <div class="ui input">
+                        <input placeholder="%" type="text" asp-for="PercentageFat">
+                        <div class="ui basic label">%</div>
+                        <span asp-validation-for="PercentageFat" class="ui red header"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="left floated four wide column">
+
+                <div class="field">
+                    <div class="ui input">
+                        <input placeholder="%" type="text" asp-for="PercentageFibre">
+                        <div class="ui basic label">%</div>
+                        <span asp-validation-for="PercentageFibre" class="ui red header"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="margin-top">
+        <button class="ui blue button" type="submit">
+            Change
+        </button>
+    </div>
+
+    <div class="bottom three fields">
+        <div class="field">
+            <label>Last name</label>
+        </div>
+        <div class="field">
+            <label>Last name</label>
+        </div>
+
+        <div class="field">
+            <label>Last name</label>
         </div>
     </div>
-</div>
+</form>
+
