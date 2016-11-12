@@ -69,7 +69,26 @@ namespace PersonalTrainerDiet.Controllers
             if (ProductDto == null)
                 ProductDto = productManagement.GetDailyFood(DateTime.Today);
 
-            return View(ProductDto);
+
+            var userGoals = userGoalsManamgenet.GetCurrentUserGoals();
+
+            var dayView = new DayView()
+            {
+                DayProteins = ProductDto.DayProteins,
+                DayFibre = ProductDto.DayFibre,
+                DayFat = ProductDto.DayFat,
+                DailyProduct = ProductDto.DailyProduct,
+                DayCarbohydrates = ProductDto.DayCarbohydrates,
+                Day = ProductDto.Day,
+                DayCalories = ProductDto.DayCalories,
+                AvaibleCalories = userGoals.Calories,
+                AvaibleCarbohydrates = userGoals.Carbohydrates,
+                AvaibleFat = userGoals.Fat,
+                AvaibleProteins = userGoals.Proteins,
+                AvaibleFibre = userGoals.Proteins
+            };
+
+            return View(dayView);
         }
 
         [HttpPost]
@@ -273,6 +292,29 @@ namespace PersonalTrainerDiet.Controllers
         [HttpPost]
         public IActionResult UserGoals(UserGoalsView dto)
         {
+            if (dto != null)
+            {
+                try
+                {
+                   var userGoals = new UserGoalsDto()
+                    {
+                        BodyFat = dto.BodyFat,
+                        Calories = dto.Calories,
+                        Weight = dto.Weight,
+                        Fat = dto.Fat,
+                        Carbohydrates = dto.Carbohydrates,
+                        Fibre = dto.Fibre,
+                        Proteins = dto.Proteins,
+                        UserId = dto.UserId
+                    };
+                    userGoalsManamgenet.SetGoals(userGoals);
+                }
+                catch(Exception exc)
+                {
+                    ModelState.TryAddModelError("AdditionalValidation", exc.Message);
+                }
+            }
+          
             return View(dto);
         }
 

@@ -1,4 +1,4 @@
-﻿@model  Framework.Models.DailyFoodDto
+﻿@model  Framework.Models.DayView
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "test";
@@ -6,6 +6,10 @@
 }
 
 <style>
+
+   td.h2 {
+color: red;
+}
         pad-right {
         padding-right: 2em;
     }
@@ -95,16 +99,46 @@
         </button>
 
         <div class="ui divider"></div>
+
+        <table class="ui very basic table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Total Protein</th>
+                    <th>Total Fat</th>
+                    <th>Total Carbs</th>
+                    <th>Total Calories</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Avaible</td>
+                    <td id="AvaibleProtein">@Model.AvaibleProteins</td>
+                    <td id="AvaibleFat">@Model.AvaibleFat</td>
+                    <td id="AvaibleCarbs">@Model.AvaibleCarbohydrates</td>
+                    <td id="AvaibleCalories">@Model.AvaibleCalories</td>
+                </tr>
+                <tr>
+                    <td>Current</td>
+                    <td id="CurrentProtein">@Model.DayProteins</td>
+                    <td id="CurrentFat">@Model.DayFat</td>
+                    <td id="CurrentCarbs">@Model.DayCarbohydrates</td>
+                    <td id="CurrentCalories">@Model.DayCalories</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td id="ResultProtein"></td>
+                    <td id="ResultFat"></td>
+                    <td id="ResultCarbs"></td>
+                    <td id="ResultCalories"></td>
+                </tr>
+            </tbody>
+        </table>
         <button class="ui blue button" value="4" name="buttonType">
             Zatwierdź
         </button>
     </form>
-    @*<div class="ui progress success">
-        <div class="bar">
-            <div class="progress"></div>
-        </div>
-        <div class="label">Everything worked, your file is all ready.</div>
-    </div>*@
+
 
 </body>
 

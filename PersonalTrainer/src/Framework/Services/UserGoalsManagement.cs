@@ -27,7 +27,7 @@ namespace Framework.Services
             {
                 var id = userManagement.GetCurrentUserId();
 
-                var goal = context.UserGoal.FirstOrDefault(x => x.UserId.Equals(userGoals));
+                var goal = context.UserGoal.FirstOrDefault(x => x.UserId.Equals(id));
 
                 if (goal == null)
                 {
