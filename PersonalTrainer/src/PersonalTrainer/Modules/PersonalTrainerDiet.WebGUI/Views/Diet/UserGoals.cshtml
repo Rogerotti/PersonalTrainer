@@ -2,17 +2,30 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "UserGoals";
-    Layout = "DietLayout";
+    Layout = "Layout";
 }
 <Style>
     .margin-top {
         margin-top: 2em;
     }
 
+        .margin-left {
+        margin-left: 2em;
+    }
+
         .Medium-margin-top {
         margin-top: 2em;
     }
+
+    .red {
+        color: red
+    }
 </style>
+
+@section LeftPanel
+{
+    @await Component.InvokeAsync("LeftMenu")
+}
 
 <form class="ui form segment" asp-controller="Diet" asp-action="UserGoals" method="post">
 
@@ -23,21 +36,20 @@
                 <div class="field">
                     <div class="ui small header">Kalorie </div>
                     <div class="ui input">
-                        <input placeholder="Kalorie" type="text" asp-for="Calories">
+                        <input id="Calories" placeholder="Kalorie" type="text" asp-for="Calories" onkeyup="ChangeCalories(this)">
                         <span asp-validation-for="Calories" class="ui red header"></span>
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <div class="four column row">
+        <div class="three column row">
       
             <div class="left floated four wide column">
                 <div class="field">
                     <div class="ui small header">Białko </div>
                     <div class="ui input">
-                        <input placeholder="Białko" type="text" asp-for="Proteins">
+                        <input id="Proteins" placeholder="Białko" type="text" asp-for="Proteins">
                     </div>
                     <span asp-validation-for="Proteins" class="ui red header"></span>
                 </div>
@@ -47,7 +59,7 @@
                 <div class="field">
                     <div class="ui small header">Węglowodany </div>
                     <div class="ui input">
-                        <input placeholder="Węglowodany" type="text" asp-for="Carbohydrates">
+                        <input id="Carbs" placeholder="Węglowodany" type="text" asp-for="Carbohydrates">
                     </div>
                     <span asp-validation-for="Carbohydrates" class="ui red header"></span>
                 </div>
@@ -57,31 +69,21 @@
                 <div class="field">
                     <div class="ui small header">Tłuszcze </div>
                     <div class="ui input">
-                        <input placeholder="Tłuszcze" type="text" asp-for="Fat">
+                        <input id="Fat" placeholder="Tłuszcze" type="text" asp-for="Fat">
                     </div>
                     <span asp-validation-for="Fat" class="ui red header"></span>
                 </div>
             </div>
 
-            <div class="left floated four wide column">
-                <div class="field">
-                    <div class="ui small header">Błonnik </div>
-                    <div class="ui input">
-                        <input placeholder="Błonnik" type="text" asp-for="Fibre">
-                    </div>
-                    <span asp-validation-for="Fibre" class="ui red header"></span>
-                </div>
-            </div>
-
         </div>
 
-        <div class="four column row">
+        <div class="three column row">
 
             <div class="left floated four wide column">
 
                 <div class="field">
                     <div class="ui input">
-                        <input placeholder="%" type="text" asp-for="PercentageProtein">
+                        <input id="PercentageProtein" class="NumericValidation" placeholder="%" type="text" asp-for="PercentageProtein" onkeyup="PercentageChanged(this)">
                         <div class="ui basic label">%</div>
                         <span asp-validation-for="PercentageProtein" class="ui red header"></span>
                     </div>
@@ -92,7 +94,7 @@
 
                 <div class="field">
                     <div class="ui input">
-                        <input placeholder="%" type="text" asp-for="PercentageCarbs">
+                        <input id="PercentageCarbs" class="NumericValidation" placeholder="%" type="text" asp-for="PercentageCarbs" onkeyup="PercentageChanged(this)">
                         <div class="ui basic label">%</div>
                         <span asp-validation-for="PercentageCarbs" class="ui red header"></span>
                     </div>
@@ -102,48 +104,147 @@
             <div class="left floated four wide column">
 
                 <div class="field">
-                    <div class="ui input">
-                        <input placeholder="%" type="text" asp-for="PercentageFat">
+                    <div class="ui input ">
+                        <input id="PercentageFat" class="NumericValidation" placeholder="%" type="text"  asp-for="PercentageFat" onkeyup="PercentageChanged(this)">
                         <div class="ui basic label">%</div>
                         <span asp-validation-for="PercentageFat" class="ui red header"></span>
                     </div>
                 </div>
             </div>
-
-            <div class="left floated four wide column">
-
-                <div class="field">
-                    <div class="ui input">
-                        <input placeholder="%" type="text" asp-for="PercentageFibre">
-                        <div class="ui basic label">%</div>
-                        <span asp-validation-for="PercentageFibre" class="ui red header"></span>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
+        <div class="column center aligned row">
+            <div class="column">
+                <div id="ValidationField" class="field red" style="display:none;">>  </div>
+            </div>
+        </div>
     </div>
 
-
+    <button class="ui blue button" type="submit">
+        Change
+    </button>
 
     <div class="margin-top">
-        <button class="ui blue button" type="submit">
-            Change
-        </button>
-    </div>
-
-    <div class="bottom three fields">
-        <div class="field">
-            <label>Last name</label>
+        <div class="fields">
+            <div class="field">Białko</div>
+            <div class="field">@Model.Proteins</div>
+            <div class="field">@Model.PercentageProtein %</div>
         </div>
-        <div class="field">
-            <label>Last name</label>
+        <div class="fields">
+            <div class="field">Tłuszcze</div>
+            <div class="field">@Model.Fat</div>
+            <div class="field">@Model.PercentageFat %</div>
         </div>
 
-        <div class="field">
-            <label>Last name</label>
+        <div class="fields">
+            <div class="field">Węglowodany</div>
+            <div class="field ">@Model.Carbohydrates</div>
+            <div class="field">@Model.PercentageCarbs %</div>
         </div>
     </div>
 </form>
 
+@section Scripts
+{
+
+<script>
+    $(document).ready(function ()
+    {
+        $(".NumericValidation").keydown(function (e)
+        {
+            // Sprawdzenie znaków specjalnych.
+            if (KeyIsSpecialCharacter(e))
+                return;
+
+            var selectionLength = this.selectionEnd - this.selectionStart
+            if (selectionLength != this.value.length)
+            {
+                if (this.value[0] == 0) {
+                    e.preventDefault();
+                    return;
+                }
+            }
+
+            // Upewnia się że jest to liczba jeżeli nie stopuje wciśnięcie
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105) )
+                e.preventDefault();
+        });
+
+        function KeyIsSpecialCharacter(e)
+        {
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
+                // Pozwala na: Ctrl+A
+           (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Pozwala na: Ctrl+C
+           (e.keyCode == 67 && e.ctrlKey === true) ||
+                // Pozwala na: Ctrl+X
+           (e.keyCode == 88 && e.ctrlKey === true) ||
+                // Pozwala na: home, end, left, right
+           (e.keyCode >= 35 && e.keyCode <= 39)) { return true; }
+
+            return false
+        }
+    })
+
+    function PercentageChanged(input)
+    {
+  
+        if (input.value < 0) input.value = 0;
+        if (input.value > 100) input.value = 100;
+
+        var calories = parseFloat(document.getElementById("Calories").value)
+        var protein = parseFloat(document.getElementById("PercentageProtein").value)
+        var carbs = parseFloat(document.getElementById("PercentageCarbs").value)
+        var fat = parseFloat(document.getElementById("PercentageFat").value)
+
+        if (input.id === "PercentageProtein")
+        {
+            var proteinInput = document.getElementById("Proteins")
+            proteinInput.value = Math.floor((calories / 4) * protein / 100)
+        }
+        else if (input.id === "PercentageCarbs")
+        {
+            var carbsInput = document.getElementById("Carbs")
+            carbsInput.value = Math.floor((calories / 4) * carbs / 100)
+        }
+        else if (input.id === "PercentageFat")
+        {
+            var fatInput = document.getElementById("Fat")
+            fatInput.value = Math.floor((calories / 9) *fat / 100) 
+        }
+
+        var count = protein + carbs + fat
+
+        if (count > 100) {
+            var field = document.getElementById("ValidationField")
+            field.innerHTML = "Wartość " + count + "% przekracza wartość 100%."
+            field.style.display = "block";
+        }
+        else
+        {
+            var field = document.getElementById("ValidationField")
+            field.innerHTML = ""
+            field.style.display = "none";
+        }
+    }
+
+    function ChangeCalories(input)
+    {
+        var calories = input.value
+        var protein = parseFloat(document.getElementById("PercentageProtein").value)
+        var carbs = parseFloat(document.getElementById("PercentageCarbs").value)
+        var fat = parseFloat(document.getElementById("PercentageFat").value)
+
+        var proteinInput = document.getElementById("Proteins")
+        proteinInput.value = Math.floor((calories / 4) * protein / 100)
+
+        var carbsInput = document.getElementById("Carbs")
+        carbsInput.value = Math.floor((calories / 4) * carbs / 100)
+
+        var fatInput = document.getElementById("Fat")
+        fatInput.value = Math.floor((calories / 9) * fat) / 100
+    }
+
+</script>
+
+}

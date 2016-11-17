@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "Layout";
-
 }
 <body>
     @RenderBody()
@@ -48,6 +47,7 @@
     </script>
 
     <script>
+
         function showDetails(b)
         {
             var rows = $('#table > tbody > tr')
@@ -172,8 +172,19 @@
             // Upewnia się że jest to liczba jeżeli nie stopuje wciśnięcie
             if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105) )
                 e.preventDefault();
-
         });
+
+        //TODO sprawdzenie procentów
+        $('.CheckPercentage').on('keyup', function (e)
+        {
+            var input = document.getElementById("PercentageFatInput")
+        
+            if (input.value < 0) input.value = 0;
+            if (input.value > 100) input.value = 100;
+        });
+
+
+
 
         function KeyIsSpecialCharacter(e) {
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
@@ -191,7 +202,9 @@
         UpdateCurrenCalories()
     })
 
-    $(".ChangeMacro").on('keyup', function (e) {
+ 
+
+    $('.BreakfestTable').on('keyup', ".ChangeMacro", function (e) {
 
         var input = $(this).children();
         var newQuant = input.val();
@@ -219,7 +232,7 @@
         UpdateCurrenCalories()
     });
 
-    $('.DeleteMacro').on('click', function (e) {
+    $('.BreakfestTable').on('click', ".DeleteMacro", function (e) {
         var tr = $(this).parent().parent();
         var body = tr.parent();
         var table = body.parent();
@@ -283,7 +296,10 @@
         caloriesElement.innerHTML = Math.round(resultCalories * 100) / 100
     }
 
-
+    // Ustawia kolor czcionki w zależności od ilości kalori
+    // dodatnie zielone
+    // równe 0 czarne
+    // ujemne czerwone
     function SetFontColorDepensOnCalories(element, amount)
     {
         if (amount > 0)
@@ -293,6 +309,8 @@
         else
             element.style.color = "Red"
     }
+
+
 
 
 </script>
