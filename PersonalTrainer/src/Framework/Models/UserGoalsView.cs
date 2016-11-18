@@ -25,8 +25,6 @@ namespace Framework.Models
 
         public Decimal PercentageFat { get; set; }
 
-        public Decimal PercentageFibre { get; set; }
-
         public Decimal PercentageProtein { get; set; }
 
         public Decimal PercentageCarbs { get; set; }

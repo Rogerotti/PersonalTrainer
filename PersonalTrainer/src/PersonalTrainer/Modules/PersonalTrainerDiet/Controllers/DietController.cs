@@ -280,10 +280,9 @@ namespace PersonalTrainerDiet.Controllers
                 Proteins = goals.Proteins,
                 UserId = goals.UserId,
                 Weight = goals.Weight,
-                PercentageCarbs = goals.Carbohydrates * 3 * 100 / goals.Calories,
-                PercentageFat = goals.Fat * 4 * 100 / goals.Calories,
-                PercentageFibre = goals.Fibre * 3 * 100 / goals.Calories,
-                PercentageProtein = goals.Proteins * 3 * 100 / goals.Calories,
+                PercentageCarbs = Math.Floor(goals.Carbohydrates * 4 * 100 / goals.Calories),
+                PercentageFat = Math.Floor(goals.Fat * 9 * 100 / goals.Calories),
+                PercentageProtein = Math.Floor(goals.Proteins * 4 * 100 / goals.Calories)
             };
 
             return View(view);

@@ -281,19 +281,19 @@
 
         var proteinElement = document.getElementById("ResultProtein")
         SetFontColorDepensOnCalories(proteinElement, resultProteins)
-        proteinElement.innerHTML = Math.round(resultProteins * 100) / 100
+        proteinElement.innerHTML = Math.floor(resultProteins * 100) / 100
 
         var fatElement = document.getElementById("ResultFat")
         SetFontColorDepensOnCalories(fatElement, resultFat)
-        fatElement.innerHTML = Math.round(resultFat* 100) / 100
+        fatElement.innerHTML = Math.floor(resultFat * 100) / 100
 
         var carbsElement = document.getElementById("ResultCarbs")
         SetFontColorDepensOnCalories(carbsElement, resultCarbs)
-        carbsElement.innerHTML = Math.round(resultCarbs * 100) / 100
+        carbsElement.innerHTML = Math.floor(resultCarbs * 100) / 100
       
         var caloriesElement = document.getElementById("ResultCalories")
         SetFontColorDepensOnCalories(caloriesElement, resultCalories)
-        caloriesElement.innerHTML = Math.round(resultCalories * 100) / 100
+        caloriesElement.innerHTML = Math.floor(resultCalories * 100) / 100
     }
 
     // Ustawia kolor czcionki w zależności od ilości kalori
