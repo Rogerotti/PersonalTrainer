@@ -15,19 +15,44 @@ namespace Framework.Models.Database
         [ForeignKey(nameof(Database.User))]
         public Guid UserId { get; set; }
 
-        public Decimal Proteins { get; set; }
+        /// <summary>
+        /// Białko użytkownika które ma za zadanie zjeść każdnego dnia.
+        /// </summary>
+        public Int32 Proteins { get; set; }
 
-        public Decimal Fat { get; set; }
+        /// <summary>
+        /// Tłuszcze użytkownika które ma za zadanie zjeść każdnego dnia.
+        /// </summary>
+        public Int32 Fat { get; set; }
 
-        public Decimal Carbohydrates { get; set; }
+        /// <summary>
+        /// Węglowodany użytkownika które ma za zadanie zjeść każdnego dnia.
+        /// </summary>
+        public Int32 Carbohydrates { get; set; }
 
-        public Decimal Fibre { get; set; }
-
+        /// <summary>
+        /// Kalorie użytkownika które ma za zadanie zjeść każdnego dnia.
+        /// </summary>
         public Int32 Calories { get; set; }
 
-        public Int32 Weight { get; set; }
+        /// <summary>
+        /// Procentowe zapotrzebowanie na tłuszcze.
+        /// </summary>
+        public Decimal PercentageFat { get; set; }
 
-        public Decimal BodyFat { get; set; }
+        /// <summary>
+        /// Procentowe zapotrzebowanie na białko.
+        /// </summary>
+        public Decimal PercentageProtein { get; set; }
+
+        /// <summary>
+        /// Procentowe zapotrzebowanie na węglowodany.
+        /// </summary>
+        public Decimal PercentageCarbs { get; set; }
+
+        //TODO waga i bodyfat
+        //public Int32 Weight { get; set; }
+        //public Decimal BodyFat { get; set; }
 
         /// <summary>
         /// Użytkownik.

@@ -1,4 +1,4 @@
-﻿@model  Framework.Models.UserDto
+﻿@model  Framework.Models.Dto.UserDto
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Register";
@@ -83,7 +83,7 @@
                                     <div class="text">cm</div>
                                     <i class="dropdown icon"></i>
                                     <div class="menu">
-                                        @foreach (var item in @Html.GetEnumSelectList(typeof(Framework.Models.HeightUnit)))
+                                        @foreach (var item in @Html.GetEnumSelectList(typeof(Framework.Models.Dto.HeightUnit)))
                                         {
                                             <div class="item" data-value="@item.Value">@item.Text</div>
                                         }

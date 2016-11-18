@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Framework.Models
+namespace Framework.Models.Dto
 {
     public class ProductListDto
     {

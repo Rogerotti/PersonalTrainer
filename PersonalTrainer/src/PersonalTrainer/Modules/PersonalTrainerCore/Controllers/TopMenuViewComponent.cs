@@ -1,4 +1,4 @@
-﻿using Framework.Models;
+﻿using Framework.Models.Dto;
 using Framework.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;

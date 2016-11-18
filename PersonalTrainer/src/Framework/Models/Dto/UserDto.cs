@@ -3,7 +3,7 @@ using Framework.ValidationAttributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Framework.Models
+namespace Framework.Models.Dto
 {
     public class UserDto
     {

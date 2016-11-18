@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Framework.Models.Dto;
+using System;
 using System.Collections.Generic;
 
-namespace Framework.Models
+namespace Framework.Models.View
 {
-    public class DailyFoodDto
+    public class DayView
     {
         public List<DailyProductDto> DailyProduct { get; set; }
 
@@ -19,5 +20,14 @@ namespace Framework.Models
 
         public Decimal DayFibre { get; set; }
 
+        public Decimal AvaibleCalories { get; set; }
+
+        public Decimal AvaibleProteins { get; set; }
+
+        public Decimal AvaibleFat { get; set; }
+
+        public Decimal AvaibleCarbohydrates { get; set; }
+
+        public Decimal AvaibleFibre { get; set; }
     }
 }

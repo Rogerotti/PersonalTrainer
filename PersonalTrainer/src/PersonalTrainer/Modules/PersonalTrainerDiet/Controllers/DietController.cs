@@ -1,4 +1,6 @@
 ﻿using Framework.Models;
+using Framework.Models.Dto;
+using Framework.Models.View;
 using Framework.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
@@ -272,17 +274,14 @@ namespace PersonalTrainerDiet.Controllers
 
             var view = new UserGoalsView()
             {
-                BodyFat = goals.BodyFat,
                 Calories = goals.Calories,
                 Carbohydrates = goals.Carbohydrates,
                 Fat = goals.Fat,
-                Fibre = goals.Fibre,
                 Proteins = goals.Proteins,
                 UserId = goals.UserId,
-                Weight = goals.Weight,
-                PercentageCarbs = Math.Floor(goals.Carbohydrates * 4 * 100 / goals.Calories),
-                PercentageFat = Math.Floor(goals.Fat * 9 * 100 / goals.Calories),
-                PercentageProtein = Math.Floor(goals.Proteins * 4 * 100 / goals.Calories)
+                PercentageCarbs = Math.Floor((Decimal)goals.Carbohydrates * 4 * 100 / goals.Calories),
+                PercentageFat = Math.Floor((Decimal)goals.Fat * 9 * 100 / goals.Calories),
+                PercentageProtein = Math.Floor((Decimal)goals.Proteins * 4 * 100 / goals.Calories)
             };
 
             return View(view);
@@ -297,12 +296,9 @@ namespace PersonalTrainerDiet.Controllers
                 {
                    var userGoals = new UserGoalsDto()
                     {
-                        BodyFat = dto.BodyFat,
                         Calories = dto.Calories,
-                        Weight = dto.Weight,
                         Fat = dto.Fat,
                         Carbohydrates = dto.Carbohydrates,
-                        Fibre = dto.Fibre,
                         Proteins = dto.Proteins,
                         UserId = dto.UserId
                     };

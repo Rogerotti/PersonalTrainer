@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Framework.Models
+namespace Framework.Models.Dto
 {
     public class ProductDto
     {

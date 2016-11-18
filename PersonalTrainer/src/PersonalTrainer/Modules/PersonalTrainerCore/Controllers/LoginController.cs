@@ -1,12 +1,8 @@
-﻿using Framework.Models;
+﻿using Framework.Models.Dto;
 using Framework.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
 
 namespace PersonalTrainerCore.Controllers
 {

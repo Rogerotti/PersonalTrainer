@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Framework.Models;
 using Framework.DataBaseContext;
 using Framework.Models.Database;
+using Framework.Models.Dto;
 
 namespace Framework.Services
 {
@@ -34,26 +32,20 @@ namespace Framework.Services
                     context.UserGoal.Add(new UserGoal()
                     {
                         UserId = id,
-                        BodyFat = userGoals.BodyFat,
                         Calories = userGoals.Calories,
                         Carbohydrates = userGoals.Carbohydrates,
                         Fat = userGoals.Fat,
-                        Fibre = userGoals.Fibre,
                         Proteins = userGoals.Proteins,
-                        Weight = userGoals.Weight
                     });
 
                     context.SaveChanges();
                 }
                 else
                 {
-                    goal.BodyFat = userGoals.BodyFat;
                     goal.Calories = userGoals.Calories;
                     goal.Carbohydrates = userGoals.Carbohydrates;
                     goal.Fat = userGoals.Fat;
-                    goal.Fibre = userGoals.Fibre;
                     goal.Proteins = userGoals.Proteins;
-                    goal.Weight = userGoals.Weight;
                     context.UserGoal.Update(goal);
                     context.SaveChanges();
                 }
@@ -70,13 +62,10 @@ namespace Framework.Services
             {
                 return new UserGoalsDto()
                 {
-                    BodyFat = 0,
                     Calories = 0,
                     Carbohydrates = 0,
                     Fat = 0,
-                    Fibre = 0,
                     Proteins = 0,
-                    Weight = 50,
                     UserId = id
                 };
             }
@@ -84,13 +73,10 @@ namespace Framework.Services
 
             return new UserGoalsDto()
             {
-                BodyFat = goals.BodyFat,
                 Calories = goals.Calories,
                 Carbohydrates = goals.Carbohydrates,
                 Fat = goals.Fat,
-                Fibre = goals.Fibre,
                 Proteins = goals.Proteins,
-                Weight = goals.Weight,
                 UserId = id
             };
         }
@@ -103,13 +89,10 @@ namespace Framework.Services
 
             return new UserGoalsDto()
             {
-                BodyFat = goals.BodyFat,
                 Calories = goals.Calories,
                 Carbohydrates = goals.Carbohydrates,
                 Fat = goals.Fat,
-                Fibre = goals.Fibre,
                 Proteins = goals.Proteins,
-                Weight = goals.Weight,
                 UserId = userId
             };
         }
