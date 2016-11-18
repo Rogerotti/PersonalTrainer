@@ -38,21 +38,17 @@ namespace Framework.Models.Database
         /// <summary>
         /// Procentowe zapotrzebowanie na tłuszcze.
         /// </summary>
-        public Decimal PercentageFat { get; set; }
+        public Int32 PercentageFat { get; set; }
 
         /// <summary>
         /// Procentowe zapotrzebowanie na białko.
         /// </summary>
-        public Decimal PercentageProtein { get; set; }
+        public Int32 PercentageProtein { get; set; }
 
         /// <summary>
         /// Procentowe zapotrzebowanie na węglowodany.
         /// </summary>
-        public Decimal PercentageCarbs { get; set; }
-
-        //TODO waga i bodyfat
-        //public Int32 Weight { get; set; }
-        //public Decimal BodyFat { get; set; }
+        public Int32 PercentageCarbs { get; set; }
 
         /// <summary>
         /// Użytkownik.

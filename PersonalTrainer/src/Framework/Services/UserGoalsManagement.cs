@@ -19,7 +19,7 @@ namespace Framework.Services
             this.userManagement = userManagement;
         }
 
-        public void SetGoals(UserGoalsDto userGoals)
+        public void SetGoals(UserGoalsDto dto)
         {
             using (var trans = context.Database.BeginTransaction())
             {
@@ -32,20 +32,27 @@ namespace Framework.Services
                     context.UserGoal.Add(new UserGoal()
                     {
                         UserId = id,
-                        Calories = userGoals.Calories,
-                        Carbohydrates = userGoals.Carbohydrates,
-                        Fat = userGoals.Fat,
-                        Proteins = userGoals.Proteins,
+                        Calories = dto.Calories,
+                        Carbohydrates = dto.Carbohydrates,
+                        Fat = dto.Fat,
+                        Proteins = dto.Proteins,
+                        PercentageCarbs = dto.PercentageCarbs,
+                        PercentageFat = dto.PercentageFat,
+                        PercentageProtein = dto.PercentageProtein
                     });
 
                     context.SaveChanges();
                 }
                 else
                 {
-                    goal.Calories = userGoals.Calories;
-                    goal.Carbohydrates = userGoals.Carbohydrates;
-                    goal.Fat = userGoals.Fat;
-                    goal.Proteins = userGoals.Proteins;
+                    goal.Calories = dto.Calories;
+                    goal.Carbohydrates = dto.Carbohydrates;
+                    goal.Fat = dto.Fat;
+                    goal.Proteins = dto.Proteins;
+                    goal.PercentageProtein = dto.PercentageProtein;
+                    goal.PercentageFat = dto.PercentageFat;
+                    goal.PercentageCarbs = dto.PercentageCarbs;
+
                     context.UserGoal.Update(goal);
                     context.SaveChanges();
                 }
@@ -62,22 +69,28 @@ namespace Framework.Services
             {
                 return new UserGoalsDto()
                 {
+                    UserId = id,
                     Calories = 0,
                     Carbohydrates = 0,
                     Fat = 0,
                     Proteins = 0,
-                    UserId = id
+                    PercentageCarbs = 0,
+                    PercentageFat = 0,
+                    PercentageProtein = 0
                 };
             }
         
 
             return new UserGoalsDto()
             {
+                UserId = id,
                 Calories = goals.Calories,
                 Carbohydrates = goals.Carbohydrates,
                 Fat = goals.Fat,
                 Proteins = goals.Proteins,
-                UserId = id
+                PercentageCarbs = goals.PercentageCarbs,
+                PercentageFat = goals.PercentageFat,
+                PercentageProtein = goals.PercentageProtein
             };
         }
 
@@ -89,11 +102,14 @@ namespace Framework.Services
 
             return new UserGoalsDto()
             {
+                UserId = userId,
                 Calories = goals.Calories,
                 Carbohydrates = goals.Carbohydrates,
                 Fat = goals.Fat,
                 Proteins = goals.Proteins,
-                UserId = userId
+                PercentageCarbs = goals.PercentageCarbs,
+                PercentageFat = goals.PercentageFat,
+                PercentageProtein = goals.PercentageProtein
             };
         }
     }

@@ -8,8 +8,8 @@ using Framework.DataBaseContext;
 namespace PersonalTrainer.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20161118121205_UserGoals02")]
-    partial class UserGoals02
+    [Migration("20161118125219_UserGoals03")]
+    partial class UserGoals03
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -158,11 +158,11 @@ namespace PersonalTrainer.Migrations
 
                     b.Property<int>("Fat");
 
-                    b.Property<decimal>("PercentageCarbs");
+                    b.Property<int>("PercentageCarbs");
 
-                    b.Property<decimal>("PercentageFat");
+                    b.Property<int>("PercentageFat");
 
-                    b.Property<decimal>("PercentageProtein");
+                    b.Property<int>("PercentageProtein");
 
                     b.Property<int>("Proteins");
 

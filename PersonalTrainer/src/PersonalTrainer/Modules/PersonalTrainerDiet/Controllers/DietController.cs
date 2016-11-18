@@ -279,9 +279,9 @@ namespace PersonalTrainerDiet.Controllers
                 Fat = goals.Fat,
                 Proteins = goals.Proteins,
                 UserId = goals.UserId,
-                PercentageCarbs = Math.Floor((Decimal)goals.Carbohydrates * 4 * 100 / goals.Calories),
-                PercentageFat = Math.Floor((Decimal)goals.Fat * 9 * 100 / goals.Calories),
-                PercentageProtein = Math.Floor((Decimal)goals.Proteins * 4 * 100 / goals.Calories)
+                PercentageCarbs = goals.PercentageCarbs,
+                PercentageFat = goals.PercentageFat,
+                PercentageProtein = goals.PercentageProtein
             };
 
             return View(view);
@@ -296,12 +296,16 @@ namespace PersonalTrainerDiet.Controllers
                 {
                    var userGoals = new UserGoalsDto()
                     {
-                        Calories = dto.Calories,
-                        Fat = dto.Fat,
-                        Carbohydrates = dto.Carbohydrates,
-                        Proteins = dto.Proteins,
-                        UserId = dto.UserId
-                    };
+                       UserId = dto.UserId,
+                       Calories = dto.Calories,
+                       Carbohydrates = dto.Carbohydrates,
+                       Fat = dto.Fat,
+                       Proteins = dto.Proteins,
+                       PercentageCarbs = dto.PercentageCarbs,
+                       PercentageFat = dto.PercentageFat,
+                       PercentageProtein = dto.PercentageProtein
+                   };
+
                     userGoalsManamgenet.SetGoals(userGoals);
                 }
                 catch(Exception exc)

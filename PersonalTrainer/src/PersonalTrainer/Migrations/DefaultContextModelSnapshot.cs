@@ -157,11 +157,11 @@ namespace PersonalTrainer.Migrations
 
                     b.Property<int>("Fat");
 
-                    b.Property<decimal>("PercentageCarbs");
+                    b.Property<int>("PercentageCarbs");
 
-                    b.Property<decimal>("PercentageFat");
+                    b.Property<int>("PercentageFat");
 
-                    b.Property<decimal>("PercentageProtein");
+                    b.Property<int>("PercentageProtein");
 
                     b.Property<int>("Proteins");
 
