@@ -1,6 +1,2 @@
-#:C:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerCore.WebGUI\PersonalTrainerCore.WebGUI.xproj
-C:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerCore.WebGUI\PersonalTrainerCore.WebGUI.xproj|C:\PersonalTrainer\PersonalTrainer\src\Framework\Framework.xproj
-#:C:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerDiet.WebGUI\PersonalTrainerDiet.WebGUI.xproj
-C:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerDiet.WebGUI\PersonalTrainerDiet.WebGUI.xproj|C:\PersonalTrainer\PersonalTrainer\src\Framework\Framework.xproj
-C:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerDiet.WebGUI\PersonalTrainerDiet.WebGUI.xproj|C:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerCore.WebGUI\PersonalTrainerCore.WebGUI.xproj
-C:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerCore.WebGUI\PersonalTrainerCore.WebGUI.xproj|C:\PersonalTrainer\PersonalTrainer\src\Framework\Framework.xproj
+#:F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\PersonalTrainer.xproj
+F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\PersonalTrainer.xproj|F:\PersonalTrainer\PersonalTrainer\src\Framework\Framework.xproj
