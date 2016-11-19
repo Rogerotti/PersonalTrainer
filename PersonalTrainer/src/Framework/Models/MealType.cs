@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Framework.Models
+﻿namespace Framework.Models
 {
+    
     public enum MealType { Breakfast, Dinner, Supper, Snacks }
 }

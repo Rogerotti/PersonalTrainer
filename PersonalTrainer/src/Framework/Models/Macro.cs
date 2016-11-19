@@ -35,14 +35,5 @@ namespace Framework.Models
 
             Calories = proteinCalories + fatCalories + carbohydratesCalories + fibreCalories;
         }
-
-        public void CountMacro(Int32 quanity)
-        {
-            var previousQuantity = Quantity;
-          //  var ratio = Quantity / (float)quanity;
-         //   Protein = Math.Round( Protein * ratio;
-            //Decimal
-        }
-
     }
 }
