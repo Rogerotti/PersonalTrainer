@@ -5,7 +5,6 @@
     Layout = "Layout";
 }
 
-
 @section LeftPanel
 {
     @await Component.InvokeAsync("LeftMenu")
@@ -18,9 +17,9 @@
         <div class="column row">
             <div class="eight wide column">
                 <div class="field">
-                    <div class="ui small header">Kalorie </div>
+                    <div class="ui small header">@Framework.Resources.ProductLanguage.Calories</div>
                     <div class="ui input">
-                        <input id="Calories" placeholder="Kalorie" type="text" asp-for="Calories" onkeyup="ChangeCalories(this)">
+                        <input id="Calories" class="NumericValidation" type="text" asp-for="Calories" onkeyup="ChangeCalories(this)">
                         <span asp-validation-for="Calories" class="ui red header"></span>
                     </div>
                 </div>
@@ -31,9 +30,9 @@
       
             <div class="left floated four wide column">
                 <div class="field">
-                    <div class="ui small header">Białko </div>
+                    <div class="ui small header">@Framework.Resources.ProductLanguage.Protein</div>
                     <div class="ui input">
-                        <input id="Proteins" placeholder="Białko" type="text" asp-for="Proteins" onkeyup="ChangeMacro()">
+                        <input id="Proteins" class="NumericValidation" type="text" asp-for="Proteins" onkeyup="ChangeMacro(this)">
                     </div>
                     <span asp-validation-for="Proteins" class="ui red header"></span>
                 </div>
@@ -41,9 +40,9 @@
 
             <div class="left floated four wide column">
                 <div class="field">
-                    <div class="ui small header">Węglowodany </div>
+                    <div class="ui small header">@Framework.Resources.ProductLanguage.Carbs</div>
                     <div class="ui input">
-                        <input id="Carbs" placeholder="Węglowodany" type="text" asp-for="Carbohydrates"  onkeyup="ChangeMacro()">
+                        <input id="Carbs" class="NumericValidation"  type="text" asp-for="Carbohydrates"  onkeyup="ChangeMacro(this)">
                     </div>
                     <span asp-validation-for="Carbohydrates" class="ui red header"></span>
                 </div>
@@ -51,9 +50,9 @@
 
             <div class="left floated four wide column">
                 <div class="field">
-                    <div class="ui small header">Tłuszcze </div>
+                    <div class="ui small header">@Framework.Resources.ProductLanguage.Fat</div>
                     <div class="ui input">
-                        <input id="Fat" placeholder="Tłuszcze" type="text" asp-for="Fat"  onkeyup="ChangeMacro()">
+                        <input id="Fat" class="NumericValidation" type="text" asp-for="Fat"  onkeyup="ChangeMacro(this)">
                     </div>
                     <span asp-validation-for="Fat" class="ui red header"></span>
                 </div>
@@ -110,18 +109,18 @@
 
     <div class="margin-top">
         <div class="fields">
-            <div class="field">Białko</div>
+            <div class="field">@Framework.Resources.ProductLanguage.Protein</div>
             <div class="field">@Model.Proteins</div>
             <div class="field">@Model.PercentageProtein %</div>
         </div>
         <div class="fields">
-            <div class="field">Tłuszcze</div>
+            <div class="field">@Framework.Resources.ProductLanguage.Fat</div>
             <div class="field">@Model.Fat</div>
             <div class="field">@Model.PercentageFat %</div>
         </div>
 
         <div class="fields">
-            <div class="field">Węglowodany</div>
+            <div class="field">@Framework.Resources.ProductLanguage.Carbs</div>
             <div class="field ">@Model.Carbohydrates</div>
             <div class="field">@Model.PercentageCarbs %</div>
         </div>
@@ -171,13 +170,15 @@
 
     function PercentageChanged(input)
     {
-        if (input.value < 0) input.value = 0;
+        if (input.value < 0 || input.value === '') input.value = 0;
         if (input.value > 100) input.value = 100;
 
         var calories = parseInt(document.getElementById("Calories").value)
         var protein = parseInt(document.getElementById("PercentageProtein").value)
         var carbs = parseInt(document.getElementById("PercentageCarbs").value)
         var fat = parseInt(document.getElementById("PercentageFat").value)
+
+        if (isNaN(calories)) calories = 0
 
         if (input.id === "PercentageProtein")
         {
@@ -212,6 +213,7 @@
 
     function ChangeCalories(input)
     {
+        if(input.value === '') input.value = 0
         var calories = input.value
         var protein = parseInt(document.getElementById("PercentageProtein").value)
         var carbs = parseInt(document.getElementById("PercentageCarbs").value)
@@ -227,19 +229,34 @@
         fatInput.value = Math.ceil((calories / 9) * fat / 100)
     }
 
-    function ChangeMacro()
+    function ChangeMacro(input)
     {
+        if (input.value === '') input.value = 0
+
         var caloriesInput = document.getElementById("Calories")
         var protein = parseInt(document.getElementById("Proteins").value)
         var carbs = parseInt(document.getElementById("Carbs").value)
         var fat = parseInt(document.getElementById("Fat").value)
 
+        if (isNaN(protein)) protein = 0
+        if (isNaN(carbs)) carbs = 0
+        if (isNaN(fat)) fat = 0
+
         var caloriesNumber = protein * 4 + carbs * 4 + fat * 9
         caloriesInput.value = caloriesNumber
 
-        document.getElementById("PercentageProtein").value = Math.round(((protein * 4) / caloriesNumber) * 100)
-        document.getElementById("PercentageFat").value = Math.round(((fat * 9) / caloriesNumber) * 100)
-        document.getElementById("PercentageCarbs").value = Math.round(((carbs * 4) / caloriesNumber) * 100)
+        if (caloriesNumber == 0)
+        {
+            document.getElementById("PercentageProtein").value = 0;
+            document.getElementById("PercentageFat").value = 0;
+            document.getElementById("PercentageCarbs").value = 0;
+        }
+        else
+        {
+            document.getElementById("PercentageProtein").value = Math.round(((protein * 4) / caloriesNumber) * 100)
+            document.getElementById("PercentageFat").value = Math.round(((fat * 9) / caloriesNumber) * 100)
+            document.getElementById("PercentageCarbs").value = Math.round(((carbs * 4) / caloriesNumber) * 100)
+        }
     }
 </script>
 }

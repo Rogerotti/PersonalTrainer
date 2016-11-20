@@ -1,9 +1,10 @@
 ﻿@model  Framework.Models.Dto.ProductListDto
 @using System.Text.RegularExpressions
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
 @{
     ViewData["Title"] = "Baza produktów";
-    Layout = "DietLayout";
+    Layout = "Layout";
 }
 
 <style>
@@ -29,20 +30,25 @@
 
 </style>
 
+@section LeftPanel
+{
+    @await Component.InvokeAsync("LeftMenu")
+}
+
 <body>
 
     <div class="ui two column middle aligned very relaxed stackable grid">
 
         <div class="two width column">
 
-            <form method="post" asp-controller="Diet" asp-action="ProductList" id="showTest">
+            <form id="showTest" method="post" asp-controller="Diet" asp-action="ProductList" >
 
                 <table id="table" class="ui sortable selectable celled  table" >
 
                         <thead>
                             <tr>
                                 <th hidden>Id column</th>
-                                <th class="sorted ascending">Product Name</th>
+                                <th class="sorted ascending">@Framework.Resources.ProductLanguage.ProductName</th>
                                 <th>@Framework.Resources.ProductLanguage.Calories</th>
                                 <th>@Framework.Resources.ProductLanguage.Carbs</th>
                                 <th>@Framework.Resources.ProductLanguage.Fat</th>
@@ -96,7 +102,7 @@
                 <div class="column">
                     <div class="field" >
                         <div>
-                            <strong>Product name:</strong>
+                            <strong>@Framework.Resources.ProductLanguage.ProductName :</strong>
                             <label id="detailsName"></label>
                         </div>
                     </div>
@@ -177,3 +183,75 @@
 
 </body>
 
+@section Scripts
+{
+    <script>
+
+        $(document).ready(function () {
+            $('.sortable.table').tablesort();
+        });
+
+        function showDetails(b)
+        {
+            var rows = $('#table > tbody > tr')
+            for (var i = 0; i < rows.length; i++)
+                rows.eq(i).attr('class', ' ');
+
+            $(b).attr('class', 'active')
+
+            var guidId = $("[id='selectedProductId']", b).val();
+            var data = { Id: guidId };
+
+            $.ajax({
+            url: '@Url.Action("GetProductDetails", "Diet")',
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (msg)
+            {
+            $('#detailsName').text(msg.name);
+            $('#detailsManufacturer').text(msg.manufacturer);
+            $('#detailsCalories').text(msg.macro.calories);
+            $('#detailsProtein').text(msg.macro.protein);
+            $('#detailsFat').text(msg.macro.fat);
+            $('#detailsCarbs').text(msg.macro.carbohydrates);
+            $('#detailsType').text(msg.type);
+            $('#editButton').removeAttr('disabled');
+            $('#deleteButton').removeAttr('disabled');
+
+            $('input[name="productId"]').val(guidId);
+            $('input[name="productDeleteId"]').val(guidId);
+            var state = msg.state;
+            if (state == 0 || state == 2)
+            {
+            $('#cancelSubscribeButton').attr('disabled','');
+            $('#subscribeButton').removeAttr('disabled');
+            $('input[name="productSubscribeId"]').val(guidId);
+            }
+            else if (state == 1) {
+            $('#cancelSubscribeButton').removeAttr('disabled');
+            $('#subscribeButton').attr('disabled', '');
+            $('input[name="productCancelSubscribeId"]').val(guidId);
+            }
+            else
+            {
+            $('#editButton').attr('disabled', '');
+            $('#deleteButton').attr('disabled', '');
+            $('#subscribeButton').attr('disabled', '');
+            $('#cancelSubscribeButton').attr('disabled', '');
+            }
+
+
+            },
+
+            error: function (xhr, ajaxOptions, thrownError)
+            {
+            alert(xhr.status);
+            alert(thrownError);
+            }
+            });
+        }
+
+        </script>
+}

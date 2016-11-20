@@ -127,10 +127,13 @@
     <value>Węglowodany</value>
   </data>
   <data name="Fat" xml:space="preserve">
-    <value>Tłuszcz</value>
+    <value>Tłuszcze</value>
   </data>
   <data name="Fibre" xml:space="preserve">
     <value>Błonnik</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Nazwa produktu</value>
   </data>
   <data name="Protein" xml:space="preserve">
     <value>Białko</value>

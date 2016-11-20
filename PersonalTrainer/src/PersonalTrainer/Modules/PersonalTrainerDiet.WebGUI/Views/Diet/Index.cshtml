@@ -1,10 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Index";
-    Layout = "DietLayout";
+    ViewData["Title"] = "Home Page";
+    Layout = "Layout";
+}
+
+@section LeftPanel
+{
+    @await Component.InvokeAsync("LeftMenu")
 }
 
 <body>
-    <p>test</p>
+   
 
 </body>
 
+
+@section Scripts
+{
+    
+}

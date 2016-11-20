@@ -132,6 +132,9 @@
   <data name="Fibre" xml:space="preserve">
     <value>Fibre</value>
   </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Product name</value>
+  </data>
   <data name="Protein" xml:space="preserve">
     <value>Protein</value>
   </data>
