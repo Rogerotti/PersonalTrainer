@@ -76,7 +76,6 @@
                                {
                                 @:<tr bgcolor="green" onclick="showDetails(this)">
                                }
-
                                     <td hidden><input id="selectedProductId" type="hidden" value="@item.ProductId" /></td>
                                     <td>@item.Name</td>
                                     <td>@item.Macro.Calories</td>
@@ -93,8 +92,6 @@
 
          </div>
 
-       
-
         <div class="column" >
 
             <div class="ui seven column row">
@@ -110,48 +107,48 @@
 
                 <div class="column">
                     <div class="field">
-                        <strong>Product Manufacturer:</strong>
+                        <strong>@Framework.Resources.ProductLanguage.ProductManufacturer :</strong>
                         <label id="detailsManufacturer"></label>
                     </div>
                 </div>
 
                 <div class="column">
                     <div class="field">
-                        <strong>Type: </strong>
+                        <strong>@Framework.Resources.ProductLanguage.Type : </strong>
                         <label id="detailsType"></label>
                     </div>
                 </div>
 
                 <div class="column">
                     <div class="field">
-                        <strong>@Framework.Resources.ProductLanguage.Calories:</strong>
+                        <strong>@Framework.Resources.ProductLanguage.Calories :</strong>
                         <label id="detailsCalories"></label>
                     </div>
                 </div>
 
                 <div class="column">
                     <div class="field">
-                        <strong>@Framework.Resources.ProductLanguage.Protein:</strong>
+                        <strong>@Framework.Resources.ProductLanguage.Protein :</strong>
                         <label id="detailsProtein"></label>
                     </div>
                 </div>
 
                 <div class="column">
                     <div class="field">
-                        <strong>@Framework.Resources.ProductLanguage.Fat:</strong>
+                        <strong>@Framework.Resources.ProductLanguage.Fat :</strong>
                         <label id="detailsFat"></label>
                     </div>
                 </div>
 
                 <div class="column">
                     <div class="field">
-                        <strong>@Framework.Resources.ProductLanguage.Carbs:</strong>
+                        <strong>@Framework.Resources.ProductLanguage.Carbs :</strong>
                         <label id="detailsCarbs"></label>
                     </div>
                 </div>
 
                 <div class="column row">
-                    <form asp-controller="Diet" asp-action="EditProduct" method="post">
+                    <form asp-controller="Diet" asp-action="AddEditProduct" method="get">
                         <input type="hidden" name="productId" value="" />
                         <button disabled id="editButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Edit</button>
                     </form>

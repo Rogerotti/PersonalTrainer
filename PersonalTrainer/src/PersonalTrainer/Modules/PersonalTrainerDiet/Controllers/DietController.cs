@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace PersonalTrainerDiet.Controllers
 {
     public class DietController : Controller
@@ -199,49 +200,90 @@ namespace PersonalTrainerDiet.Controllers
             return RedirectToAction("Day", "Diet");
         }
 
+        /// <summary>
+        /// Odpowiedzialny za wczytanie formatki dodania i edycji produktu użytkownika.
+        /// </summary>
+        /// <param name="productId">Id produku. W przypadku dodawania nowego produktu przyjmuje wartość pustą lub null.</param>
+        /// <returns></returns>
         [HttpGet]
-        public IActionResult AddProduct()
+        public IActionResult AddEditProduct(String productId)
         {
-            return View(new ProductDto() {Macro = new Macro() });
+            var dto = new AddEditProductView() { Macro = new Macro() };
+
+            if (String.IsNullOrWhiteSpace(productId))
+            {
+                dto.Macro.Calories = 0;
+                dto.Macro.Carbohydrates = 0;
+                dto.Macro.Fat = 0;
+                dto.Macro.Protein = 0;
+                dto.Macro.Quantity = 0;
+                dto.Macro.QuantityType = QuantityType.Grams;
+                dto.Mode = Mode.Add;
+                ViewData["Title"] = "Add";
+            }
+            else
+            {
+                var product = productManagement.GetProduct(new Guid(productId));
+                dto.Name = product.Name;
+                dto.Manufacturer = product.Manufacturer;
+                dto.ProductId = product.ProductId;
+                dto.Type = product.Type;
+                dto.Macro.Calories = product.Macro.Calories;
+                dto.Macro.Carbohydrates = product.Macro.Carbohydrates;
+                dto.Macro.Fat = product.Macro.Fat;
+                dto.Macro.Fibre = product.Macro.Fibre;
+                dto.Macro.Protein = product.Macro.Protein;
+                dto.Macro.Quantity = product.Macro.Quantity;
+                dto.Macro.QuantityType = product.Macro.QuantityType;
+                dto.Mode = Mode.Edit;
+                ViewData["Title"] = "Edit";
+            }
+
+            return View(dto);
+
         }
 
+        /// <summary>
+        /// Odpowiedzialny za zapis nowo dodanego lub edytowanego produktu użytkownika.
+        /// </summary>
+        /// <param name="dto">Dto produktu z widoku. <see cref="AddEditProductView"/></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult AddProduct(ProductDto dto)
+        public IActionResult AddEditProduct(AddEditProductView dto)
         {
             try
             {
-                productManagement.AddProduct(dto);
+                var product = new ProductDto()
+                {
+                    Macro = dto.Macro,
+                    Name = dto.Name,
+                    Manufacturer = dto.Manufacturer,
+                    Type = dto.Type
+                };
+
+                if (dto.Mode == Mode.Add)
+                    productManagement.AddProduct(product);
+                else if (dto.Mode == Mode.Edit)
+                {
+                    product.ProductId = dto.ProductId;
+                    productManagement.UpdateProduct(product);
+                }
+
             }
             catch (Exception exc)
             {
                 ModelState.AddModelError("AdditionalValidation", exc.Message);
                 return View(dto);
             }
+
             return RedirectToAction("ProductList", "Diet");
         }
 
-        [HttpPost]
-        public IActionResult EditProduct2(ProductDto product)
-        {
-            try
-            { 
-                productManagement.UpdateProduct(product);
-            }
-            catch (Exception exc)
-            {
-                ModelState.AddModelError("AdditionalValidation", exc.Message);
-                return View(product);
-            }
-            return RedirectToAction("ProductList", "Diet");
-        }
-
-        [HttpPost]
-        public IActionResult EditProduct(String productId)
-        {
-            var product = productManagement.GetProduct(new Guid(productId));
-            return View(product);
-        }
-
+        /// <summary>
+        /// Odpowiedzialny za usunięcie produktu użytkownika.
+        /// </summary>
+        /// <param name="productDeleteId">Id produktu.</param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult DeleteProduct(String productDeleteId)
         {

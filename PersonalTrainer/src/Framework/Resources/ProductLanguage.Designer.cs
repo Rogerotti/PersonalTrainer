@@ -105,6 +105,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Product manufacturer.
+        /// </summary>
+        public static string ProductManufacturer {
+            get {
+                return ResourceManager.GetString("ProductManufacturer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Product name.
         /// </summary>
         public static string ProductName {
@@ -128,6 +137,15 @@ namespace Framework.Resources {
         public static string Quantity {
             get {
                 return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
     }

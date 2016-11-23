@@ -39,10 +39,13 @@
     {
 
     <script>  $('.ui.dropdown').dropdown();</script>
+  
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
             $('.sortable.table').tablesort();
+ 
         });
     </script>
 
@@ -118,9 +121,6 @@
             if (input.value > 100) input.value = 100;
         });
 
-
-
-
         function KeyIsSpecialCharacter(e) {
             if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
                 // Pozwala na: Ctrl+A
@@ -136,118 +136,6 @@
         }
         UpdateCurrenCalories()
     })
-
- 
-
-    $('.BreakfestTable').on('keyup', ".ChangeMacro", function (e) {
-
-        var input = $(this).children();
-        var newQuant = input.val();
-        var tr = $(this).parent().parent();
-
-        var protein = tr[0].cells[2].innerHTML
-        var fat = tr[0].cells[3].innerHTML
-        var carbs = tr[0].cells[4].innerHTML
-        var calories = tr[0].cells[5].innerHTML
-
-        var prevQuant =  parseFloat(tr[0].cells[9].children[0].value);
-        var prevProtein = parseFloat(tr[0].cells[10].children[0].value);
-        var prevFat = parseFloat(tr[0].cells[11].children[0].value);
-        var prevCarb = parseFloat(tr[0].cells[12].children[0].value);
-        var prevCalories = parseFloat(tr[0].cells[13].children[0].value);
-
-        var ratio = Math.round(newQuant * 100.0 / prevQuant) / 100
-
-        var ress = prevProtein * ratio;
-        tr[0].cells[2].innerHTML = Math.round(prevProtein * ratio * 100)/100;
-        tr[0].cells[3].innerHTML = Math.round(prevFat * ratio * 100) / 100;
-        tr[0].cells[4].innerHTML = Math.round(prevCarb * ratio * 100) / 100;
-        tr[0].cells[5].innerHTML = Math.round(prevCalories * ratio * 100) / 100;
-
-        UpdateCurrenCalories()
-    });
-
-    $('.BreakfestTable').on('click', ".DeleteMacro", function (e) {
-        var tr = $(this).parent().parent();
-        var body = tr.parent();
-        var table = body.parent();
-        tr.remove();
-        if (body[0].childElementCount == 0)
-        {
-            table.remove();
-        }
-        UpdateCurrenCalories()
-    });
-
-    function UpdateCurrenCalories()
-    {
-        var proteins = document.getElementsByName("productProtein")
-        var fats = document.getElementsByName("productFat")
-        var carbs = document.getElementsByName("productCarbs")
-        var calories = document.getElementsByName("productCalories")
-
-        var proteinCount = parseFloat(0)
-        var fatCount = parseFloat(0)
-        var carbsnCount = parseFloat(0)
-        var caloriesCount = parseFloat(0)
-
-        for (var i = 0; i < proteins.length; i++) {
-            proteinCount += parseFloat(proteins[i].innerHTML)
-            fatCount += parseFloat(fats[i].innerHTML)
-            carbsnCount += parseFloat(carbs[i].innerHTML)
-            caloriesCount += parseFloat(calories[i].innerHTML)
-        }
-
-        document.getElementById("CurrentProtein").innerHTML = proteinCount
-        document.getElementById("CurrentFat").innerHTML = fatCount
-        document.getElementById("CurrentCarbs").innerHTML = carbsnCount
-        document.getElementById("CurrentCalories").innerHTML = caloriesCount
-
-        var avaibleProteins = parseFloat(document.getElementById("AvaibleProtein").innerHTML)
-        var avaibleFat = parseFloat(document.getElementById("AvaibleFat").innerHTML)
-        var avaibleCarbs = parseFloat(document.getElementById("AvaibleCarbs").innerHTML)
-        var avaibleCalories = parseFloat(document.getElementById("AvaibleCalories").innerHTML)
-
-
-        var resultProteins = avaibleProteins - proteinCount;
-        var resultFat = avaibleFat - fatCount;
-        var resultCarbs = avaibleCarbs - carbsnCount;
-        var resultCalories = avaibleCalories - caloriesCount;
-
-        var proteinElement = document.getElementById("ResultProtein")
-        SetFontColorDepensOnCalories(proteinElement, resultProteins)
-        proteinElement.innerHTML = Math.floor(resultProteins * 100) / 100
-
-        var fatElement = document.getElementById("ResultFat")
-        SetFontColorDepensOnCalories(fatElement, resultFat)
-        fatElement.innerHTML = Math.floor(resultFat * 100) / 100
-
-        var carbsElement = document.getElementById("ResultCarbs")
-        SetFontColorDepensOnCalories(carbsElement, resultCarbs)
-        carbsElement.innerHTML = Math.floor(resultCarbs * 100) / 100
-      
-        var caloriesElement = document.getElementById("ResultCalories")
-        SetFontColorDepensOnCalories(caloriesElement, resultCalories)
-        caloriesElement.innerHTML = Math.floor(resultCalories * 100) / 100
-    }
-
-    // Ustawia kolor czcionki w zależności od ilości kalori
-    // dodatnie zielone
-    // równe 0 czarne
-    // ujemne czerwone
-    function SetFontColorDepensOnCalories(element, amount)
-    {
-        if (amount > 0)
-            element.style.color = "Green"
-        else if (amount == 0)
-            element.style.color = "Black"
-        else
-            element.style.color = "Red"
-    }
-
-
-
-
 </script>
 }
 

@@ -132,6 +132,9 @@
   <data name="Fibre" xml:space="preserve">
     <value>Błonnik</value>
   </data>
+  <data name="ProductManufacturer" xml:space="preserve">
+    <value>Producent</value>
+  </data>
   <data name="ProductName" xml:space="preserve">
     <value>Nazwa produktu</value>
   </data>
@@ -140,5 +143,8 @@
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>Ilość</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Typ</value>
   </data>
 </root>

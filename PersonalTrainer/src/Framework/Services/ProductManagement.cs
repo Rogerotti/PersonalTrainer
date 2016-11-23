@@ -250,11 +250,11 @@ namespace Framework.Services
             {
                 var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
                 var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
-
+          
                 p.Name = dto.Name;
                 p.Manufacturer = dto.Manufacturer;
                 p.ProductType = GetProductTypeValue(dto.Type);
-                p.ProductState = GetProductStateValue(dto.State);
+               // p.ProductState = GetProductStateValue(dto.State);
 
                 pd.Calories = dto.Macro.Calories;
                 pd.Fat = dto.Macro.Fat;

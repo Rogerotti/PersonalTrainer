@@ -70,7 +70,7 @@ namespace Framework.Services
 
         public void Login(String username, String password)
         {  
-            var userList = context.User.ToList();
+             var userList = context.User.ToList();
             if (!userList.Any()) throw new UnauthorizedAccessException("No people in database.");
 
             var user = userList.FirstOrDefault(x => x.UserName.Equals(username));
