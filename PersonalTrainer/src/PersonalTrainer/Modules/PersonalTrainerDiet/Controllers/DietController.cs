@@ -78,7 +78,6 @@ namespace PersonalTrainerDiet.Controllers
             var dayView = new DayView()
             {
                 DayProteins = ProductDto.DayProteins,
-                DayFibre = ProductDto.DayFibre,
                 DayFat = ProductDto.DayFat,
                 DailyProduct = ProductDto.DailyProduct,
                 DayCarbohydrates = ProductDto.DayCarbohydrates,
@@ -88,7 +87,6 @@ namespace PersonalTrainerDiet.Controllers
                 AvaibleCarbohydrates = userGoals.Carbohydrates,
                 AvaibleFat = userGoals.Fat,
                 AvaibleProteins = userGoals.Proteins,
-                AvaibleFibre = userGoals.Proteins
             };
 
             return View(dayView);
@@ -231,7 +229,6 @@ namespace PersonalTrainerDiet.Controllers
                 dto.Macro.Calories = product.Macro.Calories;
                 dto.Macro.Carbohydrates = product.Macro.Carbohydrates;
                 dto.Macro.Fat = product.Macro.Fat;
-                dto.Macro.Fibre = product.Macro.Fibre;
                 dto.Macro.Protein = product.Macro.Protein;
                 dto.Macro.Quantity = product.Macro.Quantity;
                 dto.Macro.QuantityType = product.Macro.QuantityType;

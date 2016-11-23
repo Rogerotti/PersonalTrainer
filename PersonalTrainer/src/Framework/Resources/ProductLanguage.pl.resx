@@ -129,9 +129,6 @@
   <data name="Fat" xml:space="preserve">
     <value>Tłuszcze</value>
   </data>
-  <data name="Fibre" xml:space="preserve">
-    <value>Błonnik</value>
-  </data>
   <data name="ProductManufacturer" xml:space="preserve">
     <value>Producent</value>
   </data>

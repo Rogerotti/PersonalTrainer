@@ -36,11 +36,6 @@ namespace Framework.Models.Database
         [Required]
         public Decimal Carbohydrates { get; set; }
 
-        /// <summary>
-        /// Ilość błonnika w produkcie.
-        /// </summary>
-        [Required]
-        public Decimal Fibre { get; set; }
 
         /// <summary>
         /// Ilość kalorii w produkcie.

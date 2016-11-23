@@ -16,8 +16,5 @@ namespace Framework.Models.Dto
         public Decimal DayFat { get; set; }
 
         public Decimal DayCarbohydrates { get; set; }
-
-        public Decimal DayFibre { get; set; }
-
     }
 }

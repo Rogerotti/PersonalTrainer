@@ -18,8 +18,6 @@ namespace Framework.Models.View
 
         public Decimal DayCarbohydrates { get; set; }
 
-        public Decimal DayFibre { get; set; }
-
         public Decimal AvaibleCalories { get; set; }
 
         public Decimal AvaibleProteins { get; set; }
@@ -27,7 +25,5 @@ namespace Framework.Models.View
         public Decimal AvaibleFat { get; set; }
 
         public Decimal AvaibleCarbohydrates { get; set; }
-
-        public Decimal AvaibleFibre { get; set; }
     }
 }

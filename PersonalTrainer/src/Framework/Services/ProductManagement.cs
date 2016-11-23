@@ -55,10 +55,9 @@ namespace Framework.Services
                 var productDetails = context.ProductsDetails.Where(pd => !productsIds.Any(p => p == pd.ProductId));
 
                 var TotalCalories = productDetails.Sum(x => x.Calories);
-                var TotalFat = productDetails.Sum(x => x.Fat);//foodList.Sum(x => x.Product.ProductDetails.Fat);
-                var TotalFibre = productDetails.Sum(x => x.Fibre);//foodList.Sum(x => x.Product.ProductDetails.Fibre);
-                var TotalProteins = productDetails.Sum(x => x.Protein); //foodList.Sum(x => x.Product.ProductDetails.Protein);
-                var TotalCarbohydrates = productDetails.Sum(x => x.Carbohydrates); //foodList.Sum(x => x.Product.ProductDetails.Carbohydrates);
+                var TotalFat = productDetails.Sum(x => x.Fat);
+                var TotalProteins = productDetails.Sum(x => x.Protein);
+                var TotalCarbohydrates = productDetails.Sum(x => x.Carbohydrates);
 
                 if (day == null)
                 {
@@ -69,7 +68,6 @@ namespace Framework.Services
                         DayId = dailyFoodId,
                         TotalCalories = TotalCalories,
                         TotalFat = TotalFat,
-                        TotalFibre = TotalFibre,
                         TotalProteins = TotalProteins,
                         TotalCarbohydrates = TotalCarbohydrates
                     });
@@ -138,7 +136,6 @@ namespace Framework.Services
                                 Calories = productDetails.Calories,
                                 Carbohydrates = productDetails.Carbohydrates,
                                 Fat = productDetails.Fat,
-                                Fibre = productDetails.Fibre,
                                 Protein = productDetails.Protein,
                                 QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
                             },
@@ -156,7 +153,6 @@ namespace Framework.Services
                                  Calories = productDetails.Calories,
                                  Carbohydrates = productDetails.Carbohydrates,
                                  Fat = productDetails.Fat,
-                                 Fibre = productDetails.Fibre,
                                  Protein = productDetails.Protein,
                                  QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
                              },
@@ -169,7 +165,6 @@ namespace Framework.Services
                         Day = date,
                         DayCalories = 0,
                         DayProteins = 0,
-                        DayFibre = 0,
                         DayCarbohydrates = 0,
                         DayFat = 0,
                         DailyProduct = daily
@@ -181,7 +176,6 @@ namespace Framework.Services
                     Day = date,
                     DayCalories = 0,
                     DayProteins = 0,
-                    DayFibre = 0,
                     DayCarbohydrates = 0,
                     DayFat = 0,
                     DailyProduct = new List<DailyProductDto>()
@@ -219,7 +213,6 @@ namespace Framework.Services
                     Protein = dto.Macro.Protein,
                     Fat = dto.Macro.Fat,
                     Carbohydrates = dto.Macro.Carbohydrates,
-                    Fibre = dto.Macro.Fibre,
                     Calories = dto.Macro.Calories,
                     Quantity = dto.Macro.Quantity,
                     QuantityType = quantityType
@@ -254,11 +247,9 @@ namespace Framework.Services
                 p.Name = dto.Name;
                 p.Manufacturer = dto.Manufacturer;
                 p.ProductType = GetProductTypeValue(dto.Type);
-               // p.ProductState = GetProductStateValue(dto.State);
 
                 pd.Calories = dto.Macro.Calories;
                 pd.Fat = dto.Macro.Fat;
-                pd.Fibre = dto.Macro.Fibre;
                 pd.Protein = dto.Macro.Protein;
                 pd.Quantity = dto.Macro.Quantity;
                 pd.QuantityType = GetQuantityTypeValue(dto.Macro.QuantityType);
@@ -315,7 +306,6 @@ namespace Framework.Services
                     {
                         Calories = pd.Calories,
                         Fat = pd.Fat,
-                        Fibre = pd.Fibre,
                         Carbohydrates = pd.Carbohydrates,
                         Protein = pd.Protein,
                         Quantity = pd.Quantity,
@@ -352,7 +342,6 @@ namespace Framework.Services
                 {
                     Protein = x.pd.Protein,
                     Fat = x.pd.Fat,
-                    Fibre = x.pd.Fibre,
                     Carbohydrates = x.pd.Carbohydrates,
                     Calories = x.pd.Calories,
                     Quantity = x.pd.Quantity,
@@ -393,7 +382,6 @@ namespace Framework.Services
                 {
                     Protein = x.pd.Protein,
                     Fat = x.pd.Fat,
-                    Fibre = x.pd.Fibre,
                     Carbohydrates = x.pd.Carbohydrates,
                     Calories = x.pd.Calories,
                     Quantity = x.pd.Quantity,
@@ -545,10 +533,6 @@ namespace Framework.Services
 
         public DailyFoodDto GetDailyFoodFromDailyFoodProductDto(DateTime date, IEnumerable<DailyFoodProductDto> dto )
         {
-            //var breakfastMeals = dto.Where(x => x.MealType == MealType.Breakfast)
-            //    .Select(y => new KeyValuePair<Guid,Int32>(y.ProductId,y.ProductQuantity));
-
-
             List<DailyProductDto> products = new List<DailyProductDto>();
             foreach (var item in dto)
             {
@@ -561,7 +545,6 @@ namespace Framework.Services
                     Calories = p.Macro.Calories * res,
                     Fat = p.Macro.Fat * res,
                     Protein = p.Macro.Protein * res,
-                    Fibre = p.Macro.Fibre * res,
                     Carbohydrates = p.Macro.Carbohydrates * res,
                     Quantity = quantity
                 };
@@ -575,7 +558,6 @@ namespace Framework.Services
             }
 
             var totalFat = products.Sum(x => x.CurrentMacro.Fat);
-            var totalFibre = products.Sum(x => x.CurrentMacro.Fibre);
             var totalCarbohydrates = products.Sum(x => x.CurrentMacro.Carbohydrates);
             var totalCalories = products.Sum(x => x.CurrentMacro.Calories);
             var totalProtein = products.Sum(x => x.CurrentMacro.Protein);
@@ -588,7 +570,6 @@ namespace Framework.Services
                 DayCalories = totalCalories,
                 DayCarbohydrates = totalCarbohydrates,
                 DayFat = totalFat,
-                DayFibre = totalFibre,
                 DayProteins = totalProtein
             };
 

@@ -96,15 +96,6 @@ namespace Framework.Resources {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Fibre.
-        /// </summary>
-        public static string Fibre {
-            get {
-                return ResourceManager.GetString("Fibre", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///    Looks up a localized string similar to Product manufacturer.
         /// </summary>
         public static string ProductManufacturer {

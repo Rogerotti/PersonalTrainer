@@ -45,10 +45,6 @@ namespace Framework.Models.Database
         /// </summary>
         public Decimal TotalFat { get; set; }
 
-        /// <summary>
-        /// Spożyty błonnik w ciągu dnia.
-        /// </summary>
-        public Decimal TotalFibre { get; set; }
 
         /// <summary>
         /// Spożyte węglowodany w ciągu dnia.
