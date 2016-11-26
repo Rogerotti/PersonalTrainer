@@ -229,9 +229,16 @@ namespace Framework.Services
             {
                 var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(productId));
                 var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(productId));
+
+                var diaryProducts = context.DiaryProducts.Where(x => x.ProductId.Equals(productId)).ToList();
+                foreach (var item in diaryProducts)
+                {
+                    context.DiaryProducts.Remove(item);
+                }
+            
                 context.ProductsDetails.Remove(pd);
                 context.Product.Remove(p);
-
+           
                 context.SaveChanges();
                 trans.Commit();
             }
