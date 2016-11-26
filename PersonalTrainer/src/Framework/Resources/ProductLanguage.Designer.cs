@@ -60,6 +60,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to All products.
+        /// </summary>
+        public static string AllProducts {
+            get {
+                return ResourceManager.GetString("AllProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Calories.
         /// </summary>
         public static string Calories {
@@ -137,6 +146,15 @@ namespace Framework.Resources {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to User products.
+        /// </summary>
+        public static string UserProducts {
+            get {
+                return ResourceManager.GetString("UserProducts", resourceCulture);
             }
         }
     }

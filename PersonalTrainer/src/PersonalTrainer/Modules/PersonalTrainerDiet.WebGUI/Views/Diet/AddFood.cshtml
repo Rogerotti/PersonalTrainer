@@ -1,7 +1,7 @@
 ﻿@model  Framework.Models.Dto.SearchProductsDto
 @{
-    ViewData["Title"] = "Index";
-    Layout = "DietLayout";
+    ViewData["Title"] = "Add products";
+    Layout = "Layout";
 }
 
 <style>
@@ -45,10 +45,16 @@
         display: inline-block;
     }
 </style>
+
+@section LeftPanel
+{
+    @await Component.InvokeAsync("LeftMenu")
+}
+
 <body>
     <div class="ui tabular menu">
-        <div class="item" data-tab="AllProducts">All Products</div>
-        <div class="item" data-tab="UserProducts">User Products</div>
+        <div class="item" data-tab="AllProducts">@Framework.Resources.ProductLanguage.AllProducts</div>
+        <div class="item" data-tab="UserProducts">@Framework.Resources.ProductLanguage.UserProducts</div>
     </div>
 
     
@@ -95,7 +101,8 @@
                         }
                     </tbody>
                 </table>
-                <input type="submit" name="test33" value="1" />
+
+                <input type="submit" name="test33" value="@Framework.Resources.ButtonLanguage.Add" />
      
             </form>
 </div>
@@ -117,3 +124,32 @@
 
 </body>
 
+@section Scripts
+{
+    <script>
+        $('.tabular.menu .item').tab();
+
+        $(document).ready(function () {
+            $('.sortable.table').tablesort();
+        });
+    </script>
+
+    <script>
+        $('#search-field').on('keyup', function (e) {
+            if ('' != this.value) {
+                var reg = new RegExp(this.value, 'i'); // case-insesitive
+
+                $('.table tbody').find('tr').each(function () {
+                    var $me = $(this);
+                    if (!$me.children('td:eq(2)').text().match(reg)) {
+                        $me.hide();
+                    } else {
+                        $me.show();
+                    }
+                });
+            } else {
+                $('.table tbody').find('tr').show();
+            }
+        });
+    </script>
+}
