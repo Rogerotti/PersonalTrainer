@@ -52,23 +52,23 @@
 }
 
 <body>
+
     <div class="ui tabular menu">
-        <div class="item" data-tab="AllProducts">@Framework.Resources.ProductLanguage.AllProducts</div>
+        <div class="active item" data-tab="AllProducts">@Framework.Resources.ProductLanguage.AllProducts</div>
         <div class="item" data-tab="UserProducts">@Framework.Resources.ProductLanguage.UserProducts</div>
     </div>
 
-    
-    <div class="ui active tab" data-tab="AllProducts">
+    <div class="ui left icon input">
+        <input id="search-field" placeholder="Search food..." type="text">
+        <i class="food icon"></i>
+    </div>
 
-            <div class="ui left icon input">
-                <input id="search-field" placeholder="Search food..." type="text">
-                <i class="food icon"></i>
-            </div>
+    <div class="ui active tab" data-tab="AllProducts">
 
         <div>
             <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
 
-                <table id="table" class="ui sortable selectable celled  table">
+                <table id="table" class="ui sortable selectable celled table">
 
                     <thead>
                         <tr>
@@ -105,21 +105,20 @@
                 <input type="submit" name="test33" value="@Framework.Resources.ButtonLanguage.Add" />
      
             </form>
-</div>
+        </div>
 
-</div>
+    </div>
 
     <div class="ui tab" data-tab="UserProducts">
-        <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
 
-            <input type="submit" name="test" value="1" />
-            <div class="ui left icon input">
-                <input placeholder="Search food..." type="text">
-                <i class="food icon"></i>
-            </div>
+        <div>
+            <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
 
+                @await Component.InvokeAsync("AddProductTable", new { products = Model.UserProducts })
 
-        </form>
+                <input type="submit" name="test" value="@Framework.Resources.ButtonLanguage.Add" />
+            </form>
+        </div>
     </div>
 
 </body>
@@ -127,10 +126,10 @@
 @section Scripts
 {
     <script>
-        $('.tabular.menu .item').tab();
-
         $(document).ready(function () {
             $('.sortable.table').tablesort();
+
+            $('.tabular.menu .item').tab();
         });
     </script>
 
