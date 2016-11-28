@@ -96,6 +96,42 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Current calories.
+        /// </summary>
+        public static string CurrentCalories {
+            get {
+                return ResourceManager.GetString("CurrentCalories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Current carbs.
+        /// </summary>
+        public static string CurrentCarbs {
+            get {
+                return ResourceManager.GetString("CurrentCarbs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Current fat.
+        /// </summary>
+        public static string CurrentFat {
+            get {
+                return ResourceManager.GetString("CurrentFat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Current protein.
+        /// </summary>
+        public static string CurrentProtein {
+            get {
+                return ResourceManager.GetString("CurrentProtein", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Fat.
         /// </summary>
         public static string Fat {

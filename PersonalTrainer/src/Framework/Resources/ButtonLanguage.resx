@@ -120,8 +120,14 @@
   <data name="Add" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="AddProduct" xml:space="preserve">
+    <value>Add product</value>
+  </data>
   <data name="CancelSubscribe" xml:space="preserve">
     <value>Cancel subscribtion</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -132,16 +138,25 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Goals" xml:space="preserve">
+    <value>Goals</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="ProductBase" xml:space="preserve">
+    <value>Product base</value>
+  </data>
   <data name="SingUp" xml:space="preserve">
     <value>Sing up</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
     <value>Subscribe</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
   </data>
 </root>

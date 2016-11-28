@@ -129,6 +129,18 @@
   <data name="Carbs" xml:space="preserve">
     <value>Węglowodany</value>
   </data>
+  <data name="CurrentCalories" xml:space="preserve">
+    <value>Wykorzystane kalorie</value>
+  </data>
+  <data name="CurrentCarbs" xml:space="preserve">
+    <value>Wykorzystane węglowodany</value>
+  </data>
+  <data name="CurrentFat" xml:space="preserve">
+    <value>Wykorzystane tłuszcze</value>
+  </data>
+  <data name="CurrentProtein" xml:space="preserve">
+    <value>Wykorzystane białko</value>
+  </data>
   <data name="Fat" xml:space="preserve">
     <value>Tłuszcze</value>
   </data>

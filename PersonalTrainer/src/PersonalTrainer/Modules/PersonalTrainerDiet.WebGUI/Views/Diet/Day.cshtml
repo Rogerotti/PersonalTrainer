@@ -109,15 +109,15 @@ color: red;
             <thead>
                 <tr>
                     <th></th>
-                    <th>Total Protein</th>
-                    <th>Total Fat</th>
-                    <th>Total Carbs</th>
-                    <th>Total Calories</th>
+                    <th>@Framework.Resources.ProductLanguage.CurrentProtein</th>
+                    <th>@Framework.Resources.ProductLanguage.CurrentFat</th>
+                    <th>@Framework.Resources.ProductLanguage.CurrentCarbs</th>
+                    <th>@Framework.Resources.ProductLanguage.CurrentCalories</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Current</td>
+                    <td>@Framework.Resources.UserLanguage.Current</td>
                     <td id="CurrentProtein">@Model.DayProteins</td>
                     <td id="CurrentFat">@Model.DayFat</td>
                     <td id="CurrentCarbs">@Model.DayCarbohydrates</td>
@@ -125,7 +125,7 @@ color: red;
                 </tr>
 
                 <tr>
-                    <td>Avaible</td>
+                    <td>@Framework.Resources.UserLanguage.Avaible</td>
                     <td id="AvaibleProtein">@Model.AvaibleProteins</td>
                     <td id="AvaibleFat">@Model.AvaibleFat</td>
                     <td id="AvaibleCarbs">@Model.AvaibleCarbohydrates</td>
@@ -142,7 +142,7 @@ color: red;
             </tbody>
         </table>
         <button class="ui blue button" value="4" name="buttonType">
-            Zatwierdź
+            @Framework.Resources.ButtonLanguage.Confirm
         </button>
     </form>
 
