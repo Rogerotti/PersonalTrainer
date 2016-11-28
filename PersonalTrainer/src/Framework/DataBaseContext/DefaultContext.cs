@@ -23,7 +23,6 @@ namespace Framework.DataBaseContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<DiaryProduct>().Has
             modelBuilder.Entity<DiaryProduct>().HasKey(x => x.DiaryProductId);
             modelBuilder.Entity<DiaryProduct>()
                 .HasOne(p =>p.Day)

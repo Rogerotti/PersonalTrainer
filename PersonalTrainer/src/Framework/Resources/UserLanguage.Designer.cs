@@ -8,8 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Framework.Resources
-{
+namespace Framework.Resources {
     using System;
     using System.Reflection;
 
@@ -23,158 +22,148 @@ namespace Framework.Resources
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class UserLanguage
-    {
-
+    public class UserLanguage {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
-        internal UserLanguage()
-        {
+        
+        internal UserLanguage() {
         }
-
+        
         /// <summary>
         ///    Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Framework.Resources.UserLanguage", typeof(UserLanguage).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///    Overrides the current thread's CurrentUICulture property for all
         ///    resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Age.
         /// </summary>
-        public static string Age
-        {
-            get
-            {
+        public static string Age {
+            get {
                 return ResourceManager.GetString("Age", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Confirm password.
         /// </summary>
-        public static string ConfirmPassword
-        {
-            get
-            {
+        public static string ConfirmPassword {
+            get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Email.
         /// </summary>
-        public static string Email
-        {
-            get
-            {
+        public static string Email {
+            get {
                 return ResourceManager.GetString("Email", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Enter age.
         /// </summary>
-        public static string EnterAge
-        {
-            get
-            {
+        public static string EnterAge {
+            get {
                 return ResourceManager.GetString("EnterAge", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Gender.
         /// </summary>
-        public static string Gender
-        {
-            get
-            {
+        public static string Gender {
+            get {
                 return ResourceManager.GetString("Gender", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Height.
         /// </summary>
-        public static string Height
-        {
-            get
-            {
+        public static string Height {
+            get {
                 return ResourceManager.GetString("Height", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Home page.
+        /// </summary>
+        public static string HomePage {
+            get {
+                return ResourceManager.GetString("HomePage", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///    Looks up a localized string similar to Login.
         /// </summary>
-        public static string Login
-        {
-            get
-            {
+        public static string Login {
+            get {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Password.
         /// </summary>
-        public static string Password
-        {
-            get
-            {
+        public static string Password {
+            get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Register.
         /// </summary>
-        public static string Register
-        {
-            get
-            {
+        public static string Register {
+            get {
                 return ResourceManager.GetString("Register", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Weight.
         /// </summary>
-        public static string Weight
-        {
-            get
-            {
+        public static string Weight {
+            get {
                 return ResourceManager.GetString("Weight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Welcome.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
     }

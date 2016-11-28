@@ -8,12 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Framework.Resources
-{
+namespace Framework.Resources {
     using System;
     using System.Reflection;
-
-
+    
+    
     /// <summary>
     ///    A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,234 +22,201 @@ namespace Framework.Resources
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ErrorLanguage
-    {
-
+    public class ErrorLanguage {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
-        internal ErrorLanguage()
-        {
+        
+        internal ErrorLanguage() {
         }
-
+        
         /// <summary>
         ///    Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Framework.Resources.ErrorLanguage", typeof(ErrorLanguage).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///    Overrides the current thread's CurrentUICulture property for all
         ///    resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to The age dosent request the criteria.
         /// </summary>
-        public static string AgeRange
-        {
-            get
-            {
+        public static string AgeRange {
+            get {
                 return ResourceManager.GetString("AgeRange", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to The email is empty..
         /// </summary>
-        public static string EmailEmpty
-        {
-            get
-            {
+        public static string EmailEmpty {
+            get {
                 return ResourceManager.GetString("EmailEmpty", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to The email is wrong..
         /// </summary>
-        public static string EmailRegex
-        {
-            get
-            {
+        public static string EmailRegex {
+            get {
                 return ResourceManager.GetString("EmailRegex", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Gender dosent exist..
         /// </summary>
-        public static string GenderError
-        {
-            get
-            {
+        public static string GenderError {
+            get {
                 return ResourceManager.GetString("GenderError", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to The height is empty..
         /// </summary>
-        public static string HeightEmpty
-        {
-            get
-            {
+        public static string HeightEmpty {
+            get {
                 return ResourceManager.GetString("HeightEmpty", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Login should have size between 3 and 20 characters..
         /// </summary>
-        public static string LoginLenght
-        {
-            get
-            {
+        public static string LoginLenght {
+            get {
                 return ResourceManager.GetString("LoginLenght", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Login is required..
         /// </summary>
-        public static string LoginRequired
-        {
-            get
-            {
+        public static string LoginRequired {
+            get {
                 return ResourceManager.GetString("LoginRequired", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Password should have length between 5 and 20 characters..
         /// </summary>
-        public static string PasswordLength
-        {
-            get
-            {
+        public static string PasswordLength {
+            get {
                 return ResourceManager.GetString("PasswordLength", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Password do not match..
         /// </summary>
-        public static string PasswordNotMatch
-        {
-            get
-            {
+        public static string PasswordNotMatch {
+            get {
                 return ResourceManager.GetString("PasswordNotMatch", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to The password is wrong..
         /// </summary>
-        public static string PasswordRegex
-        {
-            get
-            {
+        public static string PasswordRegex {
+            get {
                 return ResourceManager.GetString("PasswordRegex", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Password is required..
         /// </summary>
-        public static string PasswordRequired
-        {
-            get
-            {
+        public static string PasswordRequired {
+            get {
                 return ResourceManager.GetString("PasswordRequired", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to The username is empty..
         /// </summary>
-        public static string UsernameEmpty
-        {
-            get
-            {
+        public static string UsernameEmpty {
+            get {
                 return ResourceManager.GetString("UsernameEmpty", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Username already exist..
         /// </summary>
-        public static string UsernameExist
-        {
-            get
-            {
+        public static string UsernameExist {
+            get {
                 return ResourceManager.GetString("UsernameExist", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Username should have size between 3 and 20 characters..
         /// </summary>
-        public static string UsernameLength
-        {
-            get
-            {
+        public static string UsernameLength {
+            get {
                 return ResourceManager.GetString("UsernameLength", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to Wrong username or password.
         /// </summary>
-        public static string UserNameOrPasswordWrong
-        {
-            get
-            {
+        public static string UserNameOrPasswordWrong {
+            get {
                 return ResourceManager.GetString("UserNameOrPasswordWrong", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///    Looks up a localized string similar to User is not logged in..
         /// </summary>
-        public static string UserNotLoggedIn
-        {
-            get
-            {
+        public static string UserNotLoggedIn {
+            get {
                 return ResourceManager.GetString("UserNotLoggedIn", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Validation error.
+        /// </summary>
+        public static string ValidationError {
+            get {
+                return ResourceManager.GetString("ValidationError", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///    Looks up a localized string similar to The weight is empty..
         /// </summary>
-        public static string WeightEmpty
-        {
-            get
-            {
+        public static string WeightEmpty {
+            get {
                 return ResourceManager.GetString("WeightEmpty", resourceCulture);
             }
         }

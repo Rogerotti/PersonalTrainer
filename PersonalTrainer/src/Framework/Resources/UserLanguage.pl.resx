@@ -135,6 +135,9 @@
   <data name="Height" xml:space="preserve">
     <value>Wzrost</value>
   </data>
+  <data name="HomePage" xml:space="preserve">
+    <value>Strona główna</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
@@ -146,5 +149,8 @@
   </data>
   <data name="Weight" xml:space="preserve">
     <value>Waga</value>
+  </data>
+  <data name="Welcome" xml:space="preserve">
+    <value>Witaj</value>
   </data>
 </root>

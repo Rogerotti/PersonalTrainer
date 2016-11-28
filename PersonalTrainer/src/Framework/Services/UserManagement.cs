@@ -69,8 +69,8 @@ namespace Framework.Services
         }
 
         public void Login(String username, String password)
-        {  
-             var userList = context.User.ToList();
+        {
+            var userList = context.User.ToList();
             if (!userList.Any()) throw new UnauthorizedAccessException("No people in database.");
 
             var user = userList.FirstOrDefault(x => x.UserName.Equals(username));
@@ -209,6 +209,12 @@ namespace Framework.Services
             if (age > 99 || age < 12) throw new UnauthorizedAccessException(ErrorLanguage.AgeRange);
         }
 
+
+        /// <summary>
+        /// Tworzenie soli
+        /// </summary>
+        /// <param name="size">Wielkość soli.</param>
+        /// <returns></returns>
         private Byte[] CreateSalt(Int32 size)
         {
             RandomNumberGenerator rng = RandomNumberGenerator.Create();

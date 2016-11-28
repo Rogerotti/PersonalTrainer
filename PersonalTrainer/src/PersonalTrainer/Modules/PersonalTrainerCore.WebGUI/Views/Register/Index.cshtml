@@ -14,7 +14,7 @@
                 <div class="column">
                     <div class="field">
                         <label>@Framework.Resources.UserLanguage.Login</label>
-                        <input class="MaxLength30" placeholder="Login" type="text" asp-for="Login">
+                        <input class="MaxLength30" placeholder="@Framework.Resources.UserLanguage.Login" type="text" asp-for="Login">
                         <span asp-validation-for="Login" class="ui red header"></span>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
                 <div class="column">
                     <div class="field">
                         <label>@Framework.Resources.UserLanguage.Email</label>
-                        <input class="MaxLength255" placeholder="Email" type="text" asp-for="Email">
+                        <input class="MaxLength255" placeholder="@Framework.Resources.UserLanguage.Email" type="text" asp-for="Email">
                         <span asp-validation-for="Email" class="ui red header"></span>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     <div class="field">
                         <label>@Framework.Resources.UserLanguage.Height</label>
                         <div class="ui right labeled input">
-                            <input class="NumericValidation MaxLength3" placeholder="Enter height.." type="text" asp-for="Height">
+                            <input class="NumericValidation MaxLength3" placeholder="@Framework.Resources.UserLanguage.Height" type="text" asp-for="Height">
                                 <div class="ui dropdown label" asp-for="HeightUnit">
                                     <input name="WeightType" type="hidden">
                                     <div class="text">cm</div>
@@ -98,7 +98,7 @@
                     <div class="field">
                         <label>@Framework.Resources.UserLanguage.Weight</label>
                         <div class="ui right labeled input">
-                            <input class="NumericValidation MaxLength3" placeholder="Enter weight.." type="text" asp-for="Weight">
+                            <input class="NumericValidation MaxLength3" placeholder="@Framework.Resources.UserLanguage.Weight" type="text" asp-for="Weight">
                             <div class="ui basic label"> kg</div>
                         </div>
                         <span asp-validation-for="Weight" class="ui red header"></span>
@@ -128,103 +128,101 @@
 @section Scripts
     {
         <script>  $('.ui.dropdown').dropdown('refresh');</script>
-
-    <!--Pozwala na wpisywanie samych liczb.-->
-    <script>
-        $(document).ready(function ()
-        {
-            $(".NumericValidation").keydown(function (e)
+        <!--Pozwala na wpisywanie samych liczb.-->
+        <script>
+            $(document).ready(function ()
             {
-                // Sprawdzenie znaków specjalnych.
-                if (KeyIsSpecialCharacter(e))
-                    return;
+                $(".NumericValidation").keydown(function (e)
+                {
+                    // Sprawdzenie znaków specjalnych.
+                    if (KeyIsSpecialCharacter(e))
+                        return;
 
-                // Upewnia się że jest to liczba jeżeli nie stopuje wciśnięcie
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105) )
-                    e.preventDefault();
-            });
+                    // Upewnia się że jest to liczba jeżeli nie stopuje wciśnięcie
+                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105) )
+                        e.preventDefault();
+                });
 
-            $(".MaxLength2").keydown(function (e)
-            {
-                // Sprawdzenie znaków specjalnych.
-                if (KeyIsSpecialCharacter(e))
-                    return;
+                $(".MaxLength2").keydown(function (e)
+                {
+                    // Sprawdzenie znaków specjalnych.
+                    if (KeyIsSpecialCharacter(e))
+                        return;
 
-                MaxLengthPrevent(this, 2,e);
-            });
+                    MaxLengthPrevent(this, 2,e);
+                });
 
-            $(".MaxLength3").keydown(function (e)
-            {
-                // Sprawdzenie znaków specjalnych.
-                if (KeyIsSpecialCharacter(e))
-                    return;
-                // Sprawdza maksymalną długość tekstu.
-                MaxLengthPrevent(this,3,e);
+                $(".MaxLength3").keydown(function (e)
+                {
+                    // Sprawdzenie znaków specjalnych.
+                    if (KeyIsSpecialCharacter(e))
+                        return;
+                    // Sprawdza maksymalną długość tekstu.
+                    MaxLengthPrevent(this,3,e);
 
-            });
+                });
 
-            $(".MaxLength3").keydown(function (e) {
-                // Sprawdzenie znaków specjalnych.
-                if (KeyIsSpecialCharacter(e))
-                    return;
-                // Sprawdza maksymalną długość tekstu.
-                MaxLengthPrevent(this, 3, e);
+                $(".MaxLength3").keydown(function (e) {
+                    // Sprawdzenie znaków specjalnych.
+                    if (KeyIsSpecialCharacter(e))
+                        return;
+                    // Sprawdza maksymalną długość tekstu.
+                    MaxLengthPrevent(this, 3, e);
 
-            });
+                });
 
-            $(".MaxLength30").keydown(function (e) {
-                // Sprawdzenie znaków specjalnych.
-                if (KeyIsSpecialCharacter(e))
-                    return;
-                // Sprawdza maksymalną długość tekstu.
-                MaxLengthPrevent(this, 30, e);
+                $(".MaxLength30").keydown(function (e) {
+                    // Sprawdzenie znaków specjalnych.
+                    if (KeyIsSpecialCharacter(e))
+                        return;
+                    // Sprawdza maksymalną długość tekstu.
+                    MaxLengthPrevent(this, 30, e);
 
-            });
+                });
 
-            $(".MaxLength255").keydown(function (e)
-            {
-                // Sprawdzenie znaków specjalnych.
-                if (KeyIsSpecialCharacter(e))
-                    return;
-                // Sprawdza maksymalną długość tekstu.
-                MaxLengthPrevent(this, 255, e);
+                $(".MaxLength255").keydown(function (e)
+                {
+                    // Sprawdzenie znaków specjalnych.
+                    if (KeyIsSpecialCharacter(e))
+                        return;
+                    // Sprawdza maksymalną długość tekstu.
+                    MaxLengthPrevent(this, 255, e);
 
-            });
+                });
 
-            //  Metoda sprawdzająca czy znak jest znakiem specjalnym. 
-            function KeyIsSpecialCharacter(e)
-            {
-                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-                    // Pozwala na: Ctrl+A
-               (e.keyCode == 65 && e.ctrlKey === true) ||
-                    // Pozwala na: Ctrl+C
-               (e.keyCode == 67 && e.ctrlKey === true) ||
-                    // Pozwala na: Ctrl+X
-               (e.keyCode == 88 && e.ctrlKey === true) ||
-                    // Pozwala na: home, end, left, right
-               (e.keyCode >= 35 && e.keyCode <= 39)){ return true; }
+                //  Metoda sprawdzająca czy znak jest znakiem specjalnym. 
+                function KeyIsSpecialCharacter(e)
+                {
+                    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                        // Pozwala na: Ctrl+A
+                   (e.keyCode == 65 && e.ctrlKey === true) ||
+                        // Pozwala na: Ctrl+C
+                   (e.keyCode == 67 && e.ctrlKey === true) ||
+                        // Pozwala na: Ctrl+X
+                   (e.keyCode == 88 && e.ctrlKey === true) ||
+                        // Pozwala na: home, end, left, right
+                   (e.keyCode >= 35 && e.keyCode <= 39)){ return true; }
 
-                return false
-            }
+                    return false
+                }
 
-            // Zabezpiecza przed wpisanie tekstu większym niż podana długość.
-            // W przypadku gdy tekst jest zaznaczony anuluje walidacje i usuwa tekst.
-            // input - kontrolka
-            // maxLength - najdłuzsza długość
-            // e - event który zostanie anulowany w przypadku walidacji.
-            function MaxLengthPrevent(input,maxLength, e)
-            {
-                var selectionLength = input.selectionEnd - input.selectionStart
-                if (selectionLength != 0) 
-                    return;
+                // Zabezpiecza przed wpisanie tekstu większym niż podana długość.
+                // W przypadku gdy tekst jest zaznaczony anuluje walidacje i usuwa tekst.
+                // input - kontrolka
+                // maxLength - najdłuzsza długość
+                // e - event który zostanie anulowany w przypadku walidacji.
+                function MaxLengthPrevent(input,maxLength, e)
+                {
+                    var selectionLength = input.selectionEnd - input.selectionStart
+                    if (selectionLength != 0) 
+                        return;
                 
-                if (input.value.length >= maxLength) 
-                    e.preventDefault();
-            }
-        });
-    </script>
+                    if (input.value.length >= maxLength) 
+                        e.preventDefault();
+                }
+            });
+        </script>
     }
-
 </body>
 
 

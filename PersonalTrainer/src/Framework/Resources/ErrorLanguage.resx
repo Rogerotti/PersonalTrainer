@@ -168,4 +168,7 @@
   <data name="WeightEmpty" xml:space="preserve">
     <value>The weight is empty.</value>
   </data>
+  <data name="ValidationError" xml:space="preserve">
+    <value>Validation error</value>
+  </data>
 </root>

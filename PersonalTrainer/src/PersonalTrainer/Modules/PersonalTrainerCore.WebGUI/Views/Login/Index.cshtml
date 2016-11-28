@@ -1,16 +1,9 @@
 ﻿@model  Framework.Models.Dto.UserDto
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = @Framework.Resources.UserLanguage.Login;
     Layout = "Layout";
 }
-
-<style>
-    button.ui.test2 {
-        background: #e9fffe
-    }
-
-</style>
 
 <body>
     <form class="ui form inverted blue segment"  asp-controller="Login" asp-action="Index" method="post">
@@ -44,7 +37,7 @@
 
             <!--Login Button-->
             <div class="column  centered row">
-                <button class="ui test2 button"  type="submit"> @Framework.Resources.UserLanguage.Login</button>
+                <button class="ui button"  type="submit"> @Framework.Resources.UserLanguage.Login</button>
             </div>
 
         </div>

@@ -126,8 +126,20 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Diet" xml:space="preserve">
+    <value>Diet</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="SingUp" xml:space="preserve">
+    <value>Sing up</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
     <value>Subscribe</value>

@@ -2,22 +2,22 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <div class="ui massive inverted blue menu">
         <div class="left menu">
-            <a class="item" asp-controller="Home" asp-action="Index">HomePage</a>
+            <a class="item" asp-controller="Home" asp-action="Index">@Framework.Resources.UserLanguage.HomePage</a>
         </div>
         <div class="right menu">
 
             @{
                 if (Model.IsLogedIn)
                 {
-                    <div class="ui small header item">Witaj @Model.UserName</div>
-                    <a class="item" asp-controller="Diet" asp-action="Index">Diet</a>
-                    <a class="item" asp-controller="Login" asp-action="Logout">Wyloguj</a>
+                    <div class="ui small header item">@Framework.Resources.UserLanguage.Welcome @Model.UserName</div>
+                    <a id="diet" class="active item" asp-controller="Diet" asp-action="Index" onclick="ChangeActiveItem(this)">@Framework.Resources.ButtonLanguage.Diet </a>
+                    <a class="item" asp-controller="Login" asp-action="Logout">@Framework.Resources.ButtonLanguage.Logout</a>
                                
                 }
                 else
                 {
-                    <a class="item" asp-controller="Register" asp-action="Index">Sign Up</a>
-                    <a class="item" asp-controller="Login" asp-action="Index">Login</a>
+                    <a class="item" asp-controller="Register" asp-action="Index">@Framework.Resources.ButtonLanguage.SingUp</a>
+                    <a class="item" asp-controller="Login" asp-action="Index">@Framework.Resources.ButtonLanguage.Login</a>
                     <a class="item" asp-controller="Login" asp-action="AdminLogin">Admin</a>
 
                 }
@@ -25,3 +25,4 @@
         </div>
     </div>
  <div class="ui hidden divider"></div>
+
