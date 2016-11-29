@@ -9,20 +9,17 @@
             @{
                 if (Model.IsLogedIn)
                 {
-                    <div class="ui small header item">@Framework.Resources.UserLanguage.Welcome @Model.UserName</div>
-                    <a id="diet" class="active item" asp-controller="Diet" asp-action="Index" onclick="ChangeActiveItem(this)">@Framework.Resources.ButtonLanguage.Diet </a>
+                    <div class="ui tiny header item">@Framework.Resources.UserLanguage.Welcome @Model.UserName</div>
+                    <a id="diet" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Diet"? "active item" : "item")" asp-controller="Diet" asp-action="Index">@Framework.Resources.ButtonLanguage.Diet </a>
                     <a class="item" asp-controller="Login" asp-action="Logout">@Framework.Resources.ButtonLanguage.Logout</a>
-                               
                 }
                 else
                 {
-                    <a class="item" asp-controller="Register" asp-action="Index">@Framework.Resources.ButtonLanguage.SingUp</a>
-                    <a class="item" asp-controller="Login" asp-action="Index">@Framework.Resources.ButtonLanguage.Login</a>
+                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Register"? "active item" : "item")" asp-controller="Register" asp-action="Index">@Framework.Resources.ButtonLanguage.SingUp</a>
+                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Login"? "active item" : "item")" asp-controller="Login" asp-action="Index">@Framework.Resources.ButtonLanguage.Login</a>
                     <a class="item" asp-controller="Login" asp-action="AdminLogin">Admin</a>
-
                 }
             }
         </div>
     </div>
  <div class="ui hidden divider"></div>
-

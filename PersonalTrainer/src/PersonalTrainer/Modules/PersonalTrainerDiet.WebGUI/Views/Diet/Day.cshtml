@@ -41,6 +41,7 @@ color: red;
     <form asp-action="Day" asp-controller="Diet" method="post">
         <div class="ui medium header">Breakfest</div>
         <div class="ui divider"></div>
+
         <div class="margin-bottom" >
             @{
                 if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Breakfast))
@@ -50,9 +51,10 @@ color: red;
                 }
             }
         </div>
+
         <button class="ui basic button" value="0" name="buttonType">
             <i class="food icon"></i>
-            Add Meal
+            @Framework.Resources.ButtonLanguage.AddProducts
         </button>
 
         <div class="ui medium header">Dinner</div>
@@ -66,9 +68,10 @@ color: red;
                 }
             }
         </div>
+
         <button class="ui basic button" value="1" name="buttonType">
             <i class="food icon"></i>
-            Add Meal
+            @Framework.Resources.ButtonLanguage.AddProducts
         </button>
 
         <div class="ui medium header">Supper</div>
@@ -82,9 +85,10 @@ color: red;
                 }
             }
         </div>
+
         <button class="ui basic button" value="2" name="buttonType">
             <i class="food icon"></i>
-            Add Meal
+            @Framework.Resources.ButtonLanguage.AddProducts
         </button>
 
         <div class="ui medium header">Snacks</div>
@@ -98,9 +102,10 @@ color: red;
                 }
             }
         </div>
+
         <button class="ui basic button" value="3" name="buttonType">
             <i class="food icon"></i>
-            Add Meal
+           @Framework.Resources.ButtonLanguage.AddProducts
         </button>
 
         <div class="ui divider"></div>
@@ -109,10 +114,10 @@ color: red;
             <thead>
                 <tr>
                     <th></th>
-                    <th>@Framework.Resources.ProductLanguage.CurrentProtein</th>
-                    <th>@Framework.Resources.ProductLanguage.CurrentFat</th>
-                    <th>@Framework.Resources.ProductLanguage.CurrentCarbs</th>
-                    <th>@Framework.Resources.ProductLanguage.CurrentCalories</th>
+                    <th>@Framework.Resources.ProductLanguage.Protein</th>
+                    <th>@Framework.Resources.ProductLanguage.Fat</th>
+                    <th>@Framework.Resources.ProductLanguage.Carbs</th>
+                    <th>@Framework.Resources.ProductLanguage.Calories</th>
                 </tr>
             </thead>
             <tbody>

@@ -123,8 +123,14 @@
   <data name="AddProduct" xml:space="preserve">
     <value>Dodaj produkt</value>
   </data>
+  <data name="AddProducts" xml:space="preserve">
+    <value>Dodaj produkty</value>
+  </data>
   <data name="CancelSubscribe" xml:space="preserve">
     <value>Anuluj subsckrybję</value>
+  </data>
+  <data name="Change" xml:space="preserve">
+    <value>Zmień</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>Zatwierdź</value>

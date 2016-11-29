@@ -104,8 +104,9 @@
     </div>
 
     <button class="ui blue button" type="submit">
-        Change
+       @Framework.Resources.ButtonLanguage.Change
     </button>
+
 
     <div class="margin-top">
         <div class="fields">
@@ -113,11 +114,16 @@
             <div class="field">@Model.Proteins</div>
             <div class="field">@Model.PercentageProtein %</div>
         </div>
+
+        <div class="ui divider"></div>
+
         <div class="fields">
             <div class="field">@Framework.Resources.ProductLanguage.Fat</div>
             <div class="field">@Model.Fat</div>
             <div class="field">@Model.PercentageFat %</div>
         </div>
+
+        <div class="ui divider"></div>
 
         <div class="fields">
             <div class="field">@Framework.Resources.ProductLanguage.Carbs</div>

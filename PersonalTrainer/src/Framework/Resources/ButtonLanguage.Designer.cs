@@ -78,11 +78,29 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Add products.
+        /// </summary>
+        public static string AddProducts {
+            get {
+                return ResourceManager.GetString("AddProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Cancel subscribtion.
         /// </summary>
         public static string CancelSubscribe {
             get {
                 return ResourceManager.GetString("CancelSubscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Change.
+        /// </summary>
+        public static string Change {
+            get {
+                return ResourceManager.GetString("Change", resourceCulture);
             }
         }
         
