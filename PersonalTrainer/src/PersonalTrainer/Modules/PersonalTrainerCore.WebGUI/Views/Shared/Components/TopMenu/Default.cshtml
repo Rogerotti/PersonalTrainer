@@ -2,7 +2,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 <div class="ui massive inverted blue menu">
         <div class="left menu">
-            <a class="item" asp-controller="Home" asp-action="Index">@Framework.Resources.UserLanguage.HomePage</a>
+            <a  class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home"? "active item" : "item")" asp-controller="Home" asp-action="Index">@Framework.Resources.UserLanguage.HomePage</a>
         </div>
         <div class="right menu">
 

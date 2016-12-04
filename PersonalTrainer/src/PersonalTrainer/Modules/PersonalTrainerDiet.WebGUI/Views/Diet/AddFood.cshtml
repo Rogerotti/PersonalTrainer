@@ -59,7 +59,7 @@
     </div>
 
     <div class="ui left icon input">
-        <input id="search-field" placeholder="Search food..." type="text">
+        <input id="search-field" placeholder="@Framework.Resources.ProductLanguage.SearchFood" type="text">
         <i class="food icon"></i>
     </div>
 
@@ -68,39 +68,7 @@
         <div>
             <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
 
-                <table id="table" class="ui sortable selectable celled table">
-
-                    <thead>
-                        <tr>
-                            <th hidden>Id column</th>
-                            <th>Add</th>
-                            <th class="sorted ascending">@Framework.Resources.ProductLanguage.ProductName</th>
-                            <th>@Framework.Resources.ProductLanguage.Calories</th>
-                            <th>@Framework.Resources.ProductLanguage.Carbs</th>
-                            <th>@Framework.Resources.ProductLanguage.Fat</th>
-                            <th>@Framework.Resources.ProductLanguage.Protein</th>
-                            <th>@Framework.Resources.ProductLanguage.Quantity</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach (var product in @Model.AllProducts)
-            {
-                            <tr>
-                                <td hidden><input type="hidden" name="ids" value="@product.ProductId" /></td>
-                                <td>
-                                    @Html.CheckBox("checkboxes")
-                                </td>
-                                <td>@product.Name</td>
-                                <td>@product.Macro.Calories</td>
-                                <td>@product.Macro.Carbohydrates</td>
-                                <td>@product.Macro.Fat</td>
-                                <td>@product.Macro.Protein</td>
-                                <td><input class="test2"  name="quantity" type="text"  value="@product.Macro.Quantity"/></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                @await Component.InvokeAsync("AddProductTable", new { products = Model.AllProducts })
 
                 <input type="submit" name="test33" value="@Framework.Resources.ButtonLanguage.Add" />
             </form>

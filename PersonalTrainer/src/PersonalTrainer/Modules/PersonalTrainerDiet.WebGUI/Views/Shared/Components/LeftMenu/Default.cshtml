@@ -5,21 +5,21 @@
         <div class="item">
             <div class="header">@Framework.Resources.ButtonLanguage.Diet</div>
             <div class="menu"> 
-                <a class="item" asp-controller="Diet" asp-action="Day">@Framework.Resources.ButtonLanguage.Today</a>
+                <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "Day"? "active item" : "item")" asp-controller="Diet" asp-action="Day">@Framework.Resources.ButtonLanguage.Today</a>
             </div>
         </div>
         <div class="item">
             <div class="header">@Framework.Resources.UserLanguage.MyProducts</div>
             <div class="menu">
-                <a class="item" asp-controller="Diet" asp-action="ProductList">@Framework.Resources.ButtonLanguage.ProductBase</a>
-                <a class="item" asp-controller="Diet" asp-action="AddEditProduct">@Framework.Resources.ButtonLanguage.AddProduct</a>
+                <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "ProductList"? "active item" : "item")" asp-controller="Diet" asp-action="ProductList">@Framework.Resources.ButtonLanguage.ProductBase</a>
+                <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "AddEditProduct"? "active item" : "item")" asp-controller="Diet" asp-action="AddEditProduct">@Framework.Resources.ButtonLanguage.AddProduct</a>
             </div>
         </div>
 
         <div class="item">
             <div class="header">@Framework.Resources.UserLanguage.Settings</div>
             <div class="menu">
-                <a class="item" asp-controller="Diet" asp-action="UserGoals">@Framework.Resources.ButtonLanguage.Goals</a>
+                <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "UserGoals"? "active item" : "item")" asp-controller="Diet" asp-action="UserGoals">@Framework.Resources.ButtonLanguage.Goals</a>
             </div>
         </div>
     </div>

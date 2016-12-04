@@ -69,6 +69,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Breakfast.
+        /// </summary>
+        public static string Breakfast {
+            get {
+                return ResourceManager.GetString("Breakfast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Calories.
         /// </summary>
         public static string Calories {
@@ -92,6 +101,15 @@ namespace Framework.Resources {
         public static string Carbs {
             get {
                 return ResourceManager.GetString("Carbs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Dinner.
+        /// </summary>
+        public static string Dinner {
+            get {
+                return ResourceManager.GetString("Dinner", resourceCulture);
             }
         }
         
@@ -137,6 +155,42 @@ namespace Framework.Resources {
         public static string Quantity {
             get {
                 return ResourceManager.GetString("Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Quantity Type.
+        /// </summary>
+        public static string QuantityType {
+            get {
+                return ResourceManager.GetString("QuantityType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Search Food.
+        /// </summary>
+        public static string SearchFood {
+            get {
+                return ResourceManager.GetString("SearchFood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Snacks.
+        /// </summary>
+        public static string Snacks {
+            get {
+                return ResourceManager.GetString("Snacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Supper.
+        /// </summary>
+        public static string Supper {
+            get {
+                return ResourceManager.GetString("Supper", resourceCulture);
             }
         }
         

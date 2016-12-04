@@ -120,6 +120,9 @@
   <data name="AllProducts" xml:space="preserve">
     <value>Wszystkie produkty</value>
   </data>
+  <data name="Breakfast" xml:space="preserve">
+    <value>Śniadanie</value>
+  </data>
   <data name="Calories" xml:space="preserve">
     <value>Kalorie</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Carbs" xml:space="preserve">
     <value>Węglowodany</value>
+  </data>
+  <data name="Dinner" xml:space="preserve">
+    <value>Obiad</value>
   </data>
   <data name="Fat" xml:space="preserve">
     <value>Tłuszcze</value>
@@ -143,6 +149,18 @@
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>Ilość</value>
+  </data>
+  <data name="QuantityType" xml:space="preserve">
+    <value>Jednostka miary</value>
+  </data>
+  <data name="SearchFood" xml:space="preserve">
+    <value>Wyszukaj produktu</value>
+  </data>
+  <data name="Snacks" xml:space="preserve">
+    <value>Przekąski</value>
+  </data>
+  <data name="Supper" xml:space="preserve">
+    <value>Kolacja</value>
   </data>
   <data name="Type" xml:space="preserve">
     <value>Typ</value>
