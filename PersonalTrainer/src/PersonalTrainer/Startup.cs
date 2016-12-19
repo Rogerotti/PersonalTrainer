@@ -87,8 +87,7 @@ namespace PersonalTrainer
         /// <returns></returns>
         private List<ModuleInfo> GetModules(IHostingEnvironment hostingEnviroment)
         {
-            List<ModuleInfo> modules = new List<ModuleInfo>();
-
+            var modules = new List<ModuleInfo>();
             var moduleRootFolder = new DirectoryInfo(Path.Combine(hostingEnviroment.ContentRootPath, "Modules"));
             var moduleFolders = moduleRootFolder.GetDirectories();
             foreach (var moduleFolder in moduleFolders)
@@ -99,7 +98,6 @@ namespace PersonalTrainer
                 
                 foreach (var file in binFolder.GetFileSystemInfos(moduleFolder.Name + ".dll", SearchOption.AllDirectories))
                 {
-                  
                     Assembly assembly = null;
                     try
                     {
@@ -108,15 +106,10 @@ namespace PersonalTrainer
                     catch (FileLoadException ex)
                     {
                         if (ex.Message == "Assembly with same name is already loaded")
-                        {
                                 assembly = Assembly.Load(new AssemblyName(Path.GetFileNameWithoutExtension(file.Name)));
-                        }
                         else
-                        {
                             throw;
-                        }
                     }
-
                     if (assembly.FullName.Contains(moduleFolder.Name))
                     {
                         if(!modules.Any(x => x.Name.Equals(moduleFolder.Name)))
