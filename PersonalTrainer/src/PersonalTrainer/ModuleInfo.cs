@@ -7,7 +7,5 @@ namespace PersonalTrainer
         public Assembly Assembly { get; set; }
 
         public string Name { get; set; }
-
-        public string Path { get; set; }
     }
 }

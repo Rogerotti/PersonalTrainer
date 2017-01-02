@@ -116,8 +116,7 @@ namespace PersonalTrainer
                             modules.Add(new ModuleInfo
                             {
                                 Name = moduleFolder.Name,
-                                Assembly = assembly,
-                                Path = moduleFolder.FullName
+                                Assembly = assembly
                             });
                     }
                 }
