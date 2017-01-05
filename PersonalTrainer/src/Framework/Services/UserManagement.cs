@@ -5,6 +5,7 @@ using Framework.Models.Dto;
 using Framework.Resources;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -49,6 +50,7 @@ namespace Framework.Services
                     HashCode = Convert.ToBase64String(hash),
                     Salt = Convert.ToBase64String(salt),
                     Email = email,
+                    Administrator = false
                 };
 
                 var userDetails = new UserDetails()
@@ -130,18 +132,80 @@ namespace Framework.Services
             var userDto = context.User.FirstOrDefault(x => x.UserId.Equals(userGuid));
             var userDetails = context.UsersDetails.FirstOrDefault(x => x.UserId.Equals(userGuid));
 
+            return GetUserDto(userDto, userDetails);
+        }
+
+        public IEnumerable<UserDto> GetAllUsers()
+        {
+            var userDto = context.User.ToList();
+            var userDetails = context.UsersDetails.ToList();
+
+            return GetUserDtoFromParts(userDto, userDetails);
+        }
+
+        public IEnumerable<UserDto> GetAllAdministratorUsers()
+        {
+            var userDto = context.User
+                           .Where(x => x.Administrator)
+                           .ToList();
+
+            var userDetails = context.UsersDetails.ToList();
+
+            return GetUserDtoFromParts(userDto, userDetails);
+        }
+
+        public IEnumerable<UserDto> GetAllNormalsUsers()
+        {
+            var userDto = context.User
+                    .Where(x => !x.Administrator)
+                    .ToList();
+
+            var userDetails = context.UsersDetails.ToList();
+
+            return GetUserDtoFromParts(userDto, userDetails);
+        }
+
+        public UserDto GetUser(Guid id)
+        {
+            var userDto = context.User.FirstOrDefault(x => x.UserId.Equals(id));
+            var userDetails = context.UsersDetails.FirstOrDefault(x => x.UserId.Equals(id));
+
+            return GetUserDto(userDto, userDetails);
+        }
+
+        private IEnumerable<UserDto> GetUserDtoFromParts(List<User> users, List<UserDetails> userDetails)
+        {
+            List<UserDto> usersDtoList = new List<UserDto>();
+            List<KeyValuePair<User, UserDetails>> usersPairList = new List<KeyValuePair<User, UserDetails>>();
+
+            foreach (var item in users)
+            {
+                var currentUserDetails = userDetails.FirstOrDefault(x => x.UserId.Equals(item.UserId));
+                if (currentUserDetails != null)
+                    usersPairList.Add(new KeyValuePair<User, UserDetails>(item, currentUserDetails));
+            }
+
+            foreach (var item in usersPairList)
+                usersDtoList.Add(GetUserDto(item.Key, item.Value));
+
+            return usersDtoList;
+        }
+
+        private UserDto GetUserDto(User user, UserDetails userDetails)
+        {
             return new UserDto()
             {
-                UserId = userGuid,
+                UserId = user.UserId,
                 Age = userDetails.Age,
                 Height = userDetails.Height,
                 HeightUnit = GetHeightUnitType(userDetails.HeightUnit),
-                Login = userDto.UserName,
-                Email = userDto.Email,
+                Login = user.UserName,
+                Email = user.Email,
                 Password = null,
                 PasswordConfirmation = null,
                 Weight = userDetails.Weight,
-                Gender = userDetails.Gender
+                Gender = userDetails.Gender,
+                IsAdministrator = user.Administrator
             };
         }
 
@@ -208,7 +272,6 @@ namespace Framework.Services
         {
             if (age > 99 || age < 12) throw new UnauthorizedAccessException(ErrorLanguage.AgeRange);
         }
-
 
         /// <summary>
         /// Tworzenie soli

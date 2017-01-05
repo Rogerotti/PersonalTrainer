@@ -41,6 +41,12 @@ namespace Framework.Models.Database
         public String Email { get; set; }
 
         /// <summary>
+        /// Flaga decydująca o tym czy użytkownik jest administratorem systemu.
+        /// </summary>
+        [Required]
+        public Boolean Administrator { get; set; }
+
+        /// <summary>
         /// Dane dodatkowe użytkownika.
         /// </summary>
         [Required]

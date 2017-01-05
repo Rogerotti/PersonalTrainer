@@ -60,6 +60,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Administrator panel.
+        /// </summary>
+        public static string AdministratorPanel {
+            get {
+                return ResourceManager.GetString("AdministratorPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Age.
         /// </summary>
         public static string Age {

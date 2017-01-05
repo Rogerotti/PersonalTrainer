@@ -33,10 +33,6 @@ namespace PersonalTrainerDiet.Controllers
             return View();
         }
 
-        //TODO
-        //1. Framework serwisy do dodawania posiłków do dnia oraz do typu posiłku.
-        //2. Wyszukiwanie produktów z baz danych.
-        //3. ustandaryzowanie dietCOntrollera
         [HttpGet]
         public IActionResult Day()
         {

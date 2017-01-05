@@ -165,4 +165,10 @@
   <data name="Today" xml:space="preserve">
     <value>Today</value>
   </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="UsersManagement" xml:space="preserve">
+    <value>Users management</value>
+  </data>
 </root>

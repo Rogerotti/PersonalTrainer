@@ -1,6 +1,7 @@
 ﻿using Framework.Models;
 using Framework.Models.Dto;
 using System;
+using System.Collections.Generic;
 
 namespace Framework.Services
 {
@@ -62,5 +63,29 @@ namespace Framework.Services
         /// </summary>
         /// <returns></returns>
         UserDto GetCurrentUser();
+
+        /// <summary>
+        /// Pobiera listę wszystkich użytkowników.
+        /// </summary>
+        IEnumerable<UserDto> GetAllUsers();
+
+        /// <summary>
+        /// Pobiera listę wszystkich normalnych użytkowników.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<UserDto> GetAllNormalsUsers();
+
+        /// <summary>
+        /// Pobiera listę wszystkich administratorów.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<UserDto> GetAllAdministratorUsers();
+
+        /// <summary>
+        /// Pobiera informacje dotyczące użytkownika.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        UserDto GetUser(Guid id);
     }
 }

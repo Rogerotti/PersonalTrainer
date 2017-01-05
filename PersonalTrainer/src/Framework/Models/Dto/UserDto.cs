@@ -95,6 +95,11 @@ namespace Framework.Models.Dto
         /// Wiek.
         /// </summary>
         public Int32 Age { get; set; }
+
+        /// <summary>
+        /// Czy użytkownik jest administratorem systemu.
+        /// </summary>
+        public Boolean IsAdministrator { get; set; }
     }
 
     public enum HeightUnit {cm,ft,yd };
