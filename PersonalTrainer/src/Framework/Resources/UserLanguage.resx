@@ -120,6 +120,9 @@
   <data name="AdministratorPanel" xml:space="preserve">
     <value>Administrator panel</value>
   </data>
+  <data name="AdminUsers" xml:space="preserve">
+    <value>Admin users</value>
+  </data>
   <data name="Age" xml:space="preserve">
     <value>Age</value>
   </data>
@@ -159,8 +162,14 @@
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>
+  <data name="SearchUser" xml:space="preserve">
+    <value>Search user</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="StandardUsers" xml:space="preserve">
+    <value>Standard users</value>
   </data>
   <data name="Weight" xml:space="preserve">
     <value>Weight</value>

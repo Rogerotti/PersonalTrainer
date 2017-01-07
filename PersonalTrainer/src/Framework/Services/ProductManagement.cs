@@ -266,6 +266,28 @@ namespace Framework.Services
             }
         }
 
+        public void AcceptSubscription(Guid productId)
+        {
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(productId));
+                p.ProductState = 3;
+                context.SaveChanges();
+                trans.Commit();
+            }
+        }
+
+        public void DeclineSubscription(Guid productId)
+        {
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(productId));
+                p.ProductState = 2;
+                context.SaveChanges();
+                trans.Commit();
+            }
+        }
+
         public void SubscribeProduct(Guid productId)
         {
             using (var trans = context.Database.BeginTransaction())
@@ -580,6 +602,40 @@ namespace Framework.Services
                 DayProteins = totalProtein
             };
 
+        }
+
+        public IEnumerable<ProductDto> GetPendingSubscribeProducts()
+        {
+            var result = from p in context.Product
+                         join pd in context.ProductsDetails
+                         on p.ProductId equals pd.ProductId
+                         where GetProductStateEnum(p.ProductState) == ProductState.Pending
+                         select new
+                         {
+                             p,
+                             pd
+                         };
+
+            var list = result.Select(x => new ProductDto()
+            {
+                ProductId = x.p.ProductId,
+                UserId = x.p.UserId,
+                Name = x.p.Name,
+                Manufacturer = x.p.Manufacturer,
+                Type = GetProductTypeEnum(x.p.ProductType),
+                State = GetProductStateEnum(x.p.ProductState),
+                Macro = new Macro()
+                {
+                    Protein = x.pd.Protein,
+                    Fat = x.pd.Fat,
+                    Carbohydrates = x.pd.Carbohydrates,
+                    Calories = x.pd.Calories,
+                    Quantity = x.pd.Quantity,
+                    QuantityType = GetQuantityTypeEnum(x.pd.QuantityType)
+                }
+            });
+
+            return list != null ? list.ToList() : new List<ProductDto>();
         }
     }
 }

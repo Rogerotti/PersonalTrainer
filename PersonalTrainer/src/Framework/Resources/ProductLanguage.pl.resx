@@ -132,11 +132,17 @@
   <data name="Carbs" xml:space="preserve">
     <value>Węglowodany</value>
   </data>
+  <data name="DeclinedProducts" xml:space="preserve">
+    <value>Odrzucone produkty</value>
+  </data>
   <data name="Dinner" xml:space="preserve">
     <value>Obiad</value>
   </data>
   <data name="Fat" xml:space="preserve">
     <value>Tłuszcze</value>
+  </data>
+  <data name="PendingProducts" xml:space="preserve">
+    <value>Produkty oczekujące</value>
   </data>
   <data name="ProductManufacturer" xml:space="preserve">
     <value>Producent</value>
@@ -158,6 +164,9 @@
   </data>
   <data name="Snacks" xml:space="preserve">
     <value>Przekąski</value>
+  </data>
+  <data name="SubscribedProducts" xml:space="preserve">
+    <value>Produkty zatwierdzone</value>
   </data>
   <data name="Supper" xml:space="preserve">
     <value>Kolacja</value>

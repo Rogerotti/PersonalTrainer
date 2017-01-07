@@ -105,6 +105,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Declined products.
+        /// </summary>
+        public static string DeclinedProducts {
+            get {
+                return ResourceManager.GetString("DeclinedProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Dinner.
         /// </summary>
         public static string Dinner {
@@ -119,6 +128,15 @@ namespace Framework.Resources {
         public static string Fat {
             get {
                 return ResourceManager.GetString("Fat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Pending products.
+        /// </summary>
+        public static string PendingProducts {
+            get {
+                return ResourceManager.GetString("PendingProducts", resourceCulture);
             }
         }
         
@@ -182,6 +200,15 @@ namespace Framework.Resources {
         public static string Snacks {
             get {
                 return ResourceManager.GetString("Snacks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Subscribed products.
+        /// </summary>
+        public static string SubscribedProducts {
+            get {
+                return ResourceManager.GetString("SubscribedProducts", resourceCulture);
             }
         }
         

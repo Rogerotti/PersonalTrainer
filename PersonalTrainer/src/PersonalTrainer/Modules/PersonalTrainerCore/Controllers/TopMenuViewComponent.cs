@@ -25,13 +25,15 @@ namespace PersonalTrainerCore.Controllers
                 var dto = new TopMenuDto();
                 if (userManagement.UserLogedIn())
                 {
+                    var currentUser = userManagement.GetCurrentUser();
                     dto.IsLogedIn = true;
-                    dto.UserName = userManagement.GetCurrentUser().Login;
-                  
+                    dto.UserName = currentUser.Login;
+                    dto.IsAdmin = currentUser.IsAdministrator;
                 }
                 else
                 {
                     dto.IsLogedIn = false;
+                    dto.IsAdmin = false;
                     dto.UserName = String.Empty;
                 }
 

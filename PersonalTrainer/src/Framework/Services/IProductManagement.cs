@@ -50,7 +50,18 @@ namespace Framework.Services
         /// <returns></returns>
         IEnumerable<ProductDto> GetUserProducts();
 
+        /// <summary>
+        /// Pozyskuje listę wszystkich produktów oczekujących na zatwierdzenie przez administratora systemu.
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<ProductDto> GetPendingSubscribeProducts();
+
         void SubscribeProduct(Guid productId);
+
+        void AcceptSubscription(Guid productId);
+
+        void DeclineSubscription(Guid productId);
+        
 
         void CancelSubscription(Guid productId);
     }

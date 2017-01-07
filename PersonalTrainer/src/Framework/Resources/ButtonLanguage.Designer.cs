@@ -60,6 +60,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string Accept {
+            get {
+                return ResourceManager.GetString("Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -114,6 +123,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Decline.
+        /// </summary>
+        public static string Decline {
+            get {
+                return ResourceManager.GetString("Decline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -150,6 +168,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Help.
+        /// </summary>
+        public static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Login.
         /// </summary>
         public static string Login {
@@ -168,11 +195,29 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Management.
+        /// </summary>
+        public static string Management {
+            get {
+                return ResourceManager.GetString("Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Product base.
         /// </summary>
         public static string ProductBase {
             get {
                 return ResourceManager.GetString("ProductBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Product management.
+        /// </summary>
+        public static string ProductManagement {
+            get {
+                return ResourceManager.GetString("ProductManagement", resourceCulture);
             }
         }
         

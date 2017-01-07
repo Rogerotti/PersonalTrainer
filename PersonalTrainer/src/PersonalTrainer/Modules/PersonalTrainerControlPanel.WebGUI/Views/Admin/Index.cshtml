@@ -1,0 +1,24 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Control pannel";
+    Layout = "Layout";
+}
+
+<body>
+    
+@section LeftPanel
+{
+        @await Component.InvokeAsync("AdminPanelLeftMenu")
+}
+    <div>
+        caly opis panelu administracyjnego
+    </div>
+   
+</body>
+
+@section Scripts
+{
+<script>
+
+</script>
+}

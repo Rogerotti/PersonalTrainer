@@ -6,6 +6,8 @@ namespace Framework.Models.Dto
     {
         public Boolean IsLogedIn { get; set; }
 
+        public Boolean IsAdmin { get; set; }
+
         public String UserName { get; set; }
     }
 }

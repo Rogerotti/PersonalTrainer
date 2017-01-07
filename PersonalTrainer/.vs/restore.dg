@@ -1,2 +1,4 @@
-#:F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\PersonalTrainer.xproj
-F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\PersonalTrainer.xproj|F:\PersonalTrainer\PersonalTrainer\src\Framework\Framework.xproj
+#:F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerControlPanel\PersonalTrainerControlPanel.xproj
+F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerControlPanel\PersonalTrainerControlPanel.xproj|F:\PersonalTrainer\PersonalTrainer\src\Framework\Framework.xproj
+F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerControlPanel\PersonalTrainerControlPanel.xproj|F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerCore\PersonalTrainerCore.xproj
+F:\PersonalTrainer\PersonalTrainer\src\PersonalTrainer\Modules\PersonalTrainerCore\PersonalTrainerCore.xproj|F:\PersonalTrainer\PersonalTrainer\src\Framework\Framework.xproj

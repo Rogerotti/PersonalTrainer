@@ -10,6 +10,10 @@
                 if (Model.IsLogedIn)
                 {
                     <div class="ui tiny header item">@Framework.Resources.UserLanguage.Welcome @Model.UserName</div>
+                    if (Model.IsAdmin)
+                    {
+                        <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Admin"? "active item" : "item")" asp-controller="Admin" asp-action="Index">@Framework.Resources.UserLanguage.AdministratorPanel</a>
+                    }
                     <a id="diet" class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Diet"? "active item" : "item")" asp-controller="Diet" asp-action="Index">@Framework.Resources.ButtonLanguage.Diet </a>
                     <a class="item" asp-controller="Login" asp-action="Logout">@Framework.Resources.ButtonLanguage.Logout</a>
                 }

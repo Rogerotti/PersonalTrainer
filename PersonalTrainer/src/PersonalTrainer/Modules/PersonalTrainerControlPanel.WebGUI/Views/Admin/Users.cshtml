@@ -1,0 +1,210 @@
+﻿@model  IEnumerable<Framework.Models.Dto.UserDto>
+@using System.Linq
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Users";
+    Layout = "Layout";
+}
+
+<style>
+
+   td.h2 {
+color: red;
+}
+        pad-right {
+        padding-right: 2em;
+    }
+
+    pad-top {
+        padding-top: 2em;
+    }
+
+    pad-bottom {
+        padding-bottom: 2em;
+    }
+
+    .margin-top {
+        margin-top: 2em;
+    }
+
+        .margin-bottom {
+        margin-bottom: 2em;
+    }
+
+</style>
+
+@section LeftPanel
+{
+    @await Component.InvokeAsync("AdminPanelLeftMenu")
+}
+
+<body>
+
+    <div class="ui tabular menu">
+        <div class="active item" data-tab="StandardUsers">@Framework.Resources.UserLanguage.StandardUsers</div>
+        <div class="item" data-tab="AdminUsers">@Framework.Resources.UserLanguage.AdminUsers</div>
+    </div>
+
+    <div class="ui left icon input">
+        <input id="search-field" placeholder="@Framework.Resources.UserLanguage.SearchUser" type="text">
+        <i class="user icon"></i>
+    </div>
+
+        <div id="standardUsersTab" class="ui active tab" data-tab="StandardUsers">
+            <div class="ui two column middle aligned very relaxed stackable grid">
+           
+                <div class="two width column">
+                    @await Component.InvokeAsync("UsersManagementTable", new { users = Model.Where(x => !x.IsAdministrator) })
+                </div>
+
+                <div class="column">
+
+                        <div class="ui seven column row">
+
+                            <div class="column">
+                                <div class="field">
+                                    <div>
+                                        <strong>@Framework.Resources.UserLanguage.Login: </strong>
+                                        <label id="userName"></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="field">
+                                    <strong>@Framework.Resources.UserLanguage.Email: </strong>
+                                    <label id="userEmail"></label>
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="field">
+                                    <strong>@Framework.Resources.UserLanguage.Age: </strong>
+                                    <label id="userAge"></label>
+                                </div>
+                            </div>
+
+                            <div class="column row">
+                                <form asp-controller="Diet" asp-action="AddEditProduct" method="get">
+                                    <input type="hidden" name="productId" value="" />
+                                    <button disabled id="editButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Edit</button>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+            </div>
+         </div>
+
+        <div class="ui tab" data-tab="AdminUsers">
+            <div class="ui two column middle aligned very relaxed stackable grid">
+                <div class="two width column">
+                     @await Component.InvokeAsync("UsersManagementTable", new { users = Model.Where(x => x.IsAdministrator == true) })
+                </div>
+
+                <div class="column">
+                    <div class="ui seven column row">
+
+                        <div class="column">
+                            <div class="field">
+                                <div>
+                                    <strong>@Framework.Resources.UserLanguage.Login: </strong>
+                                    <label id="adminUserName"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="field">
+                                <strong>@Framework.Resources.UserLanguage.Email: </strong>
+                                <label id="adminUserEmail"></label>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="field">
+                                <strong>@Framework.Resources.UserLanguage.Age: </strong>
+                                <label id="adminUserAge"></label>
+                            </div>
+                        </div>
+
+                        <div class="column row">
+                            <form asp-controller="Diet" asp-action="AddEditProduct" method="get">
+                                <input type="hidden" name="productId" value="" />
+                                <button disabled id="editButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Edit</button>
+                            </form>
+                        </div>
+
+                    </div>
+               </div>
+          </div>
+    </div>
+</body>
+
+@section Scripts
+{
+<script>
+     $(document).ready(function () {
+         $('.sortable.table').tablesort();
+
+         $('.tabular.menu .item').tab();
+    });
+</script>
+
+<script>
+    $('#search-field').on('keyup', function (e) {
+        if ('' != this.value) {
+            var reg = new RegExp(this.value, 'i'); // case-insesitive
+
+            $('.table tbody').find('tr').each(function () {
+                var $me = $(this);
+                if (!$me.children('td:eq(1)').text().match(reg)) {
+                    $me.hide();
+                } else {
+                    $me.show();
+                }
+            });
+        } else {
+            $('.table tbody').find('tr').show();
+        }
+    });
+
+    function showDetails(b) {
+        var rows = $('#table > tbody > tr')
+        for (var i = 0; i < rows.length; i++)
+            rows.eq(i).attr('class', ' ');
+
+        $(b).attr('class', 'active')
+
+        var guidId = $("[id='selectedUserId']", b).val();
+        var data = { Id: guidId };
+
+        $.ajax({
+            url: '@Url.Action("GetUserDetails", "Admin")',
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (userDto) {
+                if (userDto.isAdministrator) {
+                    $('#adminUserName').text(userDto.login);
+                    $('#adminUserEmail').text(userDto.email);
+                    $('#adminUserAge').text(userDto.age);
+                }
+                else {
+                    $('#userName').text(userDto.login);
+                    $('#userEmail').text(userDto.email);
+                    $('#userAge').text(userDto.age);
+                 }
+      
+            },
+
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+    }
+</script>
+}

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Akceptuj</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>Dodaj</value>
   </data>
@@ -135,6 +138,9 @@
   <data name="Confirm" xml:space="preserve">
     <value>Zatwierdź</value>
   </data>
+  <data name="Decline" xml:space="preserve">
+    <value>Odrzuć</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Usuń</value>
   </data>
@@ -147,14 +153,23 @@
   <data name="Goals" xml:space="preserve">
     <value>Cele</value>
   </data>
+  <data name="Help" xml:space="preserve">
+    <value>Pomoc</value>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Zaloguj</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Wyloguj</value>
   </data>
+  <data name="Management" xml:space="preserve">
+    <value>Zarządzanie</value>
+  </data>
   <data name="ProductBase" xml:space="preserve">
     <value>Baza produktów</value>
+  </data>
+  <data name="ProductManagement" xml:space="preserve">
+    <value>Zarządzanie produktami</value>
   </data>
   <data name="SingUp" xml:space="preserve">
     <value>Zarejestruj</value>

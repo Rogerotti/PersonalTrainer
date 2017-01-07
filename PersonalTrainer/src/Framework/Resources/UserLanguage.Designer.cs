@@ -69,6 +69,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Admin users.
+        /// </summary>
+        public static string AdminUsers {
+            get {
+                return ResourceManager.GetString("AdminUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Age.
         /// </summary>
         public static string Age {
@@ -186,11 +195,29 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Search user.
+        /// </summary>
+        public static string SearchUser {
+            get {
+                return ResourceManager.GetString("SearchUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Settings.
         /// </summary>
         public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Standard users.
+        /// </summary>
+        public static string StandardUsers {
+            get {
+                return ResourceManager.GetString("StandardUsers", resourceCulture);
             }
         }
         
