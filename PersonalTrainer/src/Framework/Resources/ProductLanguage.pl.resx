@@ -141,6 +141,9 @@
   <data name="Fat" xml:space="preserve">
     <value>Tłuszcze</value>
   </data>
+  <data name="NoPendingProducts" xml:space="preserve">
+    <value>Brak oczekiwanych produktów.</value>
+  </data>
   <data name="PendingProducts" xml:space="preserve">
     <value>Produkty oczekujące</value>
   </data>
@@ -160,6 +163,9 @@
     <value>Jednostka miary</value>
   </data>
   <data name="SearchFood" xml:space="preserve">
+    <value>Wyszukaj produktu</value>
+  </data>
+  <data name="SearchProduct" xml:space="preserve">
     <value>Wyszukaj produktu</value>
   </data>
   <data name="Snacks" xml:space="preserve">

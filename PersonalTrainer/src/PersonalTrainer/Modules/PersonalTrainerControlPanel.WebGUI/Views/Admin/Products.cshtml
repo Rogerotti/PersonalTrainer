@@ -30,6 +30,13 @@ color: red;
         .margin-bottom {
         margin-bottom: 2em;
     }
+          .margin-bottom2{
+        margin-bottom: 1em;
+    }
+
+          #testoi {
+     clear: right;
+    }
 </style>
 
 @section LeftPanel
@@ -45,22 +52,25 @@ color: red;
         <div class="item" data-tab="RejectedProducts">@Framework.Resources.ProductLanguage.DeclinedProducts</div>
     </div>
 
-    <div class="ui left icon input">
-        <input id="search-field" placeholder="@Framework.Resources.ProductLanguage.SearchFood" type="text">
-        <i class="user icon"></i>
+
+    <div class="ui left icon input margin-bottom">
+        <input id="pendingProductsSearch" placeholder="@Framework.Resources.ProductLanguage.SearchProduct" type="text">
+        <i class="food icon"></i>
     </div>
 
+    <!--Tabulator z produktami oczekującymi na zatwierdzenie przez administratora.-->
     <div class="ui active tab" data-tab="PendingProducts">
-        <div class="ui two column middle aligned very relaxed stackable grid">
+
+        <div class="ui two column top aligned very relaxed stackable grid">
             <div class="two width column">
                 @{
                     if (Model.Any(x => x.State == Framework.Models.ProductState.Pending))
                     {
-                        @await Component.InvokeAsync("ProductsManagementTable", new { products = Model.Where(x => x.State == Framework.Models.ProductState.Pending) })
+                            @await Component.InvokeAsync("ProductsManagementTable", new { products = Model.Where(x => x.State == Framework.Models.ProductState.Pending) })
                     }
                     else
                     {
-                        <div>Brak produktow.</div>
+                        <div>@Framework.Resources.ProductLanguage.NoPendingProducts</div>
                     }
                 }
           
@@ -68,7 +78,7 @@ color: red;
 
             <div class="column">
 
-                <div class="ui seven column row">
+                <div class="ui six column row">
 
                     <div class="column">
                         <div class="field">
@@ -122,25 +132,32 @@ color: red;
                     </div>
 
                     <div class="column row">
-                        <form asp-controller="Admin" asp-action="AcceptSubscription" method="get">
-                            <input type="hidden" name="productId" value="" />
-                            <button disabled id="pendingAcceptButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Accept</button>
-                        </form>
-                    </div>
 
-                    <div class="column row">
-                        <form asp-controller="Admin" asp-action="SubscribeProduct" method="get">
-                            <input type="hidden" name="productId" value="" />
-                            <button disabled id="pendingDeclineButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Decline</button>
-                        </form>
-                    </div>
+                        <div class="ui grid">
+                            <div class="two wide column">
+                                <form asp-controller="Admin" asp-action="AcceptSubscription" method="get">
+                                    <input type="hidden" name="productId" value="" />
+                                    <button disabled id="pendingAcceptButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Accept</button>
+                                </form>
+                            </div>
+
+                            <div class="two wide column">
+                                <form asp-controller="Admin" asp-action="DeclineSubscription" method="get">
+                                    <input type="hidden" name="productId" value="" />
+                                    <button disabled id="pendingDeclineButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Decline</button>
+                                </form>
+                            </div>
+                        </div>
+
+                      </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!--Tabulator z produktami zatwierdzonymy przez administratora.-->
     <div class="ui tab" data-tab="SubscribedProducts">
-        <div class="ui two column middle aligned very relaxed stackable grid">
+        <div class="ui two column top aligned very relaxed stackable grid">
             <div class="two width column">
                 @{
                     if (Model.Any(x => x.State == Framework.Models.ProductState.Accepted))
@@ -221,7 +238,7 @@ color: red;
     </div>
 
     <div class="ui tab" data-tab="RejectedProducts">
-        <div class="ui two column middle aligned very relaxed stackable grid">
+        <div class="ui two column top aligned very relaxed stackable grid">
             <div class="two width column">
                 @await Component.InvokeAsync("ProductsManagementTable", new { products = Model.Where(x => x.State == Framework.Models.ProductState.Denied) })
             </div>
@@ -276,14 +293,14 @@ color: red;
                     <div class="column">
                         <div class="field">
                             <strong>@Framework.Resources.ProductLanguage.Carbs :</strong>
-                            <label id="acceptedDetailsCarbs"></label>
+                            <label id="rejectedDetailsCarbs"></label>
                         </div>
                     </div>
 
                     <div class="column row">
-                        <form asp-controller="Diet" asp-action="DeclineSubscription" method="get">
+                        <form asp-controller="Admin" asp-action="AcceptSubscription" method="get">
                             <input type="hidden" name="productId" value="" />
-                            <button disabled id="acceptedDeclineButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Decline</button>
+                            <button disabled id="rejectedAcceptButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Accept</button>
                         </form>
                     </div>
 
@@ -302,6 +319,24 @@ color: red;
         $('.sortable.table').tablesort();
 
         $('.tabular.menu .item').tab();
+    });
+
+    $('#pendingProductsSearch').on('keyup', function (e)
+    {
+        if ('' != this.value) {
+            var reg = new RegExp(this.value, 'i'); // case-insesitive
+
+            $('.table tbody').find('tr').each(function () {
+                var $me = $(this);
+                if (!$me.children('td:eq(1)').text().match(reg)) {
+                    $me.hide();
+                } else {
+                    $me.show();
+                }
+            });
+        } else {
+            $('.table tbody').find('tr').show();
+        }
     });
 
     function showDetails(b) {
@@ -324,6 +359,8 @@ color: red;
             {
                 ManagePendingDetails(productDto);
                 ManageSubscribedDetails(productDto);
+                ManageRejectedDetails(productDto);
+
                 $('input[name="productId"]').val(guidId);
             },
             error: function (xhr, ajaxOptions, thrownError) {
@@ -380,7 +417,28 @@ color: red;
             }
         }
 
-
+        function ManageRejectedDetails(productDto) {
+            if (productDto.state == 2) {
+                $('#rejectedDetailsName').text(productDto.name);
+                $('#rejectedDetailsManufacturer').text(productDto.manufacturer);
+                $('#rejectedDetailsCalories').text(productDto.macro.calories);
+                $('#rejectedDetailsProtein').text(productDto.macro.protein);
+                $('#rejectedDetailsFat').text(productDto.macro.fat);
+                $('#rejectedDetailsCarbs').text(productDto.macro.carbohydrates);
+                $('#rejectedDetailsType').text(productDto.type);
+                $('#rejectedAcceptButton').removeAttr('disabled');
+            }
+            else {
+                $('#rejectedDetailsName').text('');
+                $('#rejectedDetailsManufacturer').text('');
+                $('#rejectedDetailsCalories').text('');
+                $('#rejectedDetailsProtein').text('');
+                $('#rejectedDetailsFat').text('');
+                $('#rejectedDetailsCarbs').text('');
+                $('#rejectedDetailsType').text('');
+                $('#rejectedAcceptButton').attr('disabled', '');
+            }
+        }
     }
 </script>
 }

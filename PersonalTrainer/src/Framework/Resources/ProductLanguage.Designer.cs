@@ -132,6 +132,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to No pending products..
+        /// </summary>
+        public static string NoPendingProducts {
+            get {
+                return ResourceManager.GetString("NoPendingProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Pending products.
         /// </summary>
         public static string PendingProducts {
@@ -191,6 +200,15 @@ namespace Framework.Resources {
         public static string SearchFood {
             get {
                 return ResourceManager.GetString("SearchFood", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Search product.
+        /// </summary>
+        public static string SearchProduct {
+            get {
+                return ResourceManager.GetString("SearchProduct", resourceCulture);
             }
         }
         

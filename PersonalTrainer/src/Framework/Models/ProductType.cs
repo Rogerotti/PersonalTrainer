@@ -1,5 +1,6 @@
 ﻿using Framework.Resources;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Framework.Models
 {
@@ -12,11 +13,11 @@ namespace Framework.Models
         DairyProducts,
         [Display(Name = nameof(EnumNames.ProductTypeSweets), ResourceType = typeof(EnumNames))]
         Sweets,
-       [Display(Name = nameof(EnumNames.ProductTypeFastFood), ResourceType = typeof(EnumNames))]
+        [Display(Name = nameof(EnumNames.ProductTypeFastFood), ResourceType = typeof(EnumNames))]
         FastFood,
         [Display(Name = nameof(EnumNames.ProductTypeFruits), ResourceType = typeof(EnumNames))]
         Fruits,
-       [Display(Name = nameof(EnumNames.ProductTypeVegetables), ResourceType = typeof(EnumNames))]
+        [Display(Name = nameof(EnumNames.ProductTypeVegetables), ResourceType = typeof(EnumNames))]
         Vegetables
 
     }
