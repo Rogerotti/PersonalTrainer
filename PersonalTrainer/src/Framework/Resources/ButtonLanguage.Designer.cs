@@ -222,6 +222,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Promote.
+        /// </summary>
+        public static string Promote {
+            get {
+                return ResourceManager.GetString("Promote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Sing up.
         /// </summary>
         public static string SingUp {

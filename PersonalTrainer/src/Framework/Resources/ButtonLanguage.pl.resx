@@ -171,6 +171,9 @@
   <data name="ProductManagement" xml:space="preserve">
     <value>Zarządzanie produktami</value>
   </data>
+  <data name="Promote" xml:space="preserve">
+    <value>Awans</value>
+  </data>
   <data name="SingUp" xml:space="preserve">
     <value>Zarejestruj</value>
   </data>

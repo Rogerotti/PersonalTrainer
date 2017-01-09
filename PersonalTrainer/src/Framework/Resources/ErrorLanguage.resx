@@ -171,4 +171,7 @@
   <data name="ValidationError" xml:space="preserve">
     <value>Validation error</value>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found</value>
+  </data>
 </root>

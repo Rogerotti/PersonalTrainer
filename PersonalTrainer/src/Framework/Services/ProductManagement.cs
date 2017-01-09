@@ -5,6 +5,7 @@ using Framework.Models;
 using Framework.Models.Database;
 using System.Collections.Generic;
 using Framework.Models.Dto;
+using Framework.Extensions;
 
 namespace Framework.Services
 {
@@ -31,14 +32,14 @@ namespace Framework.Services
                     x.Date.Month == date.Month &&
                     x.Date.Day == date.Day)
                     .FirstOrDefault();
-              
+
                 List<DiaryProduct> foodList = new List<DiaryProduct>();
 
                 Guid dailyFoodId;
                 if (day != null)
                     dailyFoodId = day.DayId;
                 else
-                   dailyFoodId = Guid.NewGuid();
+                    dailyFoodId = Guid.NewGuid();
 
                 foreach (var item in food)
                 {
@@ -86,7 +87,7 @@ namespace Framework.Services
         public DailyFoodDto GetDailyFood(DateTime date)
         {
 
-                var guid = userManagement.GetCurrentUserId();
+            var guid = userManagement.GetCurrentUserId();
             var test = context.DailyFood.Where(d => d.Date.Year == date.Year
                              && d.Date.Month == date.Month
                              && d.Date.Day == date.Day
@@ -94,83 +95,72 @@ namespace Framework.Services
 
 
 
-                var result = (from d in context.DailyFood
-                             join dp in context.DiaryProducts on d.DayId equals dp.DayId
-                             join p in context.Product on  dp.ProductId equals p.ProductId
-                             join pd in context.ProductsDetails on p.ProductId equals pd.ProductId
-                             where d.Date.Year == date.Year 
-                             && d.Date.Month == date.Month 
-                             && d.Date.Day == date.Day
-                             && d.UserId.Equals(guid)
-                             select new
-                             {
-                                d,
-                                dp,
-                                p,
-                                pd
-                            });
+            var result = (from d in context.DailyFood
+                          join dp in context.DiaryProducts on d.DayId equals dp.DayId
+                          join p in context.Product on dp.ProductId equals p.ProductId
+                          join pd in context.ProductsDetails on p.ProductId equals pd.ProductId
+                          where d.Date.Year == date.Year
+                          && d.Date.Month == date.Month
+                          && d.Date.Day == date.Day
+                          && d.UserId.Equals(guid)
+                          select new
+                          {
+                              d,
+                              dp,
+                              p,
+                              pd
+                          });
 
-              
-                var dailyFood = result.Select(x => x.d).FirstOrDefault();
 
-                if (dailyFood != null)
+            var dailyFood = result.Select(x => x.d).FirstOrDefault();
+
+            if (dailyFood != null)
+            {
+                List<DailyProductDto> daily = new List<DailyProductDto>();
+                var foodTypes = result.Select(x => x.dp).ToList();
+                var products = result.Select(x => x.p).ToList();
+                foreach (var item in result.Select(x => x.dp).ToList())
                 {
-                    List<DailyProductDto> daily = new List<DailyProductDto>();
-                    var foodTypes = result.Select(x => x.dp).ToList();
-                     var products = result.Select(x => x.p).ToList();
-                     foreach (var item in result.Select(x => x.dp).ToList())
+                    var prod = products.First(x => x.ProductId.Equals(item.ProductId));
+                    var pd = result.Select(x => x.pd);
+                    var productDetails = pd.Where(x => x.ProductId.Equals(item.ProductId)).FirstOrDefault();
+                    var a = new ProductDto()
                     {
-                        var prod = products.First(x => x.ProductId.Equals(item.ProductId));
-                        var pd = result.Select(x => x.pd);
-                        var productDetails = pd.Where(x => x.ProductId.Equals(item.ProductId)).FirstOrDefault();
-                        var a = new ProductDto()
+                        Name = item.Product.Name,
+                        Manufacturer = item.Product.Manufacturer,
+                        ProductId = item.ProductId,
+                        UserId = item.Product.UserId,
+                        Macro = new Macro()
                         {
-                            Name = item.Product.Name,
-                            Manufacturer = item.Product.Manufacturer,
-                            ProductId = item.ProductId,
-                            UserId = item.Product.UserId,
-                            
-                            Macro = new Macro()
-                            {
-                                Quantity = productDetails.Quantity,
-                                Calories = productDetails.Calories,
-                                Carbohydrates = productDetails.Carbohydrates,
-                                Fat = productDetails.Fat,
-                                Protein = productDetails.Protein,
-                                QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
-                            },
-                            Type = GetProductTypeEnum(item.Product.ProductType),
-                            State = GetProductStateEnum(item.Product.ProductState)
+                            Quantity = productDetails.Quantity,
+                            Calories = productDetails.Calories,
+                            Carbohydrates = productDetails.Carbohydrates,
+                            Fat = productDetails.Fat,
+                            Protein = productDetails.Protein,
+                            QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
+                        },
+                        Type = GetProductTypeEnum(item.Product.ProductType),
+                        TypeDisplayName = GetProductTypeEnum(item.Product.ProductType).GetDisplayName(),
+                        State = GetProductStateEnum(item.Product.ProductState)
 
-                        };
-
-                        daily.Add(new DailyProductDto()
-                        {
-                             Product = a,
-                             CurrentMacro =  new Macro()
-                             {
-                                 Quantity = productDetails.Quantity,
-                                 Calories = productDetails.Calories,
-                                 Carbohydrates = productDetails.Carbohydrates,
-                                 Fat = productDetails.Fat,
-                                 Protein = productDetails.Protein,
-                                 QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
-                             },
-                             MealType = (MealType)item.MealType
-                        });
-                    }
-
-                    return new DailyFoodDto()
-                    {
-                        Day = date,
-                        DayCalories = 0,
-                        DayProteins = 0,
-                        DayCarbohydrates = 0,
-                        DayFat = 0,
-                        DailyProduct = daily
                     };
+
+                    daily.Add(new DailyProductDto()
+                    {
+                        Product = a,
+                        CurrentMacro = new Macro()
+                        {
+                            Quantity = productDetails.Quantity,
+                            Calories = productDetails.Calories,
+                            Carbohydrates = productDetails.Carbohydrates,
+                            Fat = productDetails.Fat,
+                            Protein = productDetails.Protein,
+                            QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
+                        },
+                        MealType = (MealType)item.MealType
+                    });
                 }
-            
+
                 return new DailyFoodDto()
                 {
                     Day = date,
@@ -178,8 +168,19 @@ namespace Framework.Services
                     DayProteins = 0,
                     DayCarbohydrates = 0,
                     DayFat = 0,
-                    DailyProduct = new List<DailyProductDto>()
+                    DailyProduct = daily
                 };
+            }
+
+            return new DailyFoodDto()
+            {
+                Day = date,
+                DayCalories = 0,
+                DayProteins = 0,
+                DayCarbohydrates = 0,
+                DayFat = 0,
+                DailyProduct = new List<DailyProductDto>()
+            };
         }
 
         public void AddProduct(ProductDto dto)
@@ -235,10 +236,10 @@ namespace Framework.Services
                 {
                     context.DiaryProducts.Remove(item);
                 }
-            
+
                 context.ProductsDetails.Remove(pd);
                 context.Product.Remove(p);
-           
+
                 context.SaveChanges();
                 trans.Commit();
             }
@@ -250,7 +251,7 @@ namespace Framework.Services
             {
                 var p = context.Product.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
                 var pd = context.ProductsDetails.FirstOrDefault(x => x.ProductId.Equals(dto.ProductId));
-          
+
                 p.Name = dto.Name;
                 p.Manufacturer = dto.Manufacturer;
                 p.ProductType = GetProductTypeValue(dto.Type);
@@ -331,6 +332,7 @@ namespace Framework.Services
                     UserId = p.UserId,
                     State = GetProductStateEnum(p.ProductState),
                     Type = GetProductTypeEnum(p.ProductType),
+                    TypeDisplayName = GetProductTypeEnum(p.ProductType).GetDisplayName(),
                     Macro = new Macro()
                     {
                         Calories = pd.Calories,
@@ -366,6 +368,7 @@ namespace Framework.Services
                 Name = x.p.Name,
                 Manufacturer = x.p.Manufacturer,
                 Type = GetProductTypeEnum(x.p.ProductType),
+                TypeDisplayName = GetProductTypeEnum(x.p.ProductType).GetDisplayName(),
                 State = GetProductStateEnum(x.p.ProductState),
                 Macro = new Macro()
                 {
@@ -377,7 +380,7 @@ namespace Framework.Services
                     QuantityType = GetQuantityTypeEnum(x.pd.QuantityType)
                 }
             });
-            
+
             return list != null ? list.ToList() : new List<ProductDto>();
         }
 
@@ -406,6 +409,7 @@ namespace Framework.Services
                 Name = x.p.Name,
                 Manufacturer = x.p.Manufacturer,
                 Type = GetProductTypeEnum(x.p.ProductType),
+                TypeDisplayName = GetProductTypeEnum(x.p.ProductType).GetDisplayName(),
                 State = GetProductStateEnum(x.p.ProductState),
                 Macro = new Macro()
                 {
@@ -418,7 +422,7 @@ namespace Framework.Services
                 }
             });
 
-            return list != null  ? list.ToList() : new List<ProductDto>();
+            return list != null ? list.ToList() : new List<ProductDto>();
         }
 
         /// <summary>
@@ -560,7 +564,7 @@ namespace Framework.Services
             return type;
         }
 
-        public DailyFoodDto GetDailyFoodFromDailyFoodProductDto(DateTime date, IEnumerable<DailyFoodProductDto> dto )
+        public DailyFoodDto GetDailyFoodFromDailyFoodProductDto(DateTime date, IEnumerable<DailyFoodProductDto> dto)
         {
             List<DailyProductDto> products = new List<DailyProductDto>();
             foreach (var item in dto)
@@ -577,7 +581,7 @@ namespace Framework.Services
                     Carbohydrates = p.Macro.Carbohydrates * res,
                     Quantity = quantity
                 };
-        
+
                 products.Add(new DailyProductDto()
                 {
                     Product = p,
@@ -623,6 +627,7 @@ namespace Framework.Services
                 Name = x.p.Name,
                 Manufacturer = x.p.Manufacturer,
                 Type = GetProductTypeEnum(x.p.ProductType),
+                TypeDisplayName = GetProductTypeEnum(x.p.ProductType).GetDisplayName(),
                 State = GetProductStateEnum(x.p.ProductState),
                 Macro = new Macro()
                 {

@@ -83,6 +83,37 @@ namespace PersonalTrainerControlPanel.Controllers
             return RedirectToAction("Products", "Admin");
         }
 
+
+        
+
+        [HttpGet]
+        public IActionResult promoteToAdmin(String userId)
+        {
+            try
+            {
+                userManagement.PromoteToAdmin(new Guid(userId));
+            }
+            catch (Exception exc)
+            {
+                ModelState.TryAddModelError("AdditionalValidation", exc.Message);
+            }
+            return RedirectToAction("Users", "Admin");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteUser(String userId)
+        {
+            try
+            {
+                userManagement.DeleteUser(new Guid(userId));
+            }
+            catch (Exception exc)
+            {
+                ModelState.TryAddModelError("AdditionalValidation", exc.Message);
+            }
+            return RedirectToAction("Users", "Admin");
+        }
+
         [HttpGet]
         public IActionResult Products()
         {

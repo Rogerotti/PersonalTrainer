@@ -171,6 +171,9 @@
   <data name="ProductManagement" xml:space="preserve">
     <value>Product management</value>
   </data>
+  <data name="Promote" xml:space="preserve">
+    <value>Promote</value>
+  </data>
   <data name="SingUp" xml:space="preserve">
     <value>Sing up</value>
   </data>

@@ -377,7 +377,7 @@ color: red;
                 $('#pendingDetailsProtein').text(productDto.macro.protein);
                 $('#pendingDetailsFat').text(productDto.macro.fat);
                 $('#pendingDetailsCarbs').text(productDto.macro.carbohydrates);
-                $('#pendingDetailsType').text(productDto.type);
+                $('#pendingDetailsType').text(productDto.typeDisplayName);
                 $('#pendingAcceptButton').removeAttr('disabled');
                 $('#pendingDeclineButton').removeAttr('disabled');
             }
@@ -402,7 +402,7 @@ color: red;
                 $('#acceptedDetailsProtein').text(productDto.macro.protein);
                 $('#acceptedDetailsFat').text(productDto.macro.fat);
                 $('#acceptedDetailsCarbs').text(productDto.macro.carbohydrates);
-                $('#acceptedDetailsType').text(productDto.type);
+                $('#acceptedDetailsType').text(productDto.typeDisplayName);
                 $('#acceptedDeclineButton').removeAttr('disabled');
             }
             else {
@@ -425,7 +425,7 @@ color: red;
                 $('#rejectedDetailsProtein').text(productDto.macro.protein);
                 $('#rejectedDetailsFat').text(productDto.macro.fat);
                 $('#rejectedDetailsCarbs').text(productDto.macro.carbohydrates);
-                $('#rejectedDetailsType').text(productDto.type);
+                $('#rejectedDetailsType').text(productDto.typeDisplayName);
                 $('#rejectedAcceptButton').removeAttr('disabled');
             }
             else {

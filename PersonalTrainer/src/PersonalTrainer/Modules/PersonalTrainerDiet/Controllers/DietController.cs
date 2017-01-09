@@ -1,4 +1,5 @@
-﻿using Framework.Models;
+﻿using Framework.Extensions;
+using Framework.Models;
 using Framework.Models.Dto;
 using Framework.Models.View;
 using Framework.Services;
@@ -41,10 +42,10 @@ namespace PersonalTrainerDiet.Controllers
             var additionalMeal = TempData[additionalMealsId] as Boolean?;
             if (additionalMeal == null ? false : (Boolean)additionalMeal)
             {
-               var guids = TempData[productGuidId] as IEnumerable<Guid>;
-               var quants =  TempData[productQuantityId] as IEnumerable<Int32>;
-               var mealType =  TempData[productMealTypeId] as IEnumerable<Int32>;
-               var enumMealType = TempData[mealTypeId]  as Int32?;
+                var guids = TempData[productGuidId] as IEnumerable<Guid>;
+                var quants = TempData[productQuantityId] as IEnumerable<Int32>;
+                var mealType = TempData[productMealTypeId] as IEnumerable<Int32>;
+                var enumMealType = TempData[mealTypeId] as Int32?;
                 if (guids != null && guids.Count() != 0)
                 {
                     List<DailyFoodProductDto> lista = new List<DailyFoodProductDto>();
@@ -116,7 +117,7 @@ namespace PersonalTrainerDiet.Controllers
             TempData[productQuantityId] = quantity.ToList();
             TempData[productMealTypeId] = productMealType.ToList();
             TempData[mealTypeId] = buttonType;
-            
+
             return RedirectToAction("AddFood", "Diet");
         }
 
@@ -190,7 +191,7 @@ namespace PersonalTrainerDiet.Controllers
             TempData[productQuantityId] = properQuantities;
             TempData[productMealTypeId] = properMealTypes;
             TempData[mealTypeId] = enumMealType;
-     
+
             return RedirectToAction("Day", "Diet");
         }
 
@@ -222,6 +223,7 @@ namespace PersonalTrainerDiet.Controllers
                 dto.Manufacturer = product.Manufacturer;
                 dto.ProductId = product.ProductId;
                 dto.Type = product.Type;
+                dto.TypeDisplayName = product.Type.GetDisplayName();
                 dto.Macro.Calories = product.Macro.Calories;
                 dto.Macro.Carbohydrates = product.Macro.Carbohydrates;
                 dto.Macro.Fat = product.Macro.Fat;
@@ -251,7 +253,8 @@ namespace PersonalTrainerDiet.Controllers
                     Macro = dto.Macro,
                     Name = dto.Name,
                     Manufacturer = dto.Manufacturer,
-                    Type = dto.Type
+                    Type = dto.Type,
+                    TypeDisplayName = dto.Type.GetDisplayName()
                 };
 
                 if (dto.Mode == Mode.Add)
@@ -329,26 +332,26 @@ namespace PersonalTrainerDiet.Controllers
             {
                 try
                 {
-                   var userGoals = new UserGoalsDto()
+                    var userGoals = new UserGoalsDto()
                     {
-                       UserId = dto.UserId,
-                       Calories = dto.Calories,
-                       Carbohydrates = dto.Carbohydrates,
-                       Fat = dto.Fat,
-                       Proteins = dto.Proteins,
-                       PercentageCarbs = dto.PercentageCarbs,
-                       PercentageFat = dto.PercentageFat,
-                       PercentageProtein = dto.PercentageProtein
-                   };
+                        UserId = dto.UserId,
+                        Calories = dto.Calories,
+                        Carbohydrates = dto.Carbohydrates,
+                        Fat = dto.Fat,
+                        Proteins = dto.Proteins,
+                        PercentageCarbs = dto.PercentageCarbs,
+                        PercentageFat = dto.PercentageFat,
+                        PercentageProtein = dto.PercentageProtein
+                    };
 
                     userGoalsManamgenet.SetGoals(userGoals);
                 }
-                catch(Exception exc)
+                catch (Exception exc)
                 {
                     ModelState.TryAddModelError("AdditionalValidation", exc.Message);
                 }
             }
-          
+
             return View(dto);
         }
 

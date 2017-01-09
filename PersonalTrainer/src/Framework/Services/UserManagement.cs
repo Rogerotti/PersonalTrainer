@@ -95,10 +95,38 @@ namespace Framework.Services
                 throw new UnauthorizedAccessException(ErrorLanguage.UserNameOrPasswordWrong);
         }
 
+        public void DeleteUser(Guid id)
+        {
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var userDto = context.User.FirstOrDefault(x => x.UserId.Equals(id));
+                var userDetails = context.UsersDetails.FirstOrDefault(x => x.UserId.Equals(id));
+
+                context.UsersDetails.Remove(userDetails);
+                context.User.Remove(userDto);
+                context.SaveChanges();
+                trans.Commit();
+            }
+            return;
+        }
+
         public void Logout()
         {
             session.Remove(userId);
             session.Remove(userName);
+        }
+
+        public void PromoteToAdmin(Guid userId)
+        {
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var userDto = context.User.FirstOrDefault(x => x.UserId.Equals(userId));
+                if (userDto == null) throw new UnauthorizedAccessException(ErrorLanguage.UserNotFound);
+
+                userDto.Administrator = true;
+                context.SaveChanges();
+                trans.Commit();
+            }
         }
 
         public Boolean UserLogedIn()

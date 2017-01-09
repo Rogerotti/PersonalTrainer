@@ -15,6 +15,8 @@ namespace Framework.Models.View
         [JsonConverter(typeof(StringEnumConverter))]
         public ProductType Type { get; set; }
 
+        public String TypeDisplayName { get; set; }
+
         public Macro Macro { get; set; }
 
         public Mode Mode { get; set; }

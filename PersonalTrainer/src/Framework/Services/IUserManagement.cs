@@ -37,6 +37,10 @@ namespace Framework.Services
         /// </summary>
         void Logout();
 
+        void PromoteToAdmin(Guid userId);
+
+        void DeleteUser(Guid id);
+
         /// <summary>
         /// Sprawdza czy użytkownik jest zalogowany.
         /// </summary>
