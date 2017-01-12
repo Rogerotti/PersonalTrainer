@@ -28,7 +28,6 @@ namespace PersonalTrainerControlPanel.Controllers
         }
 
         [HttpGet]
-       // [SetTempDataModelState]
         [RestoreModelStateFromTempData]
         public IActionResult Users()
         {
