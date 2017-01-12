@@ -141,6 +141,9 @@
   <data name="Decline" xml:space="preserve">
     <value>Odrzuć</value>
   </data>
+  <data name="Degradation" xml:space="preserve">
+    <value>Degradacja</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Usuń</value>
   </data>

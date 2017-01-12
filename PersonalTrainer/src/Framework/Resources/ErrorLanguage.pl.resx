@@ -174,4 +174,7 @@
   <data name="UserNotFound" xml:space="preserve">
     <value>Nie znaleziono użytkownika</value>
   </data>
+  <data name="AccountDeleted" xml:space="preserve">
+    <value>Konto zostało usunięte</value>
+  </data>
 </root>

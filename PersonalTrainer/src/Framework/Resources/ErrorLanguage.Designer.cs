@@ -60,6 +60,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Account deleted.
+        /// </summary>
+        public static string AccountDeleted {
+            get {
+                return ResourceManager.GetString("AccountDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The age dosent request the criteria.
         /// </summary>
         public static string AgeRange {

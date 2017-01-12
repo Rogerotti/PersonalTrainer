@@ -53,6 +53,14 @@ namespace Framework.Models.Database
         public virtual UserDetails UserDetails { get; set; }
 
         /// <summary>
+        /// Status użytkownika 
+        /// 0 - działa
+        /// 1 - zablokowany
+        /// 2 - usunięty
+        /// </summary>
+        public Int32 UserState { get; set; }
+
+        /// <summary>
         /// Lista dni żywieniowych.
         /// </summary>
         public virtual ICollection<DayFoodDiary> DayFoodDiary { get; set; }

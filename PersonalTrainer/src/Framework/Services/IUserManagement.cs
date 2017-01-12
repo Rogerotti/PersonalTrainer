@@ -39,6 +39,8 @@ namespace Framework.Services
 
         void PromoteToAdmin(Guid userId);
 
+        void DegradateToUser(Guid userId);
+
         void DeleteUser(Guid id);
 
         /// <summary>

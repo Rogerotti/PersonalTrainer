@@ -132,6 +132,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Degradation.
+        /// </summary>
+        public static string Degradation {
+            get {
+                return ResourceManager.GetString("Degradation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {

@@ -95,14 +95,15 @@ color: red;
                             <div class="column row">
 
                                 <div class="ui grid">
-                                    <div class="two wide column">
-                                        <form asp-controller="Admin" asp-action="DeleteUser" method="get">
+
+                                    <div class="three wide column">
+                                        <form asp-controller="Admin" asp-action="PromoteToAdmin" method="get">
                                             <input type="hidden" name="userId" value="" />
-                                            <button disabled id="promoteToAdmin" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Promote</button>
+                                            <button disabled id="promoteButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Promote</button>
                                         </form>
                                     </div>
 
-                                    <div class="two wide column">
+                                    <div class="one wide column">
                                         <form asp-controller="Admin" asp-action="DeleteUser" method="get">
                                             <input type="hidden" name="userId" value="" />
                                             <button disabled id="deleteUserButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Delete</button>
@@ -163,9 +164,9 @@ color: red;
                         </div>
 
                         <div class="column row">
-                            <form asp-controller="Diet" asp-action="AddEditProduct" method="get">
-                                <input type="hidden" name="productId" value="" />
-                                <button disabled id="editButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Edit</button>
+                            <form asp-controller="Admin" asp-action="DegradateUser" method="get">
+                                <input type="hidden" name="userId" value="" />
+                                <button disabled id="degradateButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Degradation</button>
                             </form>
                         </div>
 
@@ -225,12 +226,16 @@ color: red;
                     $('#adminUserEmail').text(userDto.email);
                     $('#adminUserAge').text(userDto.age);
                     $('#deleteUserButton').attr('disabled', '');
+                    $('#degradateButton').removeAttr('disabled');
+                    $('#promoteButton').attr('disabled', '');
                 }
                 else {
                     $('#userName').text(userDto.login);
                     $('#userEmail').text(userDto.email);
                     $('#userAge').text(userDto.age);
                     $('#deleteUserButton').removeAttr('disabled');
+                    $('#degradateButton').attr('disabled', '');
+                    $('#promoteButton').removeAttr('disabled');
                 }
 
                 $('input[name="userId"]').val(guidId);

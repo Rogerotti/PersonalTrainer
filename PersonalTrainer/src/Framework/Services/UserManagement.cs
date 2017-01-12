@@ -46,6 +46,7 @@ namespace Framework.Services
                 var user = new User()
                 {
                     UserId = userId,
+                    UserState = 0,
                     UserName = username,
                     HashCode = Convert.ToBase64String(hash),
                     Salt = Convert.ToBase64String(salt),
@@ -78,7 +79,7 @@ namespace Framework.Services
             var user = userList.FirstOrDefault(x => x.UserName.Equals(username));
 
             if (user == null) throw new UnauthorizedAccessException(ErrorLanguage.UserNameOrPasswordWrong);
-
+            if(user.UserState == 2) throw new UnauthorizedAccessException(ErrorLanguage.AccountDeleted);
 
             byte[] salt = Convert.FromBase64String(user.Salt);
             byte[] pass = Encoding.UTF8.GetBytes(password);
@@ -100,10 +101,7 @@ namespace Framework.Services
             using (var trans = context.Database.BeginTransaction())
             {
                 var userDto = context.User.FirstOrDefault(x => x.UserId.Equals(id));
-                var userDetails = context.UsersDetails.FirstOrDefault(x => x.UserId.Equals(id));
-
-                context.UsersDetails.Remove(userDetails);
-                context.User.Remove(userDto);
+                userDto.UserState = 2;
                 context.SaveChanges();
                 trans.Commit();
             }
@@ -122,8 +120,20 @@ namespace Framework.Services
             {
                 var userDto = context.User.FirstOrDefault(x => x.UserId.Equals(userId));
                 if (userDto == null) throw new UnauthorizedAccessException(ErrorLanguage.UserNotFound);
-
                 userDto.Administrator = true;
+                context.SaveChanges();
+                trans.Commit();
+            }
+        }
+
+        public void DegradateToUser(Guid userId)
+        {
+            using (var trans = context.Database.BeginTransaction())
+            {
+                var userDto = context.User.FirstOrDefault(x => x.UserId.Equals(userId));
+                if (userDto == null) throw new UnauthorizedAccessException(ErrorLanguage.UserNotFound);
+
+                userDto.Administrator = false;
                 context.SaveChanges();
                 trans.Commit();
             }
@@ -165,7 +175,7 @@ namespace Framework.Services
 
         public IEnumerable<UserDto> GetAllUsers()
         {
-            var userDto = context.User.ToList();
+            var userDto = context.User.Where(x => x.UserState != 2).ToList();
             var userDetails = context.UsersDetails.ToList();
 
             return GetUserDtoFromParts(userDto, userDetails);
@@ -174,7 +184,7 @@ namespace Framework.Services
         public IEnumerable<UserDto> GetAllAdministratorUsers()
         {
             var userDto = context.User
-                           .Where(x => x.Administrator)
+                           .Where(x => x.Administrator && x.UserState != 2)
                            .ToList();
 
             var userDetails = context.UsersDetails.ToList();
@@ -185,7 +195,7 @@ namespace Framework.Services
         public IEnumerable<UserDto> GetAllNormalsUsers()
         {
             var userDto = context.User
-                    .Where(x => !x.Administrator)
+                    .Where(x => !x.Administrator && x.UserState != 2)
                     .ToList();
 
             var userDetails = context.UsersDetails.ToList();
@@ -224,6 +234,7 @@ namespace Framework.Services
             return new UserDto()
             {
                 UserId = user.UserId,
+                UserState = GetUserState(user.UserState),
                 Age = userDetails.Age,
                 Height = userDetails.Height,
                 HeightUnit = GetHeightUnitType(userDetails.HeightUnit),
@@ -235,6 +246,16 @@ namespace Framework.Services
                 Gender = userDetails.Gender,
                 IsAdministrator = user.Administrator
             };
+        }
+
+        private UserState GetUserState(Int32 userState)
+        {
+            if (userState == 0)
+                return UserState.Normal;
+            else if (userState == 1)
+                return UserState.Blocked;
+            else
+                return UserState.Deleted;
         }
 
         private HeightUnit? GetHeightUnitType(Int32 heightNumber)
@@ -331,5 +352,7 @@ namespace Framework.Services
 
             return algorithm.ComputeHash(plainTextWithSaltBytes);
         }
+
+
     }
 }

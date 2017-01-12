@@ -1,5 +1,6 @@
 ﻿using Framework.Models.Dto;
 using Framework.Services;
+using Framework.ValidationAttributes;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
@@ -27,6 +28,8 @@ namespace PersonalTrainerControlPanel.Controllers
         }
 
         [HttpGet]
+       // [SetTempDataModelState]
+        [RestoreModelStateFromTempData]
         public IActionResult Users()
         {
             try
@@ -83,11 +86,8 @@ namespace PersonalTrainerControlPanel.Controllers
             return RedirectToAction("Products", "Admin");
         }
 
-
-        
-
         [HttpGet]
-        public IActionResult promoteToAdmin(String userId)
+        public IActionResult PromoteToAdmin(String userId)
         {
             try
             {
@@ -101,6 +101,22 @@ namespace PersonalTrainerControlPanel.Controllers
         }
 
         [HttpGet]
+        public IActionResult DegradateUser(String userId)
+        {
+            try
+            {
+                userManagement.DegradateToUser(new Guid(userId));
+            }
+            catch (Exception exc)
+            {
+                ModelState.TryAddModelError("AdditionalValidation", exc.Message);
+            }
+            return RedirectToAction("Users", "Admin");
+        }
+
+
+        [HttpGet]
+        [SetTempDataModelState]
         public IActionResult DeleteUser(String userId)
         {
             try

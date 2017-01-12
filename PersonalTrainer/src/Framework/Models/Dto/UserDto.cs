@@ -87,6 +87,8 @@ namespace Framework.Models.Dto
         /// </summary>
         public HeightUnit? HeightUnit { get; set; }
 
+        public UserState UserState { get; set; }
+
         [Required]
         [Range(8,99,
         ErrorMessageResourceType = typeof(ErrorLanguage),
