@@ -259,6 +259,7 @@ namespace Framework.Services
                 pd.Calories = dto.Macro.Calories;
                 pd.Fat = dto.Macro.Fat;
                 pd.Protein = dto.Macro.Protein;
+                pd.Carbohydrates = dto.Macro.Carbohydrates;
                 pd.Quantity = dto.Macro.Quantity;
                 pd.QuantityType = GetQuantityTypeValue(dto.Macro.QuantityType);
 
