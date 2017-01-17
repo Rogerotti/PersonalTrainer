@@ -240,20 +240,20 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Report.
+        /// </summary>
+        public static string Report {
+            get {
+                return ResourceManager.GetString("Report", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Sing up.
         /// </summary>
         public static string SingUp {
             get {
                 return ResourceManager.GetString("SingUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Subscribe.
-        /// </summary>
-        public static string Subscribe {
-            get {
-                return ResourceManager.GetString("Subscribe", resourceCulture);
             }
         }
         

@@ -48,7 +48,7 @@ color: red;
 
     <div class="ui tabular menu">
         <div class="active item" data-tab="PendingProducts">@Framework.Resources.ProductLanguage.PendingProducts</div>
-        <div class="item" data-tab="SubscribedProducts">@Framework.Resources.ProductLanguage.SubscribedProducts</div>
+        <div class="item" data-tab="SubscribedProducts">@Framework.Resources.ProductLanguage.AcceptedProducts</div>
         <div class="item" data-tab="RejectedProducts">@Framework.Resources.ProductLanguage.DeclinedProducts</div>
     </div>
 
@@ -134,14 +134,14 @@ color: red;
                     <div class="column row">
 
                         <div class="ui grid">
-                            <div class="two wide column">
+                            <div class="three wide column">
                                 <form asp-controller="Admin" asp-action="AcceptSubscription" method="get">
                                     <input type="hidden" name="productId" value="" />
                                     <button disabled id="pendingAcceptButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Accept</button>
                                 </form>
                             </div>
 
-                            <div class="two wide column">
+                            <div class="three wide column">
                                 <form asp-controller="Admin" asp-action="DeclineSubscription" method="get">
                                     <input type="hidden" name="productId" value="" />
                                     <button disabled id="pendingDeclineButton" class="ui blue tiny button" type="submit">@Framework.Resources.ButtonLanguage.Decline</button>

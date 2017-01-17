@@ -37,15 +37,6 @@ namespace Framework.Models.Database
         public Decimal Height { get; set; }
 
         /// <summary>
-        /// Jednostka wzrostu
-        /// 0 - nie ustawiono
-        /// 1 - centymetry.
-        /// 2 - stopy.
-        /// 3 - yardy.
-        /// </summary>
-        public Int32 HeightUnit { get; set; }
-
-        /// <summary>
         /// Wiek
         /// </summary>
         public Int32 Age { get; set; }

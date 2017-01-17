@@ -60,6 +60,15 @@ namespace Framework.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Accepted products.
+        /// </summary>
+        public static string AcceptedProducts {
+            get {
+                return ResourceManager.GetString("AcceptedProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to All products.
         /// </summary>
         public static string AllProducts {
@@ -218,15 +227,6 @@ namespace Framework.Resources {
         public static string Snacks {
             get {
                 return ResourceManager.GetString("Snacks", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Subscribed products.
-        /// </summary>
-        public static string SubscribedProducts {
-            get {
-                return ResourceManager.GetString("SubscribedProducts", resourceCulture);
             }
         }
         

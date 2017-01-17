@@ -60,8 +60,7 @@ namespace Framework.Services
                     Gender = gender,
                     Height = height,
                     Weight = weight,
-                    Age = age,
-                    HeightUnit = 0
+                    Age = age
                 };
 
                 userDetails.User = user;
@@ -237,7 +236,6 @@ namespace Framework.Services
                 UserState = GetUserState(user.UserState),
                 Age = userDetails.Age,
                 Height = userDetails.Height,
-                HeightUnit = GetHeightUnitType(userDetails.HeightUnit),
                 Login = user.UserName,
                 Email = user.Email,
                 Password = null,
@@ -256,18 +254,6 @@ namespace Framework.Services
                 return UserState.Blocked;
             else
                 return UserState.Deleted;
-        }
-
-        private HeightUnit? GetHeightUnitType(Int32 heightNumber)
-        {
-            if (heightNumber == 1)
-                return HeightUnit.cm;
-            else if (heightNumber == 2)
-                return HeightUnit.ft;
-            else if (heightNumber == 3)
-                return HeightUnit.yd;
-
-            return null;
         }
 
         /// <summary>

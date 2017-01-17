@@ -136,6 +136,18 @@ namespace PersonalTrainerDiet.Controllers
         }
 
         [HttpPost]
+        public JsonResult GetDayByDate([FromBody]JToken jsonBody)
+        {
+            var dateString = jsonBody.Value<String>("Date");
+            var date = DateTime.Parse(dateString);
+            var food = productManagement.GetDailyFood(date);
+           
+            return new JsonResult(food.DailyProduct);
+        }
+
+        
+
+        [HttpPost]
         public IActionResult AddFood(List<Guid> ids, List<Int32> quantity, List<Boolean> checkboxes)
         {
 

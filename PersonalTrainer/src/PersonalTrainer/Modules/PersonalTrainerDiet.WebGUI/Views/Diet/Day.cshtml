@@ -40,10 +40,10 @@ color: red;
 
     <form asp-action="Day" asp-controller="Diet" method="post">
 
-        <div class="ui calendar tempota" id="example2" onchange="tester()">
+        <div class="ui calendar" id="DailyDate">
             <div class="ui input left icon">
                 <i class="calendar icon"></i>
-                <input type="text" placeholder="Date" onchange="tester()">
+                <input type="text" placeholder="Date" asp-for="Day">
             </div>
         </div>
 
@@ -205,37 +205,25 @@ color: red;
 
         });
 
-        $('.tempota').calendar({
-            onChange: function(date, text) 
-            {
-                var a = 5;
-                var c = 10;
-            }
-        });
-
-        $('.tempota').calendar('setting', 'onChange', function (date, text)
-        {
-            var a = 5;
-            var c = 10;
-        });
-
-        $('.tempota').calendar().on("onChange", function (date, text) {
-            var a = 5;
-            var c = 10;
-        });
-
-        $('#example2').calendar({
+        $('#DailyDate').calendar({
             type: 'date',
             onChange: function (date, text) {
-                var a = 5;
-                var c = 10;
+
+                var data = { Date: date };
+                $.ajax({
+                    url: '@Url.Action("GetDayByDate", "Diet")',
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (msg) {
+
+                        alert(msg)
+                    }
+                });
             }
         });
 
-        $('.tempota').on("onChange", function (date, text) {
-            var a = 5;
-            var c = 10;
-        });
 
         $('.BreakfestTable').on('keyup', ".ChangeMacro", function (e) {
 
@@ -275,11 +263,6 @@ color: red;
             }
             UpdateCurrenCalories()
         });
-
-
-        function tester() {
-            var a = 55;
-        }
 
 
         function UpdateCurrenCalories() {

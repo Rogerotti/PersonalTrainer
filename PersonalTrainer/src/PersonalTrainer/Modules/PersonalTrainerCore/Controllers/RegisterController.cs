@@ -42,7 +42,6 @@ namespace PersonalTrainerCore.Controllers
                 return View(user);
             }
 
-            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

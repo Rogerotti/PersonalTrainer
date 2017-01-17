@@ -177,11 +177,11 @@
   <data name="Promote" xml:space="preserve">
     <value>Promote</value>
   </data>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
   <data name="SingUp" xml:space="preserve">
     <value>Sing up</value>
-  </data>
-  <data name="Subscribe" xml:space="preserve">
-    <value>Subscribe</value>
   </data>
   <data name="Today" xml:space="preserve">
     <value>Today</value>

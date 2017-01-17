@@ -7,7 +7,7 @@
 <body>
     <form class="ui form segment" asp-controller="Register" asp-action="Index" method="post">
 
-        <div class="ui grid">
+        <div class="ui grid" >
 
             <div class="two column row">
 
@@ -55,9 +55,35 @@
 
             </div>
 
-            <div class="four column row">
+            <div class="two column row">
 
-                <div class="column">
+                <div class="centered column">
+                    <div class="field">
+                        <label>@Framework.Resources.UserLanguage.Weight</label>
+                        <div class="ui right labeled input">
+                            <input class="NumericValidation MaxLength3" placeholder="@Framework.Resources.UserLanguage.Weight" type="text" asp-for="Weight">
+                            <div class="ui basic label">kg</div>
+                        </div>
+                        <span asp-validation-for="Weight" class="ui red header"></span>
+                    </div>
+                </div>
+
+                <div class="centered column">
+                    <div class="field">
+                        <label>@Framework.Resources.UserLanguage.Height</label>
+                        <div class="ui right labeled input">
+                            <input class="NumericValidation MaxLength3" placeholder="@Framework.Resources.UserLanguage.Height" type="text" asp-for="Height">
+                            <div class="ui basic label">cm</div>
+                        </div>
+                        <span asp-validation-for="Height" class="ui red header"></span>
+                        </div>
+                    </div>
+
+            </div>
+
+            <div class="two column row">
+
+                <div class="centered column">
                     <div class="field">
                         <label>@Framework.Resources.UserLanguage.Gender</label>
                         <div class="ui selection dropdown" asp-for="Gender">
@@ -69,33 +95,12 @@
                                 <div class="item" data-value="2">@Framework.Resources.UserLanguage.Female </div>
                             </div>
                         </div>
-     
+
                     </div>
                 </div>
 
-                <div class="column">
-                    <div class="field">
-                        <label>@Framework.Resources.UserLanguage.Height</label>
-                        <div class="ui right labeled input">
-                            <input class="NumericValidation MaxLength3" placeholder="@Framework.Resources.UserLanguage.Height" type="text" asp-for="Height">
-                            <div class="ui basic label">cm</div>
-                        </div>
-                        <span asp-validation-for="Height" class="ui red header"></span>
-                    </div>
-                </div>
+                <div class="centered column">
 
-                <div class="column">
-                    <div class="field">
-                        <label>@Framework.Resources.UserLanguage.Weight</label>
-                        <div class="ui right labeled input">
-                            <input class="NumericValidation MaxLength3" placeholder="@Framework.Resources.UserLanguage.Weight" type="text" asp-for="Weight">
-                            <div class="ui basic label">kg</div>
-                        </div>
-                        <span asp-validation-for="Weight" class="ui red header"></span>
-                    </div>
-                </div>
-
-                <div class="column">
                     <div class="field">
                         <label>@Framework.Resources.UserLanguage.Age</label>
                         <input class="NumericValidation MaxLength2" placeholder="@Framework.Resources.UserLanguage.EnterAge" type="text" asp-for="Age">

@@ -177,11 +177,11 @@
   <data name="Promote" xml:space="preserve">
     <value>Awans</value>
   </data>
+  <data name="Report" xml:space="preserve">
+    <value>Zgłoś</value>
+  </data>
   <data name="SingUp" xml:space="preserve">
     <value>Zarejestruj</value>
-  </data>
-  <data name="Subscribe" xml:space="preserve">
-    <value>Subskrybuj</value>
   </data>
   <data name="Today" xml:space="preserve">
     <value>Dzisiaj</value>
