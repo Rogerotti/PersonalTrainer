@@ -280,7 +280,7 @@ namespace Framework.Services
             if (String.IsNullOrWhiteSpace(username)) throw new UnauthorizedAccessException(ErrorLanguage.UsernameEmpty);
             if (username.Length <= 2 || username.Length > 20) throw new UnauthorizedAccessException(ErrorLanguage.UsernameLength);
 
-            var users = context.User;
+            var users = context.User.ToList();
             if (users.Any(x => x.UserName.Equals(username))) throw new UnauthorizedAccessException(ErrorLanguage.UsernameExist);
         }
 

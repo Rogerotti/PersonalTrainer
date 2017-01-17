@@ -39,6 +39,14 @@ color: red;
 <body>
 
     <form asp-action="Day" asp-controller="Diet" method="post">
+
+        <div class="ui calendar tempota" id="example2" onchange="tester()">
+            <div class="ui input left icon">
+                <i class="calendar icon"></i>
+                <input type="text" placeholder="Date" onchange="tester()">
+            </div>
+        </div>
+
         <div class="ui medium header">@Framework.Resources.ProductLanguage.Breakfast</div>
         <div class="ui divider"></div>
 
@@ -197,6 +205,38 @@ color: red;
 
         });
 
+        $('.tempota').calendar({
+            onChange: function(date, text) 
+            {
+                var a = 5;
+                var c = 10;
+            }
+        });
+
+        $('.tempota').calendar('setting', 'onChange', function (date, text)
+        {
+            var a = 5;
+            var c = 10;
+        });
+
+        $('.tempota').calendar().on("onChange", function (date, text) {
+            var a = 5;
+            var c = 10;
+        });
+
+        $('#example2').calendar({
+            type: 'date',
+            onChange: function (date, text) {
+                var a = 5;
+                var c = 10;
+            }
+        });
+
+        $('.tempota').on("onChange", function (date, text) {
+            var a = 5;
+            var c = 10;
+        });
+
         $('.BreakfestTable').on('keyup', ".ChangeMacro", function (e) {
 
             var input = $(this).children();
@@ -235,6 +275,12 @@ color: red;
             }
             UpdateCurrenCalories()
         });
+
+
+        function tester() {
+            var a = 55;
+        }
+
 
         function UpdateCurrenCalories() {
             var proteins = document.getElementsByName("productProtein")

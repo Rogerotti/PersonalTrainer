@@ -27,6 +27,12 @@ namespace PersonalTrainerCore.Controllers
                 if (ModelState.IsValid)
                 {
                     userManagement.RegisterUser(user.Login, user.Email, user.Password, user.Gender, user.Height, user.Weight, user.Age);
+                    userManagement.Login(user.Login, user.Password);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View(user);
                 }
             }
             catch (Exception exc)

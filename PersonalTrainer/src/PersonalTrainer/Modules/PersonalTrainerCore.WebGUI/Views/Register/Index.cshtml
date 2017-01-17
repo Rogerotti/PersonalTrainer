@@ -63,10 +63,10 @@
                         <div class="ui selection dropdown" asp-for="Gender">
                             <input name="gender" type="hidden">
                             <i class="dropdown icon"></i>
-                            <div class="default text">Gender</div>
+                            <div class="default text">@Framework.Resources.UserLanguage.Gender</div>
                             <div class="menu">
-                                <div class="item" data-value="1">Male</div>
-                                <div class="item" data-value="2">Female</div>
+                                <div class="item" data-value="1">@Framework.Resources.UserLanguage.Male</div>
+                                <div class="item" data-value="2">@Framework.Resources.UserLanguage.Female </div>
                             </div>
                         </div>
      
@@ -78,17 +78,7 @@
                         <label>@Framework.Resources.UserLanguage.Height</label>
                         <div class="ui right labeled input">
                             <input class="NumericValidation MaxLength3" placeholder="@Framework.Resources.UserLanguage.Height" type="text" asp-for="Height">
-                                <div class="ui dropdown label" asp-for="HeightUnit">
-                                    <input name="WeightType" type="hidden">
-                                    <div class="text">cm</div>
-                                    <i class="dropdown icon"></i>
-                                    <div class="menu">
-                                        @foreach (var item in @Html.GetEnumSelectList(typeof(Framework.Models.Dto.HeightUnit)))
-                                        {
-                                            <div class="item" data-value="@item.Value">@item.Text</div>
-                                        }
-                                    </div>
-                                </div>
+                            <div class="ui basic label">cm</div>
                         </div>
                         <span asp-validation-for="Height" class="ui red header"></span>
                     </div>
@@ -108,19 +98,18 @@
                 <div class="column">
                     <div class="field">
                         <label>@Framework.Resources.UserLanguage.Age</label>
-                        <div class="ui right labeled input">
-                            <input class="NumericValidation MaxLength2" placeholder="@Framework.Resources.UserLanguage.EnterAge" type="text" asp-for="Age">
-                        </div>
+                        <input class="NumericValidation MaxLength2" placeholder="@Framework.Resources.UserLanguage.EnterAge" type="text" asp-for="Age">
                         <span asp-validation-for="Age" class="ui red header"></span>
                     </div>
                 </div>
-
             </div>
 
-            <div class="column centered"> 
-                <button class="ui blue button" type="submit" >@Framework.Resources.UserLanguage.Register
+            <div class="column centered row">
+                <button class="ui blue button" type="submit">
+                     @Framework.Resources.UserLanguage.Register
                 </button>
             </div>
+    
 
         </div>
 
