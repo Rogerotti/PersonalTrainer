@@ -1,8 +1,8 @@
-﻿@model IEnumerable<Framework.Models.Dto.DailyProductDto>
+﻿@model Framework.Models.View.DailyProductTableViewDto
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <div>
-    <table class="ui sortable table BreakfestTable">
+    <table class="ui sortable table BreakfestTable" id="@Model.Id">
         <thead>
             <tr>
                 <th hidden></th>
@@ -24,7 +24,7 @@
         </thead>
 
         <tbody>
-            @foreach (var item in @Model)
+            @foreach (var item in @Model.List)
             {
                 <tr>
                     <td hidden id="@item.Product.ProductId"><input type="hidden" /></td>

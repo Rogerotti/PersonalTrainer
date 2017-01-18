@@ -140,8 +140,10 @@ namespace PersonalTrainerDiet.Controllers
         {
             var dateString = jsonBody.Value<String>("Date");
             var date = DateTime.Parse(dateString);
+            date = date.AddDays(1);
+
             var food = productManagement.GetDailyFood(date);
-           
+
             return new JsonResult(food.DailyProduct);
         }
 

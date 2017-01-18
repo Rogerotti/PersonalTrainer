@@ -1,5 +1,6 @@
 ﻿using Framework.Models;
 using Framework.Models.Dto;
+using Framework.Models.View;
 using Framework.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,11 +18,14 @@ namespace PersonalTrainerDiet.Controllers
             this.productManagement = productManagement;
         }
 
-        public async Task <IViewComponentResult> InvokeAsync(IEnumerable<DailyProductDto> list)
+        public async Task <IViewComponentResult> InvokeAsync(String id, IEnumerable<DailyProductDto> list)
         {
             return await Task.Run(() =>
             {
-                return View(list);
+                var dto = new DailyProductTableViewDto();
+                dto.List = list;
+                dto.Id = id;
+                return View(dto);
             });
         }
     }

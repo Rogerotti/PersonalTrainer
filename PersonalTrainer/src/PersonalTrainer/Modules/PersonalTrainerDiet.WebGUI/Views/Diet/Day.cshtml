@@ -55,7 +55,7 @@ color: red;
                 if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Breakfast))
                 {
                     var result = Model.DailyProduct.Where(x => x.MealType == Framework.Models.MealType.Breakfast);
-                    @await Component.InvokeAsync("DailyProductTable", new { list = result.ToList() })
+                    @await Component.InvokeAsync("DailyProductTable", new { id = "Breakfast",  list = result.ToList() })
                 }
             }
         </div>
@@ -72,7 +72,7 @@ color: red;
                 if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Dinner))
                 {
                     var result = Model.DailyProduct.Where(x => x.MealType == Framework.Models.MealType.Dinner);
-                    @await Component.InvokeAsync("DailyProductTable", new { list = result.ToList() })
+                    @await Component.InvokeAsync("DailyProductTable", new { id = "Dinner", list = result.ToList() })
                 }
             }
         </div>
@@ -89,7 +89,7 @@ color: red;
                 if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Supper))
                 {
                     var result = Model.DailyProduct.Where(x => x.MealType == Framework.Models.MealType.Supper);
-                    @await Component.InvokeAsync("DailyProductTable", new { list = result.ToList() })
+                    @await Component.InvokeAsync("DailyProductTable", new { id = "Supper", list = result.ToList() })
                 }
             }
         </div>
@@ -106,7 +106,7 @@ color: red;
                 if (Model.DailyProduct.Any(x => x.MealType == Framework.Models.MealType.Snacks))
                 {
                     var result = Model.DailyProduct.Where(x => x.MealType == Framework.Models.MealType.Snacks);
-                    @await Component.InvokeAsync("DailyProductTable", new { list = result.ToList() })
+                    @await Component.InvokeAsync("DailyProductTable", new { id = "Snacks", list = result.ToList() })
                 }
             }
         </div>
@@ -208,7 +208,10 @@ color: red;
         $('#DailyDate').calendar({
             type: 'date',
             onChange: function (date, text) {
-
+                var ref = "/Diet/Day/date="
+                ref += date.String(datejghj);
+                var dd = date.getDate();
+                window.location.href = ref;
                 var data = { Date: date };
                 $.ajax({
                     url: '@Url.Action("GetDayByDate", "Diet")',
@@ -218,7 +221,63 @@ color: red;
                     contentType: "application/json; charset=utf-8",
                     success: function (msg) {
 
-                        alert(msg)
+                        var breakfastTableEnabled = false;
+                        var dinnerTableEnabled = false;
+                        var supperTableEnabled = false;
+                        var snacksTableEnabled = false;
+
+                        for (var i = 0; i < msg.length; i++) {
+                            if (msg[i].mealType === 0)
+                                breakfastTableEnabled = true;
+                            else if (msg[i].mealType === 1)
+                                dinnerTableEnabled = true;
+                            else if (msg[i].mealType === 2)
+                                supperTableEnabled = true;
+                            else if (msg[i].mealType === 3)
+                                snacksTableEnabled = true;
+                        }
+
+                        var breakfastTable = document.getElementById("Breakfast");
+                        var dinnerTable = document.getElementById("Dinner");
+                        var supperTable = document.getElementById("Supper");
+                        var snacksTable = document.getElementById("Snacks");
+
+                        var valueChanged = false;
+
+                        if (!breakfastTableEnabled) {
+                      
+                            while (breakfastTable.rows.length > 0) {
+                                breakfastTable.deleteRow(0);
+                            }
+                            breakfastTable.style.display = "none";
+                            valueChanged = true;
+                        }
+
+                        if (!dinnerTableEnabled) {
+                            while (dinnerTable.rows.length > 0) {
+                                dinnerTable.deleteRow(0);
+                            }
+                            dinnerTable.style.display = "none";
+                            valueChanged = true;
+                        }
+
+                        if (!supperTableEnabled) {
+
+                            while (supperTable.rows.length > 0) {
+                                supperTable.deleteRow(0);
+                            }
+                            supperTable.style.display = "none";
+                            valueChanged = true;
+                        }
+
+                        if (!snacksTableEnabled) {
+                            while (snacksTable.rows.length > 0) {
+                                snacksTable.deleteRow(0);
+                            }
+                            snacksTable.style.display = "none";
+                            valueChanged = true;
+                        }
+         
                     }
                 });
             }
