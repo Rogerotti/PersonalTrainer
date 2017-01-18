@@ -208,9 +208,13 @@ color: red;
         $('#DailyDate').calendar({
             type: 'date',
             onChange: function (date, text) {
-                var ref = "/Diet/Day/date="
-                ref += date.String(datejghj);
-                var dd = date.getDate();
+                var ref = "/Diet/Day/"
+
+                var day = date.getDate();
+                var monthIndex = date.getMonth() + 1;
+                var year = date.getFullYear();
+
+                ref += day + "-" + monthIndex + "-" + year;
                 window.location.href = ref;
                 var data = { Date: date };
                 $.ajax({

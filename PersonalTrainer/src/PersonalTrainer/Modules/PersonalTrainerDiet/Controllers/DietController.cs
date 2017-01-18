@@ -35,7 +35,7 @@ namespace PersonalTrainerDiet.Controllers
         }
 
         [HttpGet]
-        public IActionResult Day()
+        public IActionResult Day(String Id)
         {
             DailyFoodDto ProductDto = null;
 
