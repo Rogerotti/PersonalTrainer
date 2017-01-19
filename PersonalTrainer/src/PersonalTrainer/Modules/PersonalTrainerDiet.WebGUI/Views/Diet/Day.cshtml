@@ -211,7 +211,16 @@ color: red;
                 var ref = "/Diet/Day/"
 
                 var day = date.getDate();
-                var monthIndex = date.getMonth() + 1;
+                var monthIndex;
+                var test = date.getMonth() + 1;
+                if (test < 10) {
+                    monthIndex = "0";
+                    monthIndex += test;
+                }
+                else
+                    monthIndex = test;
+               
+
                 var year = date.getFullYear();
 
                 ref += day + "-" + monthIndex + "-" + year;
@@ -294,24 +303,18 @@ color: red;
             var newQuant = input.val();
             var tr = $(this).parent().parent();
 
-            var protein = tr[0].cells[2].innerHTML
-            var fat = tr[0].cells[3].innerHTML
-            var carbs = tr[0].cells[4].innerHTML
-            var calories = tr[0].cells[5].innerHTML
+            var quant = parseFloat(tr[0].cells[9].children[0].value.replace(/,/, '.'));
+            var prevProtein = parseFloat(tr[0].cells[10].children[0].value.replace(/,/, '.'));
+            var prevFat = parseFloat(tr[0].cells[11].children[0].value.replace(/,/, '.'));
+            var prevCarb = parseFloat(tr[0].cells[12].children[0].value.replace(/,/, '.'));
+            var prevCalories = parseFloat(tr[0].cells[13].children[0].value.replace(/,/, '.'));
 
-            var prevQuant = parseFloat(tr[0].cells[9].children[0].value);
-            var prevProtein = parseFloat(tr[0].cells[10].children[0].value);
-            var prevFat = parseFloat(tr[0].cells[11].children[0].value);
-            var prevCarb = parseFloat(tr[0].cells[12].children[0].value);
-            var prevCalories = parseFloat(tr[0].cells[13].children[0].value);
+            var ratio = Math.round(newQuant * 100.0 / quant) / 100
 
-            var ratio = Math.round(newQuant * 100.0 / prevQuant) / 100
-
-            var ress = prevProtein * ratio;
-            tr[0].cells[2].innerHTML = Math.round(prevProtein * ratio * 100) / 100;
-            tr[0].cells[3].innerHTML = Math.round(prevFat * ratio * 100) / 100;
-            tr[0].cells[4].innerHTML = Math.round(prevCarb * ratio * 100) / 100;
-            tr[0].cells[5].innerHTML = Math.round(prevCalories * ratio * 100) / 100;
+            tr[0].cells[2].innerHTML = (Math.round(prevProtein * ratio * 100) / 100).toString().replace('.', ',');
+            tr[0].cells[3].innerHTML = (Math.round(prevFat * ratio * 100) / 100).toString().replace('.', ',');
+            tr[0].cells[4].innerHTML = (Math.round(prevCarb * ratio * 100) / 100).toString().replace('.', ',');
+            tr[0].cells[5].innerHTML = (Math.round(prevCalories * ratio * 100) / 100).toString().replace('.', ',');
 
             UpdateCurrenCalories()
         });
@@ -340,16 +343,16 @@ color: red;
             var caloriesCount = parseFloat(0)
 
             for (var i = 0; i < proteins.length; i++) {
-                proteinCount += parseFloat(proteins[i].innerHTML)
-                fatCount += parseFloat(fats[i].innerHTML)
-                carbsnCount += parseFloat(carbs[i].innerHTML)
-                caloriesCount += parseFloat(calories[i].innerHTML)
+                proteinCount += parseFloat(proteins[i].innerHTML.replace(/,/, '.'))
+                fatCount += parseFloat(fats[i].innerHTML.replace(/,/, '.'))
+                carbsnCount += parseFloat(carbs[i].innerHTML.replace(/,/, '.'))
+                caloriesCount += parseFloat(calories[i].innerHTML.replace(/,/, '.'))
             }
 
-            document.getElementById("CurrentProtein").innerHTML = proteinCount
-            document.getElementById("CurrentFat").innerHTML = fatCount
-            document.getElementById("CurrentCarbs").innerHTML = carbsnCount
-            document.getElementById("CurrentCalories").innerHTML = caloriesCount
+            document.getElementById("CurrentProtein").innerHTML = proteinCount.toString().replace('.', ',');
+            document.getElementById("CurrentFat").innerHTML = fatCount.toString().replace('.', ',');
+            document.getElementById("CurrentCarbs").innerHTML = carbsnCount.toString().replace('.', ',');
+            document.getElementById("CurrentCalories").innerHTML = caloriesCount.toString().replace('.', ',');
 
             var avaibleProteins = parseFloat(document.getElementById("AvaibleProtein").innerHTML)
             var avaibleFat = parseFloat(document.getElementById("AvaibleFat").innerHTML)

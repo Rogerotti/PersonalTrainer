@@ -1,4 +1,5 @@
 ﻿@model  Framework.Models.Dto.SearchProductsDto
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "Add products";
     Layout = "Layout";
@@ -67,10 +68,10 @@
 
         <div>
             <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
-
+                <input type="hidden" asp-for="Day" value="@Model.Day" />
                 @await Component.InvokeAsync("AddProductTable", new { products = Model.AllProducts })
-
                 <input type="submit" name="test33" value="@Framework.Resources.ButtonLanguage.Add" />
+               
             </form>
         </div>
 
@@ -80,13 +81,15 @@
 
         <div>
             <form class="ui form segment" asp-controller="Diet" asp-action="AddFood" method="post">
-
+                <input type="hidden" asp-for="Day" value="@Model.Day" />
                 @await Component.InvokeAsync("AddProductTable", new { products = Model.UserProducts })
-
                 <input type="submit" name="test" value="@Framework.Resources.ButtonLanguage.Add" />
+          
             </form>
         </div>
     </div>
+
+
 
 </body>
 
@@ -117,5 +120,13 @@
                 $('.table tbody').find('tr').show();
             }
         });
+
+        function calc(e)
+        {
+            var cde = e.parentNode
+            var ggg = e.parentNode.children[0];
+            var cccc = e.parentNode.children[0].value;
+            e.parentNode.children[0].value = e.checked;
+        }
     </script>
 }

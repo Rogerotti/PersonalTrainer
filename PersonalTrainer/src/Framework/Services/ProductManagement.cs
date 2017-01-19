@@ -49,7 +49,8 @@ namespace Framework.Services
                         Quantity = item.ProductQuantity,
                         ProductId = item.ProductId,
                         MealType = (Int32)item.MealType,
-                        DayId = dailyFoodId
+                        DayId = dailyFoodId,
+                        Day = day
                     });
                 }
                 var productsIds = foodList.Select(x => x.ProductId).ToList();
@@ -121,6 +122,7 @@ namespace Framework.Services
                 var products = result.Select(x => x.p).ToList();
                 foreach (var item in result.Select(x => x.dp).ToList())
                 {
+               
                     var prod = products.First(x => x.ProductId.Equals(item.ProductId));
                     var pd = result.Select(x => x.pd);
                     var productDetails = pd.Where(x => x.ProductId.Equals(item.ProductId)).FirstOrDefault();
@@ -144,17 +146,24 @@ namespace Framework.Services
                         State = GetProductStateEnum(item.Product.ProductState)
 
                     };
+                    var food = foodTypes.FirstOrDefault(x => x.ProductId.Equals(item.ProductId));
+                    var ration = (decimal)food.Quantity/ productDetails.Quantity;
+                    var currentQuant = food.Quantity;
+                    var currentCalories = Math.Round(productDetails.Calories * ration,2);
+                    var currentFat = Math.Round(productDetails.Fat * ration,2);
+                    var currentProtein = Math.Round(productDetails.Protein * ration,2);
+                    var currentCarbohydrates = Math.Round(productDetails.Carbohydrates * ration,2);
 
                     daily.Add(new DailyProductDto()
                     {
                         Product = a,
                         CurrentMacro = new Macro()
                         {
-                            Quantity = productDetails.Quantity,
-                            Calories = productDetails.Calories,
-                            Carbohydrates = productDetails.Carbohydrates,
-                            Fat = productDetails.Fat,
-                            Protein = productDetails.Protein,
+                            Quantity = currentQuant,
+                            Calories = currentCalories,
+                            Carbohydrates = currentCarbohydrates,
+                            Fat = currentFat,
+                            Protein = currentProtein,
                             QuantityType = GetQuantityTypeEnum(productDetails.QuantityType)
                         },
                         MealType = (MealType)item.MealType
@@ -181,6 +190,11 @@ namespace Framework.Services
                 DayFat = 0,
                 DailyProduct = new List<DailyProductDto>()
             };
+        }
+
+        private void DoMagic()
+        {
+
         }
 
         public void AddProduct(ProductDto dto)
@@ -577,9 +591,9 @@ namespace Framework.Services
                 {
                     QuantityType = p.Macro.QuantityType,
                     Calories = p.Macro.Calories * res,
-                    Fat = p.Macro.Fat * res,
-                    Protein = p.Macro.Protein * res,
-                    Carbohydrates = p.Macro.Carbohydrates * res,
+                    Fat = Math.Round(p.Macro.Fat * res,2),
+                    Protein = Math.Round(p.Macro.Protein * res,2),
+                    Carbohydrates = Math.Round(p.Macro.Carbohydrates * res,2),
                     Quantity = quantity
                 };
 

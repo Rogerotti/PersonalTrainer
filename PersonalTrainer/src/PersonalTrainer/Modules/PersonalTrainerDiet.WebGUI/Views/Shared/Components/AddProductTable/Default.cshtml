@@ -23,7 +23,8 @@
                 <tr>
                     <td hidden><input type="hidden" name="ids" value="@product.ProductId" /></td>
                     <td>
-                        @Html.CheckBox("checkboxes")
+                        <input type="hidden" name="tess" value="false" />
+                        <input type="checkbox"  name="testt" onclick="calc(this)" />
                     </td>
                     <td>@product.Name</td>
                     <td>@product.Macro.Calories</td>

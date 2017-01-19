@@ -38,9 +38,17 @@ namespace PersonalTrainerDiet.Controllers
         public IActionResult Day(String Id)
         {
             DailyFoodDto ProductDto = null;
+            DateTime dayDate;
+            if (Id != null)
+            {
+                dayDate = DateTime.ParseExact(Id, "dd-MM-yyyy",
+                                            System.Globalization.CultureInfo.InvariantCulture);
+            }
+            else
+                dayDate = DateTime.Today;
 
             var additionalMeal = TempData[additionalMealsId] as Boolean?;
-            if (additionalMeal == null ? false : (Boolean)additionalMeal)
+            if (additionalMeal == null ? false : (Boolean)additionalMeal )
             {
                 var guids = TempData[productGuidId] as IEnumerable<Guid>;
                 var quants = TempData[productQuantityId] as IEnumerable<Int32>;
@@ -62,12 +70,12 @@ namespace PersonalTrainerDiet.Controllers
                         });
                     }
 
-                    ProductDto = productManagement.GetDailyFoodFromDailyFoodProductDto(DateTime.Today, lista);
+                    ProductDto = productManagement.GetDailyFoodFromDailyFoodProductDto(dayDate, lista);
                 }
             }
 
             if (ProductDto == null)
-                ProductDto = productManagement.GetDailyFood(DateTime.Today);
+                ProductDto = productManagement.GetDailyFood(dayDate);
 
 
             var userGoals = userGoalsManamgenet.GetCurrentUserGoals();
@@ -90,7 +98,7 @@ namespace PersonalTrainerDiet.Controllers
         }
 
         [HttpPost]
-        public IActionResult Day(IEnumerable<Guid> productId, IEnumerable<Int32> quantity, IEnumerable<Int32> productMealType, Int32 buttonType)
+        public IActionResult Day(IEnumerable<Guid> productId, IEnumerable<Int32> quantity, IEnumerable<Int32> productMealType, Int32 buttonType, DateTime Day)
         {
             if (buttonType == 4)
             {
@@ -107,7 +115,7 @@ namespace PersonalTrainerDiet.Controllers
                         MealType = (MealType)mealTypeList[i]
                     });
                 }
-                productManagement.SubmitDailyFood(DateTime.Today, food);
+                productManagement.SubmitDailyFood(Day, food);
 
                 return RedirectToAction("Day", "Diet");
             }
@@ -118,11 +126,11 @@ namespace PersonalTrainerDiet.Controllers
             TempData[productMealTypeId] = productMealType.ToList();
             TempData[mealTypeId] = buttonType;
 
-            return RedirectToAction("AddFood", "Diet");
+            return RedirectToAction("AddFood", "Diet", new { dateTime = Day });
         }
 
         [HttpGet]
-        public IActionResult AddFood()
+        public IActionResult AddFood(DateTime dateTime)
         {
             var allProducts = productManagement.GetProducts();
             var userProducts = productManagement.GetUserProducts();
@@ -130,7 +138,8 @@ namespace PersonalTrainerDiet.Controllers
             {
                 AllProducts = allProducts.ToList(),
                 UserProducts = userProducts.ToList(),
-                RecentProducts = userProducts.ToList()
+                RecentProducts = userProducts.ToList(),
+                Day = dateTime
             };
             return View(dto);
         }
@@ -147,37 +156,15 @@ namespace PersonalTrainerDiet.Controllers
             return new JsonResult(food.DailyProduct);
         }
 
-        
-
         [HttpPost]
-        public IActionResult AddFood(List<Guid> ids, List<Int32> quantity, List<Boolean> checkboxes)
+        public IActionResult AddFood(List<Guid> ids, List<Int32> quantity, DateTime Day, Boolean[] tess)
         {
-
-            //Wynika to ze zwracania zaznaczonych checkboxów 2 wartości true oraz false a w przypadku braku zaznaczenia false przez co po wartości true zawsze musi być false.
-            List<Boolean> realBooleanValues = new List<Boolean>();
             List<Guid> properIds = new List<Guid>();
             List<Int32> properQuantities = new List<int>();
 
-            if (checkboxes != null && checkboxes.Count < 2)
-                realBooleanValues = checkboxes;
-            else
+            for (int i = 0; i < tess.Count(); i++)
             {
-                for (int i = 0; i < checkboxes.Count; i++)
-                {
-                    if (checkboxes[i])
-                    {
-                        i++;
-                        realBooleanValues.Add(true);
-                    }
-                    else
-                        realBooleanValues.Add(false);
-                }
-
-            }
-
-            for (int i = 0; i < realBooleanValues.Count(); i++)
-            {
-                if (realBooleanValues[i])
+                if (tess[i])
                 {
                     properIds.Add(ids[i]);
                     properQuantities.Add(quantity[i]);
@@ -206,7 +193,14 @@ namespace PersonalTrainerDiet.Controllers
             TempData[productMealTypeId] = properMealTypes;
             TempData[mealTypeId] = enumMealType;
 
-            return RedirectToAction("Day", "Diet");
+            String id = String.Empty;
+            String month = String.Empty;
+            if (Day.Month < 10)
+                month = String.Format("0{0}", Day.Month);
+            else
+                month = Day.Month.ToString();
+            id = String.Format("{0}-{1}-{2}", Day.Day.ToString(), month, Day.Year.ToString());
+            return RedirectToAction("Day", "Diet", new { id = id} );
         }
 
         /// <summary>
