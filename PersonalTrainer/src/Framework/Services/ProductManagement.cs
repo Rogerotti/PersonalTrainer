@@ -590,7 +590,7 @@ namespace Framework.Services
                 var currentMacro = new Macro()
                 {
                     QuantityType = p.Macro.QuantityType,
-                    Calories = p.Macro.Calories * res,
+                    Calories = Math.Round(p.Macro.Calories * res,2),
                     Fat = Math.Round(p.Macro.Fat * res,2),
                     Protein = Math.Round(p.Macro.Protein * res,2),
                     Carbohydrates = Math.Round(p.Macro.Carbohydrates * res,2),
