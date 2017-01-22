@@ -225,74 +225,6 @@ color: red;
 
                 ref += day + "-" + monthIndex + "-" + year;
                 window.location.href = ref;
-                var data = { Date: date };
-                $.ajax({
-                    url: '@Url.Action("GetDayByDate", "Diet")',
-                    type: "POST",
-                    data: JSON.stringify(data),
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (msg) {
-
-                        var breakfastTableEnabled = false;
-                        var dinnerTableEnabled = false;
-                        var supperTableEnabled = false;
-                        var snacksTableEnabled = false;
-
-                        for (var i = 0; i < msg.length; i++) {
-                            if (msg[i].mealType === 0)
-                                breakfastTableEnabled = true;
-                            else if (msg[i].mealType === 1)
-                                dinnerTableEnabled = true;
-                            else if (msg[i].mealType === 2)
-                                supperTableEnabled = true;
-                            else if (msg[i].mealType === 3)
-                                snacksTableEnabled = true;
-                        }
-
-                        var breakfastTable = document.getElementById("Breakfast");
-                        var dinnerTable = document.getElementById("Dinner");
-                        var supperTable = document.getElementById("Supper");
-                        var snacksTable = document.getElementById("Snacks");
-
-                        var valueChanged = false;
-
-                        if (!breakfastTableEnabled) {
-                      
-                            while (breakfastTable.rows.length > 0) {
-                                breakfastTable.deleteRow(0);
-                            }
-                            breakfastTable.style.display = "none";
-                            valueChanged = true;
-                        }
-
-                        if (!dinnerTableEnabled) {
-                            while (dinnerTable.rows.length > 0) {
-                                dinnerTable.deleteRow(0);
-                            }
-                            dinnerTable.style.display = "none";
-                            valueChanged = true;
-                        }
-
-                        if (!supperTableEnabled) {
-
-                            while (supperTable.rows.length > 0) {
-                                supperTable.deleteRow(0);
-                            }
-                            supperTable.style.display = "none";
-                            valueChanged = true;
-                        }
-
-                        if (!snacksTableEnabled) {
-                            while (snacksTable.rows.length > 0) {
-                                snacksTable.deleteRow(0);
-                            }
-                            snacksTable.style.display = "none";
-                            valueChanged = true;
-                        }
-         
-                    }
-                });
             }
         });
 
@@ -349,10 +281,16 @@ color: red;
                 caloriesCount += parseFloat(calories[i].innerHTML.replace(/,/, '.'))
             }
 
-            document.getElementById("CurrentProtein").innerHTML = proteinCount.toString().replace('.', ',');
-            document.getElementById("CurrentFat").innerHTML = fatCount.toString().replace('.', ',');
-            document.getElementById("CurrentCarbs").innerHTML = carbsnCount.toString().replace('.', ',');
-            document.getElementById("CurrentCalories").innerHTML = caloriesCount.toString().replace('.', ',');
+            var currentProtein = (Math.round(proteinCount * 100) / 100).toString().replace('.', ',');
+            var currentFat = (Math.round(fatCount * 100) / 100).toString().replace('.', ',');
+
+            var currentCarbs = (Math.round(carbsnCount * 100) / 100).toString().replace('.', ',');
+            var currentCalories = (Math.round(caloriesCount * 100) / 100).toString().replace('.', ',');
+
+            document.getElementById("CurrentProtein").innerHTML = currentProtein
+            document.getElementById("CurrentFat").innerHTML = currentFat
+            document.getElementById("CurrentCarbs").innerHTML = currentCarbs
+            document.getElementById("CurrentCalories").innerHTML = currentCalories
 
             var avaibleProteins = parseFloat(document.getElementById("AvaibleProtein").innerHTML)
             var avaibleFat = parseFloat(document.getElementById("AvaibleFat").innerHTML)

@@ -207,13 +207,42 @@
             contentType: "application/json; charset=utf-8",
             success: function (msg)
             {
-            $('#detailsName').text(msg.name);
-            $('#detailsManufacturer').text(msg.manufacturer);
-            $('#detailsCalories').text(msg.macro.calories);
-            $('#detailsProtein').text(msg.macro.protein);
-            $('#detailsFat').text(msg.macro.fat);
-            $('#detailsCarbs').text(msg.macro.carbohydrates);
-            $('#detailsType').text(msg.typeDisplayName);
+                var name = "";
+                var manufacturer = "";
+                var calories = "";
+                var proteins = "";
+                var fat = "";
+                var carbohydrates = "";
+                var typeDisplayName = "";
+
+                if (typeof (msg.name) != "undefined")
+                    name = msg.name;
+
+                if (typeof (msg.manufacturer) != "undefined")
+                    manufacturer = msg.manufacturer;
+
+                if (typeof (msg.macro.calories) != "undefined")
+                    calories = msg.macro.calories;
+
+                if (typeof (msg.macro.protein) != "undefined")
+                    proteins = msg.macro.protein;
+
+                if (typeof (msg.macro.fat) != "undefined")
+                    fat = msg.macro.fat;
+
+                if (typeof (msg.macro.carbohydrates) != "undefined")
+                    carbohydrates = msg.macro.carbohydrates;
+
+                if (typeof (msg.typeDisplayName) != "undefined")
+                    typeDisplayName = msg.typeDisplayName;
+
+            $('#detailsName').text(name);
+            $('#detailsManufacturer').text(manufacturer);
+            $('#detailsCalories').text(calories);
+            $('#detailsProtein').text(proteins);
+            $('#detailsFat').text(fat);
+            $('#detailsCarbs').text(carbohydrates);
+            $('#detailsType').text(typeDisplayName);
             $('#editButton').removeAttr('disabled');
             $('#deleteButton').removeAttr('disabled');
 

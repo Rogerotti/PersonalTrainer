@@ -18,6 +18,7 @@
                 }
                 else
                 {
+                    <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Home"? "active item" : "item")" asp-controller="Home" asp-action="Index">@Framework.Resources.UserLanguage.HomePage</a>
                     <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Register"? "active item" : "item")" asp-controller="Register" asp-action="Index">@Framework.Resources.ButtonLanguage.SingUp</a>
                     <a class="@(ViewContext.RouteData.Values["Controller"].ToString() == "Login"? "active item" : "item")" asp-controller="Login" asp-action="Index">@Framework.Resources.ButtonLanguage.Login</a>
                     <a class="item" asp-controller="Login" asp-action="AdminLogin">Admin</a>
