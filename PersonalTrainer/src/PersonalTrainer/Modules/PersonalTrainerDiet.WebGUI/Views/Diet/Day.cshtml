@@ -207,6 +207,15 @@ color: red;
 
         $('#DailyDate').calendar({
             type: 'date',
+            text: {
+                days: ['N', 'P', 'W', 'ś', 'C', 'P', 'S'],
+                months: ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'],
+                monthsShort: ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru'],
+                today: 'Dzisiaj',
+                now: 'Teraz',
+                am: 'AM',
+                pm: 'PM'
+            },
             onChange: function (date, text) {
                 var ref = "/Diet/Day/"
 

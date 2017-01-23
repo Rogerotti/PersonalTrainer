@@ -219,11 +219,12 @@
 
     function ChangeCalories(input)
     {
-        if(input.value === '') input.value = 0
         var calories = input.value
         var protein = parseInt(document.getElementById("PercentageProtein").value)
         var carbs = parseInt(document.getElementById("PercentageCarbs").value)
         var fat = parseInt(document.getElementById("PercentageFat").value)
+
+        if (isNaN(calories)) calories = 0
 
         var proteinInput = document.getElementById("Proteins")
         proteinInput.value = Math.ceil((calories / 4 * protein / 100))
@@ -237,8 +238,6 @@
 
     function ChangeMacro(input)
     {
-        //if (input.value === '') input.value = 0
-
         var caloriesInput = document.getElementById("Calories")
         var protein = parseInt(document.getElementById("Proteins").value)
         var carbs = parseInt(document.getElementById("Carbs").value)

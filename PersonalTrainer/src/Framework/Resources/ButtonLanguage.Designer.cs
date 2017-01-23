@@ -96,11 +96,11 @@ namespace Framework.Resources {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Cancel subscribtion.
+        ///    Looks up a localized string similar to Cancel report.
         /// </summary>
-        public static string CancelSubscribe {
+        public static string CancelReport {
             get {
-                return ResourceManager.GetString("CancelSubscribe", resourceCulture);
+                return ResourceManager.GetString("CancelReport", resourceCulture);
             }
         }
         
@@ -146,6 +146,15 @@ namespace Framework.Resources {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Diary.
+        /// </summary>
+        public static string Diary {
+            get {
+                return ResourceManager.GetString("Diary", resourceCulture);
             }
         }
         

@@ -75,9 +75,14 @@ namespace Framework.Services
             var userList = context.User.ToList();
             if (!userList.Any()) throw new UnauthorizedAccessException("No people in database.");
 
-            var user = userList.FirstOrDefault(x => x.UserName.Equals(username));
+            var user = userList.FirstOrDefault(x => x.UserName.ToLower().Equals(username.ToLower()));
 
-            if (user == null) throw new UnauthorizedAccessException(ErrorLanguage.UserNameOrPasswordWrong);
+            if (user == null)
+            {
+                user = userList.FirstOrDefault(x => x.Email.ToLower().Equals(username.ToLower()));
+
+                if (user == null) throw new UnauthorizedAccessException(ErrorLanguage.UserNameOrPasswordWrong);
+            } 
             if(user.UserState == 2) throw new UnauthorizedAccessException(ErrorLanguage.AccountDeleted);
 
             byte[] salt = Convert.FromBase64String(user.Salt);
